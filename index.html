@@ -1,117 +1,112 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="sombre">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="theme-color" content="#14161a">
-<title>YO1tv · test du lecteur</title>
-<style>
-/* Étape 0 de YO1tv : vérifier que le lecteur YouTube intégré fonctionne sur GitHub Pages,
-   dans Brave sur tablette Android en portrait (pub, superposition, écran éteint, enchaînement).
-   Données : data/catalogue-exemple.json (catalogue de La Vigie du 1er novembre 2026).
-   Adresse alternative : #v=ID1,ID2,…&t=Titre (compatible avec l'ancien lecteur de la Vigie). */
-:root { --fond: #F3EFE6; --papier: #FBF8F2; --encre: #1F2420; --gris: #5D635C; --trait: #D9D2C3; --accent: #1E3A78 }
-@media (prefers-color-scheme: dark) { :root { --fond: #14161a; --papier: #1d2026; --encre: #E6E4DC; --gris: #A3A69C; --trait: #343842; --accent: #9DB8F0; color-scheme: dark } }
-* { box-sizing: border-box }
-body { margin: 0; background: var(--fond); color: var(--encre); font: 16px/1.45 system-ui, sans-serif }
-header { padding: 10px 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--trait); background: var(--papier) }
-header b { font: 700 22px system-ui } header b span { color: var(--accent) }
-main { max-width: 1100px; margin: 0 auto; padding: 12px 16px 40px }
-.cadre { position: sticky; top: 0; z-index: 2; background: var(--fond); padding-bottom: 6px }
-.video { position: relative; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden }
-.video > div, .video iframe { position: absolute; inset: 0; width: 100%; height: 100% }
-h1 { font-size: 18px; margin: 8px 0 2px } .muet { color: var(--gris); font-size: 14px }
-.ctrl { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 }
-.ctrl button, .ctrl a { border: 1px solid var(--trait); background: var(--papier); color: inherit; border-radius: 999px; padding: 9px 15px; font: 600 15px system-ui; text-decoration: none; cursor: pointer }
-ol { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 6px }
-li button { width: 100%; display: grid; grid-template-columns: 112px 1fr; gap: 10px; align-items: center; text-align: left; border: 1px solid var(--trait); background: var(--papier); color: inherit; border-radius: 10px; padding: 6px; font: inherit; cursor: pointer }
-li button[aria-current="true"] { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent) }
-li img { width: 112px; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; background: #8883 }
-li small { display: block; color: var(--gris) }
-details { margin-top: 14px } pre { font: 12px/1.45 ui-monospace, monospace; white-space: pre-wrap; max-height: 300px; overflow: auto; padding: 8px; border-radius: 8px; background: #8881 }
-</style>
+<meta name="theme-color" content="#0f1115">
+<meta name="description" content="YO1tv : télé personnelle construite sur le catalogue vidéo quotidien de La Vigie.">
+<title>YO1tv</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icone-192.png">
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
-<header><b>YO1<span>tv</span></b><span class="muet" id="etat">test du lecteur</span></header>
-<main>
-  <div class="cadre">
-    <div class="video"><div id="lecteur"></div></div>
-    <h1 id="titre">Chargement…</h1><div class="muet" id="chaine"></div>
-    <div class="ctrl">
-      <button id="prec" aria-label="Précédente">⏮</button><button id="pause" aria-label="Lecture ou pause">⏯</button><button id="suiv" aria-label="Suivante">⏭</button>
-      <button id="direct">📡 Direct simulé</button><a id="yt" target="_blank" rel="noopener">Ouvrir sur YouTube</a>
-    </div>
-  </div>
-  <ol id="file"></ol>
-  <details open><summary>Journal technique (à copier pour Claude)</summary><pre id="journal"></pre></details>
-</main>
-<script>
-"use strict";
-const $ = id => document.getElementById(id);
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-const sec = d => String(d || "").split(":").reduce((s, x) => s * 60 + (+x || 0), 0);
-const journal = [];
-function log(m) { journal.push(new Date().toLocaleTimeString("fr-FR") + "  " + m); $("journal").textContent = journal.join("\n"); }
-let file = [], i = 0, lecteur = null, vuNote = new Set();
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-prec" viewBox="0 0 24 24"><path d="M6 5v14M18 6l-9 6 9 6z"/></symbol>
+    <symbol id="i-suiv" viewBox="0 0 24 24"><path d="M18 5v14M6 6l9 6-9 6z"/></symbol>
+    <symbol id="i-lecture" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></symbol>
+    <symbol id="i-aime" viewBox="0 0 24 24"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8a2 2 0 0 1-1.9 1.4H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></symbol>
+    <symbol id="i-bof" viewBox="0 0 24 24"><path d="M17 14V3M9 18.1 10 14H4.2a2 2 0 0 1-1.9-2.6l2.3-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.8a2 2 0 0 0-1.8 1.1L12 22a3.1 3.1 0 0 1-3-3.9Z"/></symbol>
+    <symbol id="i-tard" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-humeur" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-dodo" viewBox="0 0 24 24"><path d="M20.5 13.2A8.5 8.5 0 1 1 10.8 3.5a6.6 6.6 0 0 0 9.7 9.7z"/></symbol>
+    <symbol id="i-cc" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M17 10.2a2.2 2.2 0 1 0 0 3.6"/></symbol>
+    <symbol id="i-plein" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+    <symbol id="i-yt" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-reglages" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  </defs>
+</svg>
 
-// File de test : 2 vidéos par catégorie + 2 formats courts, ou les identifiants passés dans l'adresse
-async function chargerFile() {
-  const p = new URLSearchParams(location.hash.slice(1)), ids = (p.get("v") || "").split(",").filter(x => /^[\w-]{11}$/.test(x));
-  if (ids.length) return ids.slice(0, 200).map(id => ({ i: id, t: "Vidéo " + id, c: "" }));
-  const cat = await (await fetch("data/catalogue-exemple.json")).json(), out = [], vus = new Set();
-  for (const o of ["humour", "actu", "decouverte", "culture", "divertissement", "analyse"])
-    for (const x of cat.items.filter(x => x.o === o && !x.co).sort((a, b) => (b.p || 1) - (a.p || 1)).slice(0, 2)) if (!vus.has(x.i)) { vus.add(x.i); out.push(x); }
-  const courts = cat.items.filter(x => x.co).slice(0, 2); out.splice(1, 0, courts[0]); out.splice(6, 0, courts[1]);
-  return out.filter(Boolean);
-}
-function rendreFile() {
-  $("file").innerHTML = file.map((x, k) => `<li><button data-k="${k}" aria-current="${k === i}"><img src="https://i.ytimg.com/vi/${x.i}/mqdefault.jpg" alt="" loading="lazy"><span>${esc(x.t)}<small>${esc(x.c)}${x.co ? " · court" : x.du ? " · " + esc(x.du) : ""}</small></span></button></li>`).join("");
-}
-function tete() {
-  const x = file[i]; if (!x) return;
-  $("titre").textContent = x.t; $("chaine").textContent = x.c || ""; $("yt").href = "https://www.youtube.com/watch?v=" + x.i;
-  document.querySelectorAll("#file button").forEach(b => b.setAttribute("aria-current", String(+b.dataset.k === i)));
-}
-function jouer(k, debut = 0) {
-  i = (k + file.length) % file.length; const x = file[i];
-  lecteur?.loadVideoById({ videoId: x.i, startSeconds: debut | 0 });
-  log(`▶ ${i + 1}/${file.length} « ${x.t.slice(0, 60)} »${debut ? ` à ${Math.floor(debut / 60)} min ${debut % 60 | 0} s` : ""}${x.co ? " (court)" : ""}`);
-  tete();
-}
-const ETATS = { "-1": "non démarrée", 0: "terminée", 1: "lecture", 2: "pause", 3: "chargement", 5: "en file" };
-window.onYouTubeIframeAPIReady = () => {
-  log("✓ API IFrame de YouTube chargée.");
-  lecteur = new YT.Player("lecteur", {
-    videoId: file[0]?.i, playerVars: { playsinline: 1, rel: 0, origin: location.origin },
-    events: {
-      onReady: () => { log("✓ Lecteur prêt : le pilotage fonctionne (enchaînement, boutons)."); $("etat").textContent = "lecteur piloté ✓"; },
-      onStateChange: e => { log("état : " + (ETATS[e.data] ?? e.data)); if (e.data === 0) jouer(i + 1); },
-      onError: e => { log(`✗ Erreur ${e.data}${[101, 150].includes(e.data) ? " (intégration interdite par la chaîne)" : e.data === 153 ? " (configuration : référent manquant)" : ""} → suivante.`); setTimeout(() => jouer(i + 1), 1200); }
-    }
-  });
-  // « vue » à 80 % : préfigure l'historique de YO1tv
-  setInterval(() => {
-    if (!lecteur?.getDuration) return; const d = lecteur.getDuration(), t = lecteur.getCurrentTime(), x = file[i];
-    if (d > 0 && t / d > 0.8 && x && !vuNote.has(x.i)) { vuNote.add(x.i); log(`✓ vue à 80 % : ${x.i}`); }
-  }, 5000);
-};
-$("file").onclick = e => { const b = e.target.closest("button[data-k]"); if (b) jouer(+b.dataset.k); };
-$("prec").onclick = () => jouer(i - 1);
-$("suiv").onclick = () => jouer(i + 1);
-$("pause").onclick = () => lecteur?.getPlayerState?.() === 1 ? lecteur.pauseVideo() : lecteur?.playVideo();
-$("direct").onclick = () => {
-  const d = file.map(x => x.co ? 45 : sec(x.du) || 300), tot = d.reduce((a, b) => a + b, 0);
-  let r = Math.floor(Date.now() / 1000) % tot, k = 0; while (r >= d[k]) { r -= d[k]; k++; }
-  log(`📡 Direct simulé : grille de ${Math.round(tot / 60)} min en boucle, calée sur l'horloge.`); jouer(k, r);
-};
-document.addEventListener("visibilitychange", () => log("page " + (document.hidden ? "masquée (écran éteint ou autre appli)" : "de nouveau visible") + " · état lecteur : " + (ETATS[lecteur?.getPlayerState?.()] ?? "?")));
-(async () => {
-  log(`Origine : ${location.origin} · ${navigator.userAgent.match(/Android[^;)]*/)?.[0] || navigator.platform}`);
-  try { file = await chargerFile(); } catch (e) { log("✗ Catalogue illisible : " + e.message); return; }
-  log(`File de ${file.length} vidéos.`); rendreFile(); tete();
-  const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.onerror = () => log("✗ Script de l'API YouTube bloqué."); document.head.append(s);
-})();
-</script>
+<header class="haut">
+  <b class="logo" aria-label="YO1tv"><svg viewBox="0 0 340 240" aria-hidden="true"><defs>
+    <linearGradient id="haloEnTete" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#1677F0" stop-opacity="0"/><stop offset=".5" stop-color="#1677F0"/><stop offset="1" stop-color="#1677F0" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g fill="currentColor">
+    <path d="M52 34Q170 26 288 34Q310 36 311 58L313 174Q312 196 290 198Q170 206 50 198Q28 196 29 174L31 58Q32 36 52 34ZM56 49Q44 50 44 62L42 172Q42 183 54 184Q170 191 286 184Q298 183 298 172L296 62Q296 50 284 49Q170 42 56 49Z" fill-rule="evenodd"/>
+    <path d="M58 72H85L99 100L113 72H140L112 121V160H86V121Z"/>
+    <path d="M187 72a44 44 0 1 1 0 88a44 44 0 1 1 0-88Zm0 24a20 20 0 1 0 0 40a20 20 0 1 0 0-40Z" fill-rule="evenodd"/>
+  </g>
+  <path d="M240 91L263 72H285V160H259V103L246 110Z" fill="#1677F0"/>
+  <path d="M95 204Q170 211 245 204" stroke="url(#haloEnTete)" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <ellipse cx="170" cy="224" rx="34" ry="5" fill="#1677F0"/></svg><span>tv</span></b>
+  <nav class="seg" aria-label="Mode">
+    <button id="mTele" aria-pressed="true">Télé</button><button id="mCarte" aria-pressed="false">À la carte</button>
+  </nav>
+  <span class="horloge" id="horloge" aria-label="Heure de Paris">--:--</span>
+  <button class="rond" id="bReglages" aria-label="Réglages" title="Réglages"><svg><use href="#i-reglages"/></svg></button>
+</header>
+
+<div class="ecran" id="ecran">
+  <div class="video" id="video">
+    <div id="lecteur"></div>
+    <button class="allumer" id="allumer" hidden>▶ Allumer</button>
+    <div class="annonce" id="annonce" hidden></div>
+  </div>
+</div>
+
+<section class="infos" id="infos">
+  <div class="canaux" id="canaux" role="tablist" aria-label="Canaux"></div>
+  <div class="bandeau">
+    <div class="surtitre"><span id="surtitre"></span><span class="badges" id="badges"></span></div>
+    <h1 id="titre">Chargement…</h1>
+    <div class="meta"><button class="lien-chaine" id="chaine" title="Voir les vidéos de cette chaîne"></button><span id="meta"></span></div>
+    <div class="progres" aria-hidden="true"><i id="progres"></i></div>
+  </div>
+  <div class="actions" id="actions">
+    <button id="bPrec" aria-label="Précédente"><svg><use href="#i-prec"/></svg><span>Précédente</span></button>
+    <button id="bPause" aria-label="Lecture ou pause"><svg><use href="#i-pause" id="icoPause"/></svg><span id="txtPause">Pause</span></button>
+    <button id="bSuiv" aria-label="Suivante"><svg><use href="#i-suiv"/></svg><span>Suivante</span></button>
+    <button id="bAime" aria-pressed="false" class="vote"><svg><use href="#i-aime"/></svg><span>J'aime</span></button>
+    <button id="bBof" aria-pressed="false" class="vote"><svg><use href="#i-bof"/></svg><span>Bof</span></button>
+    <button id="bTard"><svg><use href="#i-tard"/></svg><span>Plus tard</span></button>
+    <button id="bHumeur"><svg><use href="#i-humeur"/></svg><span id="txtHumeur">Humeur</span></button>
+    <button id="bDodo" aria-pressed="false"><svg><use href="#i-dodo"/></svg><span id="txtDodo">Dodo</span></button>
+    <button id="bCC" aria-pressed="false"><svg><use href="#i-cc"/></svg><span>Sous-titres</span></button>
+    <button id="bPlein"><svg><use href="#i-plein"/></svg><span>Plein écran</span></button>
+  </div>
+</section>
+
+<div class="banniere" id="banniere" hidden></div>
+
+<main>
+  <section id="vueTele">
+    <h2 class="titre-section"><span>Et ensuite</span><button class="petit" id="bGrille">Toute la grille</button></h2>
+    <ol class="liste" id="ensuite"></ol>
+  </section>
+
+  <section id="vueCarte" hidden>
+    <div class="filtres">
+      <input type="search" id="recherche" placeholder="Chercher un titre, une chaîne…" aria-label="Chercher" autocomplete="off">
+      <div class="puces" id="pucesVue"></div>
+      <div class="puces" id="pucesCat"></div>
+      <div class="puces" id="pucesFormat"></div>
+    </div>
+    <p class="note" id="noteCarte"></p>
+    <ol class="liste" id="carte"></ol>
+    <button class="plus" id="bPlus" hidden>Afficher plus</button>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastTxt"></span><span id="toastAct"></span></div>
+
+<dialog id="dlg"><form method="dialog" class="feuille"><div id="dlgCorps"></div><button class="fermer" value="x">Fermer</button></form></dialog>
+
+<script src="app.js"></script>
 </body>
 </html>

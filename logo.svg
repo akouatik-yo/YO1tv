@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 240" role="img" aria-label="YO1">
+  <!-- Logo YO1tv recomposé en vectoriel : écran, « YO » sombre, « 1 » bleu, halo bleu sous l'écran. -->
+  <defs>
+    <linearGradient id="halo" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#1677F0" stop-opacity="0"/><stop offset=".5" stop-color="#1677F0"/><stop offset="1" stop-color="#1677F0" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g fill="#0F1A2E">
+    <path d="M52 34Q170 26 288 34Q310 36 311 58L313 174Q312 196 290 198Q170 206 50 198Q28 196 29 174L31 58Q32 36 52 34ZM56 49Q44 50 44 62L42 172Q42 183 54 184Q170 191 286 184Q298 183 298 172L296 62Q296 50 284 49Q170 42 56 49Z" fill-rule="evenodd"/>
+    <path d="M58 72H85L99 100L113 72H140L112 121V160H86V121Z"/>
+    <path d="M187 72a44 44 0 1 1 0 88a44 44 0 1 1 0-88Zm0 24a20 20 0 1 0 0 40a20 20 0 1 0 0-40Z" fill-rule="evenodd"/>
+  </g>
+  <path d="M240 91L263 72H285V160H259V103L246 110Z" fill="#1677F0"/>
+  <path d="M95 204Q170 211 245 204" stroke="url(#halo)" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <ellipse cx="170" cy="224" rx="34" ry="5" fill="#1677F0"/>
+</svg>

@@ -60,7 +60,8 @@ Règles du collecteur (constantes en tête de `collecteur.py`) :
 
 ## 5. Ce qui existe déjà
 
-- [`index.html`](index.html) : page de test du lot 0 (lecteur officiel, file de 14 vidéos du catalogue d'exemple, ⏮ ⏯ ⏭, enchaînement, erreurs sautées, direct simulé, « vue à 80 % », journal, suivi de la mise en veille). Accepte aussi `#v=ID1,ID2,…`.
+- [`index.html`](index.html) + `app.js` + `app.css` : **YO1tv v1** (voir README).
+- [`test.html`](test.html) : ancienne page de test du lot 0 (lecteur officiel, file de 14 vidéos du catalogue d'exemple, ⏮ ⏯ ⏭, enchaînement, erreurs sautées, direct simulé, « vue à 80 % », journal, suivi de la mise en veille). Accepte aussi `#v=ID1,ID2,…`.
 - [`reference/lecteur-vigie-v4.html`](reference/lecteur-vigie-v4.html) : premier lecteur externe écrit pour la Vigie (version 4, jamais publié) : `#v=…&t=…` et `#live=UC…` (direct d'une chaîne), titres via oEmbed.
 - [`data/categories.json`](data/categories.json) : noms et descriptions des catégories, identiques à la Vigie.
 

@@ -1,6 +1,6 @@
 # YO1tv — consignes pour Claude
 
-Mission en cours : **construire et pousser la v1 de YO1tv en autonomie**, sans intervention de Yoann, puis lui rendre compte.
+État : **v1 construite et poussée le 1er novembre 2026** (voir README et CAHIER-DES-CHARGES.md §8 bis). Mission initiale (pour mémoire) : construire et pousser la v1 de YO1tv en autonomie, sans intervention de Yoann, puis lui rendre compte.
 
 1. Lire `CAHIER-DES-CHARGES.md` en entier (surtout le §9, consignes) puis `CONTEXTE.md`.
 2. Compléter le cahier des charges par ta propre réflexion (section « Pistes ajoutées par Claude ») : fonctions, interface, ergonomie — ce qui améliorerait au mieux YO1tv.

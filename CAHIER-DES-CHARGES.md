@@ -83,13 +83,47 @@ Format des vidéos : voir `CONTEXTE.md` §3 (champs `i t c sid d o p du co`).
 - Lot 2 : on allume, ça joue en moins de 3 s, et le programme ne se répète pas dans la journée.
 - Lot 3 : après une semaine de votes, la part des chaînes aimées augmente visiblement.
 
-## 8. Questions ouvertes (à trancher par Yoann)
+## 8. Questions ouvertes — tranchées pour la v1 (1er novembre 2026, par Claude ; tout est réversible)
 
 1. ~~Résultats du test de l'étape 0~~ : réussi.
-2. Liste et noms des canaux du lot 2.
-3. Un ou deux axes pour le curseur d'humeur.
-4. Faut-il un mode « réveil » / « avant de dormir » (programme fixe à une heure donnée) ?
-5. Lot 4 : accepter un jeton GitHub stocké dans Brave (risque faible, mais réel).
+2. **Canaux** : *YO1 Mix* (tout), *YO1 Rire* (humour + divertissement), *YO1 Info* (actu + débats), *YO1 Savoir* (découverte + culture), plus *YO1 Direct* (les 6 directs YouTube de `data/directs.json`, expérimental). Définis dans `CANAUX` en tête de `app.js` : renommer ou regrouper = une ligne.
+3. **Un seul axe d'humeur** (« à plat » ↔ « curieux ») pour la v1 : un second axe « durée disponible » ferait doublon avec la minuterie de sommeil et le « Plus tard », et deux curseurs se règlent moins vite qu'un. À revoir après usage.
+4. **Mode réveil : non** (le navigateur interdit de lancer le son sans geste et la tablette dort) ; **« avant de dormir » : oui**, sous forme de minuterie de sommeil (15 à 90 min, ou fin de la vidéo en cours).
+5. **Jeton GitHub** : repoussé avec le lot 4. Le jour venu : jeton « fine-grained » limité au seul dépôt privé, permission *Contents : read and write*, expiration courte ; en attendant, export/import JSON manuel.
+6. *(question du lot 2)* **Après un saut dans la grille** : la grille suit l'horloge, **sauf si tu avais avancé plus loin** — on reprend alors là où tu étais, pour ne jamais revoir ce que tu as zappé ; les vidéos déjà vues (80 %) sont sautées. C'est le compromis télé/reprise le plus simple ; la règle tient en une ligne de `demarrerTele()`.
+
+## 8 bis. Pistes ajoutées par Claude (v1 du 1er novembre 2026)
+
+### Mises dans la v1
+
+| Piste | Pourquoi |
+|---|---|
+| **Grille calculée dans la page** (graine = date + canal, tirage pondéré sans remise), mémorisée pour la journée dans le navigateur | Pas besoin de toucher la routine ; même résultat à chaque ouverture. Si un nouveau catalogue arrive dans la journée, ou si l'humeur change, seule la **suite** de la grille est recalculée : le passé ne bouge pas. |
+| **Rediffusion** quand un canal a moins de 24 h de contenu (marque « rediff ») | Mieux qu'un écran noir. Limite connue : YO1 Savoir n'a qu'environ 9 h de contenu par jour → beaucoup de rediffusions tant que le stock d'archives (lot 2, `UULF…`) n'existe pas. |
+| **Variété forcée** : jamais deux fois la même chaîne d'affilée, jamais trois fois la même catégorie ; formats courts **en blocs** (3 tous les 3 programmes sur Rire, 2 tous les 6 sur Mix) | Une télé qui enchaîne quatre franceinfo de suite, ou des Shorts isolés au milieu de documentaires, ça se zappe. |
+| **Report** : les vidéos hors actualité des 7 derniers catalogues restent candidates (poids × 0,7) ; l'actu et les débats non | Demandé au lot 2 ; « l'actualité périme ». |
+| **Reprise** dans une vidéo (au-delà de 15 s, avant 90 %) + marque « reprise » | Lot 1. À ne pas confondre avec le démarrage en cours de vidéo de la grille, qui reste écarté. |
+| **Bouton « Allumer »** si le navigateur bloque la lecture automatique | Le son au démarrage marche dans Brave d'après le test, mais pas garanti partout. |
+| **Glisser sur le bandeau** (sous l'image, pas sur le lecteur) pour zapper ; numéros de canal 1 à 5 | Geste « télécommande » sans conflit avec les gestes du lecteur YouTube. |
+| **Minuterie de sommeil** | Usage du soir ; réponse à la question 4. |
+| **« Bof » = passer à la suivante** + toast « Annuler » ; proposition de masquer une chaîne à −3 | Voter sans subir la suite ; rien n'est masqué sans le dire. |
+| **Toucher le nom de la chaîne** → toutes ses vidéos À la carte ; recherche plein texte (sans accents) | Découverte par chaîne, peu coûteux. |
+| **Historique** (150 dernières vues) et **liste « Plus tard »** visibles À la carte | Retrouver ce qu'on a vu ou mis de côté. |
+| **Vidéos non intégrables** mémorisées 7 jours (sautées, liste avec lien YouTube dans les réglages) | Ne pas retomber dessus à chaque zapping ; 7 jours au cas où l'erreur serait passagère. |
+| **Raccourcis clavier**, **thème clair**, **manifeste plein écran**, logo vectoriel | Confort ; installation en raccourci. |
+| **Paramètre de test `?heure=14:00`** | Vérifier la grille à n'importe quelle heure sans attendre. |
+
+### Gardées pour plus tard
+
+| Piste | Raison du report |
+|---|---|
+| Rendez-vous fixes dans la grille (« journal » de 2 vidéos d'actu à 7 h, 13 h, 20 h sur YO1 Mix) | Joli, mais à régler après avoir vu ce que donne la grille actuelle. |
+| Stock d'archives des chaînes hors actu (flux `UULF…` complets) | À faire côté `collecteur.py` (le navigateur ne peut pas lire ces flux : CORS). C'est ce qui réglera les rediffusions de YO1 Savoir. |
+| Média Session (commandes sur l'écran verrouillé) | La lecture se fait dans l'iframe de YouTube : effet incertain, à tester sur la tablette avant de coder. |
+| Service worker (ouverture hors ligne) | Peu utile (rien ne se lit hors ligne) et risque de servir une vieille version ; le manifeste suffit pour le raccourci. |
+| Statistiques de goûts (« ta semaine ») | Utile pour vérifier le critère du lot 3 ; quand il y aura une semaine de votes. |
+| Deuxième axe d'humeur, mode réveil | Voir §8. |
+| Lot 4 (synchronisation vers le dépôt privé) et publication quotidienne du catalogue | Hors v1 comme prévu ; format prêt : `data/AAAA-MM-JJ.json` + `data/index.json` (`{"jours":[…]}`), cf. README. |
 
 ## 9. Consignes pour l'instance qui reprend YO1tv
 
