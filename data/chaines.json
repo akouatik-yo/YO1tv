@@ -1,0 +1,2181 @@
+[
+{
+"id": "yt-thinkerview",
+"nom": "Thinkerview",
+"url": "https://www.youtube.com/@thinkerview",
+"chaine_id": "UCQgWpmt02UtJkyO32HGUASQ",
+"onglet": "analyse",
+"poids": 3,
+"directs": true,
+"actif": true
+},
+{
+"id": "yt-hugo",
+"nom": "HugoDécrypte",
+"url": "https://www.youtube.com/@HugoDecrypteActus",
+"chaine_id": "UCAcAnMF0OrCtUep3Y4M-ZPw",
+"onglet": "actu",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-lemonde",
+"nom": "Le Monde (vidéo)",
+"url": "https://www.youtube.com/@lemondefr",
+"onglet": "actu",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-france24",
+"nom": "France 24",
+"url": "https://www.youtube.com/@FRANCE24",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-arte",
+"nom": "ARTE",
+"url": "https://www.youtube.com/@arte",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-dessouscartes",
+"nom": "Le Dessous des cartes",
+"url": "https://www.youtube.com/@LeDessousDesCartesARTE",
+"chaine_id": "UCHGMBrXUzClgjEzBMei-Jdw",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-lci",
+"nom": "LCI",
+"url": "https://www.youtube.com/@LCI",
+"onglet": "actu",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-blast",
+"nom": "Blast",
+"url": "https://www.youtube.com/@blastinfo",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lemedia",
+"nom": "Le Média",
+"url": "https://www.youtube.com/@LeMédia-TV",
+"chaine_id": "UCT67YOMntJxfRnO_9bXDpvw",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-elucid",
+"nom": "Élucid",
+"url": "https://www.youtube.com/@elucidmedia",
+"chaine_id": "UCkgO4A3Fzm5D9Xu1Y_4vCKQ",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-scienceetonnante",
+"nom": "ScienceEtonnante",
+"url": "https://www.youtube.com/@ScienceEtonnante",
+"chaine_id": "UCaNlbnghtwlsGF-KzAFThqA",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-heureka",
+"nom": "Heu?reka",
+"url": "https://www.youtube.com/@Heu7reka",
+"chaine_id": "UC7sXGI8p8PvKosLWagkK9wQ",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-underscore",
+"nom": "Underscore_",
+"url": "https://www.youtube.com/@Underscore_",
+"chaine_id": "UCWedHS9qKebauVIK2J7383g",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-monsieurphi",
+"nom": "Monsieur Phi",
+"url": "https://www.youtube.com/@MonsieurPhi",
+"chaine_id": "UCqA8H22FwgBVcF3GJpp0MQw",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-notabene",
+"nom": "Nota Bene",
+"url": "https://www.youtube.com/@NotaBeneMovies",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-franceinter",
+"nom": "France Inter",
+"url": "https://www.youtube.com/@FranceInter",
+"chaine_id": "UCJldRgT_D7Am-ErRHQZ90uw",
+"onglet": "analyse",
+"poids": 2,
+"mixte": true,
+"motif": "le billet d|drôle d'humeur|sketch|parodie|imitation|humoriste|Meurice|Pastureau|Morin|Mahaut|Drama|Charline|Vanhoenacker|Doully|Djamil|Waly Dia|Fromet|Pablo Mira|Ameziane|Merwane|Benlazar|Lautrette|Tom Villa|Salaun|Vizorek|Chameroy|Sophia Aram|Larrue|Léandre|Rodrigue|Jensky|Manon Bril|Matthieu Noël|Thomas VDB|Bertrand Usclat|François Rollin|Ngiraan Fall|Tout va très bien|Aymeric Lompret|Lompret|Guillermo Guiz|Fanny Ruwet|Nora Hamzawi|Constance|Benjamin Tranié|Rosa Bursztein|Kominek|Nicole Ferroni|François Morel|Sébastien Marx|Agnès Hurstel|Hurstel",
+"sinon": "analyse",
+"actif": true
+},
+{
+"id": "yt-nova",
+"nom": "Radio Nova",
+"url": "https://www.youtube.com/@radionova",
+"chaine_id": "UCGvjUWz3mGV9cssraATuEsw",
+"onglet": "humour",
+"poids": 3,
+"mixte": true,
+"motif": "Mazine|le billet d|la chanson d|GiedRé|humour|sketch|parodie|imitation|Double jeu|Personnage principal",
+"sinon": "culture",
+"actif": true
+},
+{
+"id": "yt-montreux",
+"nom": "Montreux Comedy",
+"url": "https://www.youtube.com/@MontreuxComedy",
+"chaine_id": "UCPHJfLg1VeNBsfzzTszpmmQ",
+"onglet": "humour",
+"poids": 3,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-quotidien",
+"nom": "Quotidien",
+"url": "https://www.youtube.com/@QuotidienTMC",
+"chaine_id": "UCpi-4daExRSchtsJzO06rwA",
+"onglet": "humour",
+"poids": 2,
+"mixte": true,
+"motif": "Petit Q|Panayotis|Alison Wheeler|Dedienne|Castello-Lopes|humour|humoriste|sketch|parodie|imitation|drôle|\\brire\\b|blague|Pablo Mira|Bellver|Julien Bellver|Chameroy",
+"sinon": "divertissement",
+"actif": true
+},
+{
+"id": "yt-kurzgesagt",
+"nom": "Kurzgesagt (FR)",
+"url": "https://www.youtube.com/@kurzgesagt_fr",
+"chaine_id": "UCzMHLUJ8xTqDq6xsk0N5IdQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lesrevues",
+"nom": "Les Revues du Monde",
+"url": "https://www.youtube.com/@LesRevuesduMonde",
+"chaine_id": "UCnf0fDz1vTYW-sl36wbVMbg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-mediapart",
+"nom": "Mediapart (vidéo)",
+"url": "https://www.youtube.com/@mediapart",
+"chaine_id": "UCdnaDhU-LDQrIEEmSIfq0-Q",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-asi",
+"nom": "Arrêt sur images",
+"url": "https://www.youtube.com/@Arrêtsurimages-w9h",
+"chaine_id": "UCXHWT_QoQSsdGXbqF0hAMtg",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-reveilleur",
+"nom": "Le Réveilleur",
+"url": "https://www.youtube.com/@lereveilleur",
+"chaine_id": "UC1EacOJoqsKaYxaDomTCTEQ",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-fouloscopie",
+"nom": "Fouloscopie",
+"url": "https://www.youtube.com/@Fouloscopie",
+"chaine_id": "UCLXDNUOO3EQ80VmD9nQBHPg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-datagueule",
+"nom": "DataGueule",
+"url": "https://www.youtube.com/@datagueule",
+"chaine_id": "UCm5wThREh298TkK8hCT9HuA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-rn",
+"nom": "Rassemblement national",
+"url": "https://www.youtube.com/channel/UCeWMp4Frgyv275gSnWNYoZQ",
+"chaine_id": "UCeWMp4Frgyv275gSnWNYoZQ",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-zemmour",
+"nom": "Éric Zemmour",
+"url": "https://www.youtube.com/channel/UCjTbZBXEw-gplUAnMXLYHpg",
+"chaine_id": "UCjTbZBXEw-gplUAnMXLYHpg",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-bardella",
+"nom": "Jordan Bardella",
+"url": "https://www.youtube.com/channel/UC3U0VIDgANFaXeOAtt1m5Mw",
+"chaine_id": "UC3U0VIDgANFaXeOAtt1m5Mw",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lepen",
+"nom": "Marine Le Pen",
+"url": "https://www.youtube.com/channel/UCU3z3px1_RCqYBwrs8LJVWg",
+"chaine_id": "UCU3z3px1_RCqYBwrs8LJVWg",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lr",
+"nom": "Les Républicains",
+"url": "https://www.youtube.com/channel/UC3Ma4tRFxx85oZI_XKVTPwg",
+"chaine_id": "UC3Ma4tRFxx85oZI_XKVTPwg",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-marechal",
+"nom": "Marion Maréchal",
+"url": "https://www.youtube.com/channel/UCwupzUX-SYyt3y4yx8cYdpg",
+"chaine_id": "UCwupzUX-SYyt3y4yx8cYdpg",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-philippe",
+"nom": "Édouard Philippe",
+"url": "https://www.youtube.com/channel/UCoDttl6w1T-Stuw_pvNOvLA",
+"chaine_id": "UCoDttl6w1T-Stuw_pvNOvLA",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-attal",
+"nom": "Gabriel Attal",
+"url": "https://www.youtube.com/channel/UCOcDPuYTuxoRBtfmTBXtqBA",
+"chaine_id": "UCOcDPuYTuxoRBtfmTBXtqBA",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-renaissance",
+"nom": "Renaissance",
+"url": "https://www.youtube.com/channel/UCJw8np695wqWOaKVhFjkRyg",
+"chaine_id": "UCJw8np695wqWOaKVhFjkRyg",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-retailleau",
+"nom": "Bruno Retailleau",
+"url": "https://www.youtube.com/channel/UCRkuLQabW1hsihpZuHJSbEA",
+"chaine_id": "UCRkuLQabW1hsihpZuHJSbEA",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-ruffin",
+"nom": "François Ruffin",
+"url": "https://www.youtube.com/channel/UCIQGSp79vVch0vO3Efqif_w",
+"chaine_id": "UCIQGSp79vVch0vO3Efqif_w",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-placepublique",
+"nom": "Place publique",
+"url": "https://www.youtube.com/channel/UCixe3VYdKvKavOyopBxsKCw",
+"chaine_id": "UCixe3VYdKvKavOyopBxsKCw",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-melenchon",
+"nom": "Jean-Luc Mélenchon",
+"url": "https://www.youtube.com/channel/UCKHKSD-yanY2ZwwU_4Tgf0w",
+"chaine_id": "UCKHKSD-yanY2ZwwU_4Tgf0w",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-ps",
+"nom": "Parti socialiste",
+"url": "https://www.youtube.com/channel/UCREhQcvc7n7zLWPzK--CopA",
+"chaine_id": "UCREhQcvc7n7zLWPzK--CopA",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-frontieres",
+"nom": "Frontières",
+"url": "https://www.youtube.com/channel/UCkOeYQ-MNqbLvRL_weDpuDg",
+"chaine_id": "UCkOeYQ-MNqbLvRL_weDpuDg",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-tvlibertes",
+"nom": "TV Libertés",
+"url": "https://www.youtube.com/channel/UCyamXi0qEQJghCjJbj__aWQ",
+"chaine_id": "UCyamXi0qEQJghCjJbj__aWQ",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-revperm",
+"nom": "Révolution permanente",
+"url": "https://www.youtube.com/channel/UCwLLr_Fo9dpdJ9UHq4A7PjA",
+"chaine_id": "UCwLLr_Fo9dpdJ9UHq4A7PjA",
+"onglet": "politique",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-jamel",
+"nom": "Jamel Comedy Club",
+"url": "https://www.youtube.com/@JamelComedyClub",
+"chaine_id": "UCI5jJx0Mk7IgnYz9wxvoQLw",
+"onglet": "humour",
+"poids": 2,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-konbini",
+"nom": "Konbini",
+"url": "https://www.youtube.com/@Konbini",
+"chaine_id": "UCHQda5vLxrH0Ff0I0kMq4zw",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-franceinfo",
+"nom": "franceinfo",
+"url": "https://www.youtube.com/channel/UCO6K_kkdP-lnSCiO3tPx7WA",
+"chaine_id": "UCO6K_kkdP-lnSCiO3tPx7WA",
+"onglet": "actu",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-bfmtv",
+"nom": "BFMTV",
+"url": "https://www.youtube.com/channel/UCXwDLMDV86ldKoFVc_g8P0g",
+"chaine_id": "UCXwDLMDV86ldKoFVc_g8P0g",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-tf1info",
+"nom": "TF1 Info",
+"url": "https://www.youtube.com/channel/UCsrPUA0ZSDCNZC6wyRlR7ZA",
+"chaine_id": "UCsrPUA0ZSDCNZC6wyRlR7ZA",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-euronews",
+"nom": "Euronews (FR)",
+"url": "https://www.youtube.com/channel/UCW2QcKZiU8aUGg4yxCIditg",
+"chaine_id": "UCW2QcKZiU8aUGg4yxCIditg",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lefigaro",
+"nom": "Le Figaro (vidéo)",
+"url": "https://www.youtube.com/channel/UCCDz_XYeKWd0OIyjp95dqyQ",
+"chaine_id": "UCCDz_XYeKWd0OIyjp95dqyQ",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-liberation",
+"nom": "Libération (vidéo)",
+"url": "https://www.youtube.com/channel/UC9x4Iyu-D257P0P-VDRwSzw",
+"chaine_id": "UC9x4Iyu-D257P0P-VDRwSzw",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-parisien",
+"nom": "Le Parisien (vidéo)",
+"url": "https://www.youtube.com/channel/UCfHn_8-ehdem86fEvlFg-Gw",
+"chaine_id": "UCfHn_8-ehdem86fEvlFg-Gw",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-tv5info",
+"nom": "TV5MONDE Info",
+"url": "https://www.youtube.com/channel/UCzKH70qfN_yuXq3s91fdwmg",
+"chaine_id": "UCzKH70qfN_yuXq3s91fdwmg",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lepoint",
+"nom": "Le Point (vidéo)",
+"url": "https://www.youtube.com/channel/UCQd5LYcykaFeZtjDaP3bNSA",
+"chaine_id": "UCQd5LYcykaFeZtjDaP3bNSA",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-europe1",
+"nom": "Europe 1",
+"url": "https://www.youtube.com/channel/UCIMGfEAERXjmWwQeg15BFsg",
+"chaine_id": "UCIMGfEAERXjmWwQeg15BFsg",
+"onglet": "actu",
+"poids": 1,
+"mixte": true,
+"motif": "sketch|humour|imitation|parodie|Bertrand Chameroy|Mathieu Madénian|Castello-Lopes|Manu Payet|Canteloup|revue de presque|Laurent Gerra",
+"sinon": "actu",
+"actif": true
+},
+{
+"id": "yt-cnews",
+"nom": "CNews",
+"url": "https://www.youtube.com/channel/UCXKJrYczY2_fJEZgFPGY0HQ",
+"chaine_id": "UCXKJrYczY2_fJEZgFPGY0HQ",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-huffpost",
+"nom": "Le HuffPost (vidéo)",
+"url": "https://www.youtube.com/channel/UC9GGzAhhvhJO1hL10-BcgNA",
+"chaine_id": "UC9GGzAhhvhJO1hL10-BcgNA",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lexpress",
+"nom": "L'Express (vidéo)",
+"url": "https://www.youtube.com/channel/UCp2kK3DyhpgFOdILF3BBC9A",
+"chaine_id": "UCp2kK3DyhpgFOdILF3BBC9A",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-nouvelobs",
+"nom": "Le Nouvel Obs (vidéo)",
+"url": "https://www.youtube.com/channel/UC1ObaaFz4XHVPN2T5IFsU4w",
+"chaine_id": "UC1ObaaFz4XHVPN2T5IFsU4w",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-brut",
+"nom": "Brut",
+"url": "https://www.youtube.com/channel/UCSKdvgqdnj72_SLggp7BDTg",
+"chaine_id": "UCSKdvgqdnj72_SLggp7BDTg",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-rmc",
+"nom": "RMC",
+"url": "https://www.youtube.com/channel/UCgGb7tN3tIH5_Kk05D1J_bA",
+"chaine_id": "UCgGb7tN3tIH5_Kk05D1J_bA",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-radiocanada",
+"nom": "Radio-Canada Info",
+"url": "https://www.youtube.com/channel/UClxaaAzHu1B5EoTtBYea7ig",
+"chaine_id": "UClxaaAzHu1B5EoTtBYea7ig",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-rts",
+"nom": "RTS Info",
+"url": "https://www.youtube.com/channel/UClTOqr6qe-BmwwXDrcmuEhg",
+"chaine_id": "UClTOqr6qe-BmwwXDrcmuEhg",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-gaspardg",
+"nom": "Gaspard G",
+"url": "https://www.youtube.com/channel/UCI-8QMy9n3I5Pv6mTmXoAXA",
+"chaine_id": "UCI-8QMy9n3I5Pv6mTmXoAXA",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-sudouest",
+"nom": "Sud Ouest (vidéo)",
+"url": "https://www.youtube.com/channel/UC7PX-myPpcT4YfZEWqZxGGg",
+"chaine_id": "UC7PX-myPpcT4YfZEWqZxGGg",
+"onglet": "actu",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-rtl",
+"nom": "RTL",
+"url": "https://www.youtube.com/channel/UC_ykXc7v9zZQdOG5QvJqpgg",
+"chaine_id": "UC_ykXc7v9zZQdOG5QvJqpgg",
+"onglet": "actu",
+"poids": 1,
+"mixte": true,
+"motif": "Caverivière|Grosses Têtes|Vizorek|Élodie Poux|Elodie Poux|Laurent Gerra|sketch|imitation|parodie",
+"sinon": "actu",
+"actif": true
+},
+{
+"id": "yt-publicsenat",
+"nom": "Public Sénat",
+"url": "https://www.youtube.com/channel/UCTa1bPArjpvNMgSHAb_pflA",
+"chaine_id": "UCTa1bPArjpvNMgSHAb_pflA",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lcp",
+"nom": "LCP",
+"url": "https://www.youtube.com/channel/UCHGFbA0KWBgf6gMbyUCZeCQ",
+"chaine_id": "UCHGFbA0KWBgf6gMbyUCZeCQ",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-franceculture",
+"nom": "France Culture",
+"url": "https://www.youtube.com/channel/UCd5DKToXYTKAQ6khzewww2g",
+"chaine_id": "UCd5DKToXYTKAQ6khzewww2g",
+"onglet": "analyse",
+"poids": 2,
+"mixte": true,
+"sinon": "analyse",
+"actif": true
+},
+{
+"id": "yt-ccesoir",
+"nom": "C ce soir",
+"url": "https://www.youtube.com/channel/UC1UUvhau_2V8ETvHfwkUQwg",
+"chaine_id": "UC1UUvhau_2V8ETvHfwkUQwg",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-28minutes",
+"nom": "28 minutes (ARTE)",
+"url": "https://www.youtube.com/channel/UC8EzKGkEiusTm7g0mTfkWkg",
+"chaine_id": "UC8EzKGkEiusTm7g0mTfkWkg",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-sudradio",
+"nom": "Sud Radio",
+"url": "https://www.youtube.com/channel/UCESTwDXpoMgiYBHipMdKTkQ",
+"chaine_id": "UCESTwDXpoMgiYBHipMdKTkQ",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-complement",
+"nom": "Complément d'enquête",
+"url": "https://www.youtube.com/channel/UCPplJEsqnAH_8s8qvyI3BEw",
+"chaine_id": "UCPplJEsqnAH_8s8qvyI3BEw",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-osonscauser",
+"nom": "Osons Causer",
+"url": "https://www.youtube.com/channel/UCVeMw72tepFl1Zt5fvf9QKQ",
+"chaine_id": "UCVeMw72tepFl1Zt5fvf9QKQ",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-offinvestigation",
+"nom": "Off Investigation",
+"url": "https://www.youtube.com/channel/UCEFGCs68E9Vr5te5qZuJsbg",
+"chaine_id": "UCEFGCs68E9Vr5te5qZuJsbg",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lecrayon",
+"nom": "Le Crayon",
+"url": "https://www.youtube.com/channel/UCbXWhsd805LfcbAy7xL9d-A",
+"chaine_id": "UCbXWhsd805LfcbAy7xL9d-A",
+"onglet": "analyse",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-troncheenbiais",
+"nom": "La Tronche en Biais",
+"url": "https://www.youtube.com/channel/UCq-8pBMM3I40QlrhM9ExXJQ",
+"chaine_id": "UCq-8pBMM3I40QlrhM9ExXJQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-dirtybiology",
+"nom": "DirtyBiology",
+"url": "https://www.youtube.com/channel/UCtqICqGbPSbTN09K1_7VZ3Q",
+"chaine_id": "UCtqICqGbPSbTN09K1_7VZ3Q",
+"onglet": "decouverte",
+"poids": 2,
+"actif": true
+},
+{
+"id": "yt-epenser",
+"nom": "e-penser",
+"url": "https://www.youtube.com/channel/UCcziTK2NKeWtWQ6kB5tmQ8Q",
+"chaine_id": "UCcziTK2NKeWtWQ6kB5tmQ8Q",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-balade",
+"nom": "Balade Mentale",
+"url": "https://www.youtube.com/channel/UCS_7tplUgzJG4DhA16re5Yg",
+"chaine_id": "UCS_7tplUgzJG4DhA16re5Yg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-mamytwink",
+"nom": "Mamytwink",
+"url": "https://www.youtube.com/channel/UCjxfoYq1vAEGU7KD_C3I48g",
+"chaine_id": "UCjxfoYq1vAEGU7KD_C3I48g",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-linguisticae",
+"nom": "Linguisticae",
+"url": "https://www.youtube.com/channel/UCofQxJWd4qkqc7ZgaLkZfcw",
+"chaine_id": "UCofQxJWd4qkqc7ZgaLkZfcw",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-scilabus",
+"nom": "Scilabus",
+"url": "https://www.youtube.com/channel/UCeR8BYZS7IHYjk_9Mh5JgkA",
+"chaine_id": "UCeR8BYZS7IHYjk_9Mh5JgkA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-philoxime",
+"nom": "Philoxime",
+"url": "https://www.youtube.com/channel/UCdKTlsmvczkdvGjiLinQwmw",
+"chaine_id": "UCdKTlsmvczkdvGjiLinQwmw",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-astronogeek",
+"nom": "AstronoGeek",
+"url": "https://www.youtube.com/channel/UC5X4e8ScZI2AFd_vkjSoyoQ",
+"chaine_id": "UC5X4e8ScZI2AFd_vkjSoyoQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-danstoncorps",
+"nom": "Dans Ton Corps",
+"url": "https://www.youtube.com/channel/UCOchT7ZJ4TXe3stdLW1Sfxw",
+"chaine_id": "UCOchT7ZJ4TXe3stdLW1Sfxw",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-histoirenousledira",
+"nom": "L'Histoire nous le dira",
+"url": "https://www.youtube.com/channel/UCN4TCCaX-gqBNkrUqXdgGRA",
+"chaine_id": "UCN4TCCaX-gqBNkrUqXdgGRA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-docseven",
+"nom": "Doc Seven",
+"url": "https://www.youtube.com/channel/UC5Twj1Axp_-9HLsZ5o_cEQQ",
+"chaine_id": "UC5Twj1Axp_-9HLsZ5o_cEQQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-cnrs",
+"nom": "CNRS",
+"url": "https://www.youtube.com/channel/UCRHBpvcASQs852H0t4mt1zA",
+"chaine_id": "UCRHBpvcASQs852H0t4mt1zA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-stupideco",
+"nom": "Stupid Economics",
+"url": "https://www.youtube.com/channel/UCyJDHgrsUKuWLe05GvC2lng",
+"chaine_id": "UCyJDHgrsUKuWLe05GvC2lng",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-bidouille",
+"nom": "Monsieur Bidouille",
+"url": "https://www.youtube.com/channel/UCSULDz1yaHLVQWHpm4g_GHA",
+"chaine_id": "UCSULDz1yaHLVQWHpm4g_GHA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-defendintelligence",
+"nom": "Defend Intelligence",
+"url": "https://www.youtube.com/channel/UCnEHCrot2HkySxMTmDPhZyg",
+"chaine_id": "UCnEHCrot2HkySxMTmDPhZyg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-micode",
+"nom": "Micode",
+"url": "https://www.youtube.com/channel/UCYnvxJ-PKiGXo_tYXpWAC-w",
+"chaine_id": "UCYnvxJ-PKiGXo_tYXpWAC-w",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-histoireappliquee",
+"nom": "Histoire Appliquée",
+"url": "https://www.youtube.com/channel/UCcT7B4zCzrfywO2Q19OJIzA",
+"chaine_id": "UCcT7B4zCzrfywO2Q19OJIzA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-jamy",
+"nom": "Jamy - Épicurieux",
+"url": "https://www.youtube.com/channel/UCG9G2dyRv04FDSH1FSYuLBg",
+"chaine_id": "UCG9G2dyRv04FDSH1FSYuLBg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-inahistoire",
+"nom": "INA Histoire",
+"url": "https://www.youtube.com/channel/UCFdEMYmiimq2uKmOMaBfPLg",
+"chaine_id": "UCFdEMYmiimq2uKmOMaBfPLg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-inasociete",
+"nom": "INA Société",
+"url": "https://www.youtube.com/channel/UCCTuFofVWD9uORhQqgn-d7Q",
+"chaine_id": "UCCTuFofVWD9uORhQqgn-d7Q",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-inaactu",
+"nom": "INA Actu",
+"url": "https://www.youtube.com/channel/UC4Bw8KLhbLPrcZbOAJa4p0w",
+"chaine_id": "UC4Bw8KLhbLPrcZbOAJa4p0w",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-geopolitix",
+"nom": "Mister Geopolitix",
+"url": "https://www.youtube.com/channel/UCX9lsdsTKfTi1eqoyL-RS-Q",
+"chaine_id": "UCX9lsdsTKfTi1eqoyL-RS-Q",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-biaisvert",
+"nom": "Le Biais Vert",
+"url": "https://www.youtube.com/channel/UCRFIJXn4jTCK3-67U1I3eKA",
+"chaine_id": "UCRFIJXn4jTCK3-67U1I3eKA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-arteconcert",
+"nom": "ARTE Concert",
+"url": "https://www.youtube.com/channel/UC-smeLB9AnOTeypr1YyjJ3A",
+"chaine_id": "UC-smeLB9AnOTeypr1YyjJ3A",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-bolchegeek",
+"nom": "Bolchegeek",
+"url": "https://www.youtube.com/channel/UCEfpbmshpf-G90fGLla73kA",
+"chaine_id": "UCEfpbmshpf-G90fGLla73kA",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-francemusique",
+"nom": "France Musique",
+"url": "https://www.youtube.com/channel/UCVcbRcozWvbekJ3CQQGzxKA",
+"chaine_id": "UCVcbRcozWvbekJ3CQQGzxKA",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-telerama",
+"nom": "Télérama (vidéo)",
+"url": "https://www.youtube.com/channel/UCb9EmqspwO4fHZHvJdM38HA",
+"chaine_id": "UCb9EmqspwO4fHZHvJdM38HA",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-inrocks",
+"nom": "Les Inrocks (vidéo)",
+"url": "https://www.youtube.com/channel/UCP2m0GEtx97dYpUnuhk7CIg",
+"chaine_id": "UCP2m0GEtx97dYpUnuhk7CIg",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-inaculture",
+"nom": "INA Culture",
+"url": "https://www.youtube.com/channel/UCs-e7ayRI75k-i617JkCrpA",
+"chaine_id": "UCs-e7ayRI75k-i617JkCrpA",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-tv5monde",
+"nom": "TV5MONDE",
+"url": "https://www.youtube.com/channel/UCJsZHPR1jqKu-soDmKNMBFg",
+"chaine_id": "UCJsZHPR1jqKu-soDmKNMBFg",
+"onglet": "culture",
+"poids": 1,
+"mixte": true,
+"sinon": "culture",
+"actif": true
+},
+{
+"id": "yt-canalplus",
+"nom": "CANAL+",
+"url": "https://www.youtube.com/channel/UCb4UAZwZqS4a35FrBcLlMXA",
+"chaine_id": "UCb4UAZwZqS4a35FrBcLlMXA",
+"onglet": "divertissement",
+"poids": 1,
+"mixte": true,
+"motif": "zap|zapping|Groland|sketch|parodie|Les Guignols",
+"sinon": "divertissement",
+"actif": true
+},
+{
+"id": "yt-clique",
+"nom": "Clique TV",
+"url": "https://www.youtube.com/channel/UCmHfCD8c8CmjlyWa8d4GObg",
+"chaine_id": "UCmHfCD8c8CmjlyWa8d4GObg",
+"onglet": "divertissement",
+"poids": 1,
+"mixte": true,
+"sinon": "divertissement",
+"actif": true
+},
+{
+"id": "yt-legrandjd",
+"nom": "Le Grand JD",
+"url": "https://www.youtube.com/channel/UCzjd9v6DMprAAvOBB4sxBPA",
+"chaine_id": "UCzjd9v6DMprAAvOBB4sxBPA",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-labajon",
+"nom": "LaBajon",
+"url": "https://www.youtube.com/channel/UCukbnzZSfOVmszwwHGK7tqw",
+"chaine_id": "UCukbnzZSfOVmszwwHGK7tqw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-norman",
+"nom": "Norman",
+"url": "https://www.youtube.com/channel/UCww2zZWg4Cf5xcRKG-ThmXQ",
+"chaine_id": "UCww2zZWg4Cf5xcRKG-ThmXQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-studiobagel",
+"nom": "Studio Bagel",
+"url": "https://www.youtube.com/channel/UCZ8kV8vuMdDLSerCIFfWnFQ",
+"chaine_id": "UCZ8kV8vuMdDLSerCIFfWnFQ",
+"onglet": "humour",
+"poids": 3,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-joueurdugrenier",
+"nom": "Joueur du Grenier",
+"url": "https://www.youtube.com/channel/UC_yP2DpIgs5Y1uWC0T03Chw",
+"chaine_id": "UC_yP2DpIgs5Y1uWC0T03Chw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-meurice",
+"nom": "Guillaume Meurice",
+"url": "https://www.youtube.com/channel/UCEp20q4I5XDc2GbLPF0-tPA",
+"chaine_id": "UCEp20q4I5XDc2GbLPF0-tPA",
+"onglet": "humour",
+"poids": 2,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-comedycentral",
+"nom": "Comedy Central France",
+"url": "https://www.youtube.com/channel/UCCYFTGT5TMw5gbqWfYa1kuA",
+"chaine_id": "UCCYFTGT5TMw5gbqWfYa1kuA",
+"onglet": "humour",
+"poids": 2,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-squeezie",
+"nom": "Squeezie",
+"url": "https://www.youtube.com/channel/UCWeg2Pkate69NFdBeuRFTAw",
+"chaine_id": "UCWeg2Pkate69NFdBeuRFTAw",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-mastu",
+"nom": "Mastu",
+"url": "https://www.youtube.com/channel/UCAhaFPP6v3WCfK5Tjao0B7A",
+"chaine_id": "UCAhaFPP6v3WCfK5Tjao0B7A",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-joyca",
+"nom": "Joyca",
+"url": "https://www.youtube.com/channel/UCow2IGnug1l3Xazkrc5jM_Q",
+"chaine_id": "UCow2IGnug1l3Xazkrc5jM_Q",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-natoo",
+"nom": "Natoo",
+"url": "https://www.youtube.com/channel/UCtihF1ZtlYVzoaj_bKLQZ-Q",
+"chaine_id": "UCtihF1ZtlYVzoaj_bKLQZ-Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-justriadh",
+"nom": "Just Riadh",
+"url": "https://www.youtube.com/channel/UCIFLzrXGmPv4lvfo-FrY-9w",
+"chaine_id": "UCIFLzrXGmPv4lvfo-FrY-9w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-pierrecroce",
+"nom": "Pierre Croce",
+"url": "https://www.youtube.com/channel/UCC_r3spMB5i5QKgtdNVO0OQ",
+"chaine_id": "UCC_r3spMB5i5QKgtdNVO0OQ",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-doigby",
+"nom": "Doigby",
+"url": "https://www.youtube.com/channel/UCen9TDD6K1ZVW44unAGxtOw",
+"chaine_id": "UCen9TDD6K1ZVW44unAGxtOw",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-theodort",
+"nom": "Theodort",
+"url": "https://www.youtube.com/channel/UC3TmGiSjX2Ix3qTjUnIIv4g",
+"chaine_id": "UC3TmGiSjX2Ix3qTjUnIIv4g",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-squeeziegaming",
+"nom": "Squeezie Gaming",
+"url": "https://www.youtube.com/channel/UCY-_QmcW09PHAImgVnKxU2g",
+"chaine_id": "UCY-_QmcW09PHAImgVnKxU2g",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-valouzz",
+"nom": "Valouzz",
+"url": "https://www.youtube.com/channel/UCNGq4mP3Ds5OUGjPo8IJOcw",
+"chaine_id": "UCNGq4mP3Ds5OUGjPo8IJOcw",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-studiodanielle",
+"nom": "Studio Danielle",
+"url": "https://www.youtube.com/channel/UC1iLfWw_KN-UrEDLSdd3L_A",
+"chaine_id": "UC1iLfWw_KN-UrEDLSdd3L_A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-simonpuech",
+"nom": "Simon Puech",
+"url": "https://www.youtube.com/channel/UCMQSwUNSnMOP4IRysfeg8EA",
+"chaine_id": "UCMQSwUNSnMOP4IRysfeg8EA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-seblafrite",
+"nom": "Seb la Frite",
+"url": "https://www.youtube.com/channel/UCK3inMNRNAVUleEbpDU1k2g",
+"chaine_id": "UCK3inMNRNAVUleEbpDU1k2g",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-morganvs",
+"nom": "Morgan VS",
+"url": "https://www.youtube.com/channel/UCXwummUhfF-o4o9YXiJUT8A",
+"chaine_id": "UCXwummUhfF-o4o9YXiJUT8A",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lewoop",
+"nom": "Woop",
+"url": "https://www.youtube.com/channel/UCdsopirJ8XJilmg2Jvgc6AA",
+"chaine_id": "UCdsopirJ8XJilmg2Jvgc6AA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-leshowjaunekevintran",
+"nom": "Kevin Tran (Le Show Jaune)",
+"url": "https://www.youtube.com/channel/UCYD22MFqaNqXp-ogTMosW_A",
+"chaine_id": "UCYD22MFqaNqXp-ogTMosW_A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-arnaudsoly",
+"nom": "Arnaud Soly",
+"url": "https://www.youtube.com/channel/UCrunkdoX2gzv_T3U_fOzLsg",
+"chaine_id": "UCrunkdoX2gzv_T3U_fOzLsg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-paulmirabel",
+"nom": "Paul Mirabel",
+"url": "https://www.youtube.com/channel/UCi1tByn-qeNhHF0q5SJCl2Q",
+"chaine_id": "UCi1tByn-qeNhHF0q5SJCl2Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-latelierderoxane",
+"nom": "L'atelier de Roxane",
+"url": "https://www.youtube.com/channel/UC3rxwrZSiTp6Kk2RXcyHtCA",
+"chaine_id": "UC3rxwrZSiTp6Kk2RXcyHtCA",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lorisgiuliano",
+"nom": "Loris Giuliano",
+"url": "https://www.youtube.com/channel/UCsTK8xMZKkrbTeWc8REbn8Q",
+"chaine_id": "UCsTK8xMZKkrbTeWc8REbn8Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-davidvoinson",
+"nom": "David Voinson",
+"url": "https://www.youtube.com/channel/UCqj1Upmdot_XWTp8fBYtXvA",
+"chaine_id": "UCqj1Upmdot_XWTp8fBYtXvA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-ninoarial",
+"nom": "Nino Arial",
+"url": "https://www.youtube.com/channel/UC_3PmpXhpgfBXuFHWaTrTfA",
+"chaine_id": "UC_3PmpXhpgfBXuFHWaTrTfA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-julienbing",
+"nom": "Julien Bing",
+"url": "https://www.youtube.com/channel/UC_F42oOSE2XNPNlBWHCP5Zg",
+"chaine_id": "UC_F42oOSE2XNPNlBWHCP5Zg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-redouanebougheraba",
+"nom": "Redouane Bougheraba",
+"url": "https://www.youtube.com/channel/UC-4xdm_HWFZqaoZVbJ72o0w",
+"chaine_id": "UC-4xdm_HWFZqaoZVbJ72o0w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-cyprien",
+"nom": "Cyprien",
+"url": "https://www.youtube.com/channel/UCyWqModMQlbIo8274Wh_ZsQ",
+"chaine_id": "UCyWqModMQlbIo8274Wh_ZsQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-misterv",
+"nom": "Mister V",
+"url": "https://www.youtube.com/channel/UC8Q0SLrZLiTj5s4qc9aad-w",
+"chaine_id": "UC8Q0SLrZLiTj5s4qc9aad-w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-mcflyetcarlito",
+"nom": "McFly et Carlito",
+"url": "https://www.youtube.com/channel/UCDPK_MTu3uTUFJXRVcTJcEw",
+"chaine_id": "UCDPK_MTu3uTUFJXRVcTJcEw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lamafache",
+"nom": "Lama Fâché",
+"url": "https://www.youtube.com/channel/UCH0XvUpYcxn4V0iZGnZXMnQ",
+"chaine_id": "UCH0XvUpYcxn4V0iZGnZXMnQ",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-nomanhosni",
+"nom": "Noman Hosni",
+"url": "https://www.youtube.com/channel/UCpw9Pr-8gXbv2XYw0ZcO7rw",
+"chaine_id": "UCpw9Pr-8gXbv2XYw0ZcO7rw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-kemar",
+"nom": "Kemar",
+"url": "https://www.youtube.com/channel/UChKMRHxLETrj_5JjiqExD1w",
+"chaine_id": "UChKMRHxLETrj_5JjiqExD1w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lesinconnus",
+"nom": "Les Inconnus",
+"url": "https://www.youtube.com/channel/UCXY5L6p4n3COUBqaTJY-2tQ",
+"chaine_id": "UCXY5L6p4n3COUBqaTJY-2tQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-fabienolicard",
+"nom": "Fabien Olicard",
+"url": "https://www.youtube.com/channel/UCTafEJoRl5myC8A50plIrng",
+"chaine_id": "UCTafEJoRl5myC8A50plIrng",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-kyankhojandi",
+"nom": "Kyan Khojandi",
+"url": "https://www.youtube.com/channel/UC-6TxFNjRXDwCBicVMmK5vg",
+"chaine_id": "UC-6TxFNjRXDwCBicVMmK5vg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-haroun",
+"nom": "Haroun",
+"url": "https://www.youtube.com/channel/UCKeL_a8Pu3bdt251ICPV8bA",
+"chaine_id": "UCKeL_a8Pu3bdt251ICPV8bA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-sugarsammy",
+"nom": "Sugar Sammy",
+"url": "https://www.youtube.com/channel/UCrl8Klvxlg1u9P9srfu5_EQ",
+"chaine_id": "UCrl8Klvxlg1u9P9srfu5_EQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-franjo",
+"nom": "Franjo",
+"url": "https://www.youtube.com/channel/UC53gfTiWvslLPNuoDcoxmVg",
+"chaine_id": "UC53gfTiWvslLPNuoDcoxmVg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-mariereno",
+"nom": "Marie Reno",
+"url": "https://www.youtube.com/channel/UCkbGwu2SKMZZOeodk3S26UA",
+"chaine_id": "UCkbGwu2SKMZZOeodk3S26UA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-fary",
+"nom": "Fary",
+"url": "https://www.youtube.com/channel/UCES7NniAl9dlDbLy5mtuRaA",
+"chaine_id": "UCES7NniAl9dlDbLy5mtuRaA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-kody",
+"nom": "Le Grand Cactus (RTBF)",
+"url": "https://www.youtube.com/channel/UCGL5paLvoHr-WRi0cc8opAA",
+"chaine_id": "UCGL5paLvoHr-WRi0cc8opAA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-tetesaclaques",
+"nom": "Têtes à claques",
+"url": "https://www.youtube.com/channel/UCAQhhizvcHJccDd2HaKzyqA",
+"chaine_id": "UCAQhhizvcHJccDd2HaKzyqA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-justepourrire",
+"nom": "Juste pour rire",
+"url": "https://www.youtube.com/channel/UC6iniX9nuuuwacoo_um3H_g",
+"chaine_id": "UC6iniX9nuuuwacoo_um3H_g",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-thomasgauthier",
+"nom": "Thomas Gauthier",
+"url": "https://www.youtube.com/channel/UCx0oS6YmHSbOMnN3vQvTR0Q",
+"chaine_id": "UCx0oS6YmHSbOMnN3vQvTR0Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-francoisperusse",
+"nom": "François Pérusse",
+"url": "https://www.youtube.com/channel/UC0vWI_4ksC3BbbM7Zn2P7_w",
+"chaine_id": "UC0vWI_4ksC3BbbM7Zn2P7_w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-celinedept",
+"nom": "Céline Dept",
+"url": "https://www.youtube.com/channel/UC1a2ZCw7tugRZYRMnecNj3A",
+"chaine_id": "UC1a2ZCw7tugRZYRMnecNj3A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lacuisinedejeanphilippe",
+"nom": "La Cuisine de Jean-Philippe",
+"url": "https://www.youtube.com/channel/UCQMScW9nY0IVW3yIdt8kYtg",
+"chaine_id": "UCQMScW9nY0IVW3yIdt8kYtg",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-yvidero",
+"nom": "Yvidero",
+"url": "https://www.youtube.com/channel/UCQ--bsq2rf6nBmafol7PiBg",
+"chaine_id": "UCQ--bsq2rf6nBmafol7PiBg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-mikewardsousecoute",
+"nom": "Mike Ward – Sous Écoute",
+"url": "https://www.youtube.com/channel/UCKhVag9OGIOJu_x430Dmedw",
+"chaine_id": "UCKhVag9OGIOJu_x430Dmedw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-davidthibault",
+"nom": "David Thibault",
+"url": "https://www.youtube.com/channel/UC6E3HHUi1t_Y5AG_KKpvoww",
+"chaine_id": "UC6E3HHUi1t_Y5AG_KKpvoww",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-jemcee",
+"nom": "Jemcee",
+"url": "https://www.youtube.com/channel/UC6XfPUJyC1JA4wfISK9ZulA",
+"chaine_id": "UC6XfPUJyC1JA4wfISK9ZulA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-martinmatte",
+"nom": "Martin Matte",
+"url": "https://www.youtube.com/channel/UCPQmKUtoYICYbGfWcQM0TXA",
+"chaine_id": "UCPQmKUtoYICYbGfWcQM0TXA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-cavous",
+"nom": "C à vous",
+"url": "https://www.youtube.com/channel/UCejTWYquMXD_MFHRZiqo_Aw",
+"chaine_id": "UCejTWYquMXD_MFHRZiqo_Aw",
+"onglet": "analyse",
+"poids": 1,
+"mixte": true,
+"motif": "Chameroy|ABC|Antoine de Caunes|sketch|parodie",
+"sinon": "analyse",
+"actif": true
+},
+{
+"id": "yt-quelleepoque",
+"nom": "Quelle époque !",
+"url": "https://www.youtube.com/channel/UC1XC_c6DZbYef3Nx6_Dkr6w",
+"chaine_id": "UC1XC_c6DZbYef3Nx6_Dkr6w",
+"onglet": "analyse",
+"poids": 1,
+"mixte": true,
+"motif": "Saint Sernin|Paul de Saint Sernin|sketch|parodie",
+"sinon": "analyse",
+"actif": true
+},
+{
+"id": "yt-inahumour",
+"nom": "INA Humour",
+"url": "https://www.youtube.com/channel/UCsHd-E4Q3hCgp_fvOf-tBiw",
+"chaine_id": "UCsHd-E4Q3hCgp_fvOf-tBiw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-walydia",
+"nom": "Waly Dia",
+"url": "https://www.youtube.com/channel/UCPDsSV-b0shNlM_ZtnKgrBA",
+"chaine_id": "UCPDsSV-b0shNlM_ZtnKgrBA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-tanguypastureau",
+"nom": "Tanguy Pastureau",
+"url": "https://www.youtube.com/channel/UCx7RoxLf1DaKZpwWXS2uf0w",
+"chaine_id": "UCx7RoxLf1DaKZpwWXS2uf0w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-norahamzawi",
+"nom": "Nora Hamzawi",
+"url": "https://www.youtube.com/channel/UCbDmd4DMDejXLGe9q6ZY_jg",
+"chaine_id": "UCbDmd4DMDejXLGe9q6ZY_jg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-rosabursztein",
+"nom": "Rosa Bursztein",
+"url": "https://www.youtube.com/channel/UCfiEeRJa-jbg_8SVqxtMifg",
+"chaine_id": "UCfiEeRJa-jbg_8SVqxtMifg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-djamilleshlag",
+"nom": "Djamil le Shlag",
+"url": "https://www.youtube.com/channel/UCJEjYxKFgRYAxw8bWCGdzfQ",
+"chaine_id": "UCJEjYxKFgRYAxw8bWCGdzfQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-fannyruwet",
+"nom": "Fanny Ruwet",
+"url": "https://www.youtube.com/channel/UCNRNOG0J3ArcCMIo-6w8Ndw",
+"chaine_id": "UCNRNOG0J3ArcCMIo-6w8Ndw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lolywood",
+"nom": "Lolywood",
+"url": "https://www.youtube.com/channel/UCSse-lNI1DQ4w-8lh7vfPUw",
+"chaine_id": "UCSse-lNI1DQ4w-8lh7vfPUw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lebizarreum",
+"nom": "Le Bizarreum",
+"url": "https://www.youtube.com/channel/UCj3ZOi3rawL27HS2Qs3epiA",
+"chaine_id": "UCj3ZOi3rawL27HS2Qs3epiA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-ludovik",
+"nom": "Ludovik",
+"url": "https://www.youtube.com/channel/UCc-4HSPd7yMcK1Y5XkVVwGQ",
+"chaine_id": "UCc-4HSPd7yMcK1Y5XkVVwGQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-thomasdeseur",
+"nom": "Thomas Deseur",
+"url": "https://www.youtube.com/channel/UC1laADwVF4U43BONuLFUnXw",
+"chaine_id": "UC1laADwVF4U43BONuLFUnXw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-jeremynadeau",
+"nom": "Jérémy Nadeau",
+"url": "https://www.youtube.com/channel/UC6irqcoPrFw8GPXVYKLsMtw",
+"chaine_id": "UC6irqcoPrFw8GPXVYKLsMtw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-jeremynadeausecondechain",
+"nom": "Jérémy Nadeau (seconde chaîne)",
+"url": "https://www.youtube.com/channel/UCQLZkqvxRYqwJAlsl-ybsww",
+"chaine_id": "UCQLZkqvxRYqwJAlsl-ybsww",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-rosalievaillancourt",
+"nom": "Rosalie Vaillancourt",
+"url": "https://www.youtube.com/channel/UCKa57aOo6ger9DQ1NgOm9dQ",
+"chaine_id": "UCKa57aOo6ger9DQ1NgOm9dQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lemondealenvers",
+"nom": "Le Monde à L'Envers",
+"url": "https://www.youtube.com/channel/UCulscYArLmBcMy9Dn45JOIg",
+"chaine_id": "UCulscYArLmBcMy9Dn45JOIg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-inesreg",
+"nom": "Inès Reg",
+"url": "https://www.youtube.com/channel/UCsrzNKCK1YuYQzLFt76Mu7A",
+"chaine_id": "UCsrzNKCK1YuYQzLFt76Mu7A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lebebou",
+"nom": "Le Bebou",
+"url": "https://www.youtube.com/channel/UCGYkeZsyZd67tmhJ1T5AADQ",
+"chaine_id": "UCGYkeZsyZd67tmhJ1T5AADQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-sebmellia",
+"nom": "Seb Mellia",
+"url": "https://www.youtube.com/channel/UCFmN0sav0nBd0gsaPwrCFtA",
+"chaine_id": "UCFmN0sav0nBd0gsaPwrCFtA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-alexandrekominek",
+"nom": "Alexandre Kominek",
+"url": "https://www.youtube.com/channel/UCjRKLT45Mkn48NV_0AQqBXQ",
+"chaine_id": "UCjRKLT45Mkn48NV_0AQqBXQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-haroldbarbe",
+"nom": "Harold Barbé",
+"url": "https://www.youtube.com/channel/UCjN8woAOSDA5erfHqrjqHUA",
+"chaine_id": "UCjN8woAOSDA5erfHqrjqHUA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-palmashow",
+"nom": "Palmashow",
+"url": "https://www.youtube.com/channel/UCoZoRz4-y6r87ptDp4Jk74g",
+"chaine_id": "UCoZoRz4-y6r87ptDp4Jk74g",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-goldenmoustachem6",
+"nom": "Golden Moustache (M6)",
+"url": "https://www.youtube.com/channel/UCJruTcTs7Gn2Tk7YC-ENeHQ",
+"chaine_id": "UCJruTcTs7Gn2Tk7YC-ENeHQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-wilaime",
+"nom": "Wil Aime",
+"url": "https://www.youtube.com/channel/UC_tFrxyQIsygGVx25P8DkMQ",
+"chaine_id": "UC_tFrxyQIsygGVx25P8DkMQ",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-vilebrequin",
+"nom": "Vilebrequin",
+"url": "https://www.youtube.com/channel/UCC9mlCpyisiIpp9YA9xV-QA",
+"chaine_id": "UCC9mlCpyisiIpp9YA9xV-QA",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lauralaune",
+"nom": "Laura Laune",
+"url": "https://www.youtube.com/channel/UCb32WqbvB979c0rDifGZVvA",
+"chaine_id": "UCb32WqbvB979c0rDifGZVvA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lesdeguns",
+"nom": "Les Déguns",
+"url": "https://www.youtube.com/channel/UCnoyAsavxtYmqoI2Pkhnphg",
+"chaine_id": "UCnoyAsavxtYmqoI2Pkhnphg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-booder",
+"nom": "Booder",
+"url": "https://www.youtube.com/channel/UCtp7at_1rzWUPOqElyJ0XRQ",
+"chaine_id": "UCtp7at_1rzWUPOqElyJ0XRQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-guillaumebats",
+"nom": "Guillaume Bats",
+"url": "https://www.youtube.com/channel/UCoCkd1GZB2kUafNsk0fvV4Q",
+"chaine_id": "UCoCkd1GZB2kUafNsk0fvV4Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-thomasvdb",
+"nom": "Thomas VDB",
+"url": "https://www.youtube.com/channel/UCTNW-O9u2JtkDVTvWF3b4ng",
+"chaine_id": "UCTNW-O9u2JtkDVTvWF3b4ng",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-yacinebelhousse",
+"nom": "Yacine Belhousse",
+"url": "https://www.youtube.com/channel/UCmHKwqXCOpw_XAHNs4vAx6w",
+"chaine_id": "UCmHKwqXCOpw_XAHNs4vAx6w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-geremycredeville",
+"nom": "Gérémy Crédeville",
+"url": "https://www.youtube.com/channel/UC6DpPiu-fjFc2T1zPfYszDg",
+"chaine_id": "UC6DpPiu-fjFc2T1zPfYszDg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-adelfugazi",
+"nom": "Adel Fugazi",
+"url": "https://www.youtube.com/channel/UCjVRltp8y_cUBfLmHSB-htw",
+"chaine_id": "UCjVRltp8y_cUBfLmHSB-htw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-rachidbadouri",
+"nom": "Rachid Badouri",
+"url": "https://www.youtube.com/channel/UC9FGuM_Yezkm_lw9mJFkejA",
+"chaine_id": "UC9FGuM_Yezkm_lw9mJFkejA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-adibalkhalidey",
+"nom": "Adib Alkhalidey",
+"url": "https://www.youtube.com/channel/UCyye6SA5OCukfqECTsYwX4Q",
+"chaine_id": "UCyye6SA5OCukfqECTsYwX4Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-julienlacroix",
+"nom": "Julien Lacroix",
+"url": "https://www.youtube.com/channel/UCH3pTAZZ2uu0SqTauqlEPuQ",
+"chaine_id": "UCH3pTAZZ2uu0SqTauqlEPuQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-ceciledjunga",
+"nom": "Cécile Djunga",
+"url": "https://www.youtube.com/channel/UCwUzNNm6eAmgjjXfoeuWPfw",
+"chaine_id": "UCwUzNNm6eAmgjjXfoeuWPfw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-mehdibousaidan",
+"nom": "Mehdi Bousaidan",
+"url": "https://www.youtube.com/channel/UCrnsxfN8Z4QYYBUtCd9Q7tQ",
+"chaine_id": "UCrnsxfN8Z4QYYBUtCd9Q7tQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-yannickdemartino",
+"nom": "Yannick De Martino",
+"url": "https://www.youtube.com/channel/UCdrOU_yWrH9UoKdigWRhXlA",
+"chaine_id": "UCdrOU_yWrH9UoKdigWRhXlA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-boucardiouf",
+"nom": "Boucar Diouf",
+"url": "https://www.youtube.com/channel/UCdDdZ6qMAxVSoDnoG_NOpsA",
+"chaine_id": "UCdDdZ6qMAxVSoDnoG_NOpsA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-sambreton",
+"nom": "Sam Breton",
+"url": "https://www.youtube.com/channel/UC3GaRbIP0O5_BrvcXUYtwuA",
+"chaine_id": "UC3GaRbIP0O5_BrvcXUYtwuA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-freddytsimba",
+"nom": "Freddy Tsimba",
+"url": "https://www.youtube.com/channel/UCrJXU3t1R-EBr2ESVAI96-w",
+"chaine_id": "UCrJXU3t1R-EBr2ESVAI96-w",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-elodiepoux",
+"nom": "Elodie Poux",
+"url": "https://www.youtube.com/channel/UCGMWT3CM6uMuuRSOIYITeLw",
+"chaine_id": "UCGMWT3CM6uMuuRSOIYITeLw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-sophiaaram",
+"nom": "Sophia Aram",
+"url": "https://www.youtube.com/channel/UC2ApicFIBkhsRAuUzEnfiRA",
+"chaine_id": "UC2ApicFIBkhsRAuUzEnfiRA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-constance",
+"nom": "Constance",
+"url": "https://www.youtube.com/channel/UCkt_884dE3il5I-M06FurAw",
+"chaine_id": "UCkt_884dE3il5I-M06FurAw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-benjamintranie",
+"nom": "Benjamin Tranié",
+"url": "https://www.youtube.com/channel/UCHuVA3VartthDrmZ7mjPsUA",
+"chaine_id": "UCHuVA3VartthDrmZ7mjPsUA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-nicoleferroni",
+"nom": "Nicole Ferroni",
+"url": "https://www.youtube.com/channel/UClhlWlO3fBbLuYo8DZ-4EDw",
+"chaine_id": "UClhlWlO3fBbLuYo8DZ-4EDw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-aymericlompret",
+"nom": "Aymeric Lompret",
+"url": "https://www.youtube.com/channel/UCTyuRGUyV3JuLy7mnONqwdg",
+"chaine_id": "UCTyuRGUyV3JuLy7mnONqwdg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-guihome",
+"nom": "GuiHome",
+"url": "https://www.youtube.com/channel/UCFNOftdL_3Gb0XJLnGRaY4A",
+"chaine_id": "UCFNOftdL_3Gb0XJLnGRaY4A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-peppeetciccio",
+"nom": "Peppe et Ciccio",
+"url": "https://www.youtube.com/channel/UCjw6UfOTw7Yza7eGaWdre9A",
+"chaine_id": "UCjw6UfOTw7Yza7eGaWdre9A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-natootwo",
+"nom": "Natoo Two",
+"url": "https://www.youtube.com/channel/UCgyF_Dcv-q87s-1szIQ6U5Q",
+"chaine_id": "UCgyF_Dcv-q87s-1szIQ6U5Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-ludovyk",
+"nom": "LudovYK",
+"url": "https://www.youtube.com/channel/UCOXG5STgecPkliBPbQw8CzA",
+"chaine_id": "UCOXG5STgecPkliBPbQw8CzA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-highnomannomanhosni",
+"nom": "HIGH NOMAN (Noman Hosni)",
+"url": "https://www.youtube.com/channel/UCrdFGYWztnVc6OyRSlMmyTg",
+"chaine_id": "UCrdFGYWztnVc6OyRSlMmyTg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-lewoopofficiel",
+"nom": "Le Woop (officiel)",
+"url": "https://www.youtube.com/channel/UCm3C3OSgcyzaTBXrNRupB3Q",
+"chaine_id": "UCm3C3OSgcyzaTBXrNRupB3Q",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-inoxtag30",
+"nom": "Inoxtag 3.0",
+"url": "https://www.youtube.com/channel/UCHqcB-ZN9GcPH1om__T6ouA",
+"chaine_id": "UCHqcB-ZN9GcPH1om__T6ouA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-larelevemontreuxcomedy",
+"nom": "La Relève Montreux Comedy",
+"url": "https://www.youtube.com/channel/UCamTTlGH4IHd1xveSre1p8g",
+"chaine_id": "UCamTTlGH4IHd1xveSre1p8g",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-gaboomfilmsbravolesgars",
+"nom": "Gaboom Films (Bravo les Gars)",
+"url": "https://www.youtube.com/channel/UC8Boqzo6zcCza64_kOmr6yg",
+"chaine_id": "UC8Boqzo6zcCza64_kOmr6yg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-comediha",
+"nom": "ComediHa!",
+"url": "https://www.youtube.com/channel/UCMwotCqCa0qxV6dOLnFMHpQ",
+"chaine_id": "UCMwotCqCa0qxV6dOLnFMHpQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-nathalienicole",
+"nom": "Nathalie Nicole",
+"url": "https://www.youtube.com/channel/UCm6xk6yw6gDhbANblPzOHDw",
+"chaine_id": "UCm6xk6yw6gDhbANblPzOHDw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-melanieghanime",
+"nom": "Mélanie Ghanimé",
+"url": "https://www.youtube.com/channel/UCSg1a44TeDyb8x_oMf9pNhg",
+"chaine_id": "UCSg1a44TeDyb8x_oMf9pNhg",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-rirechansons",
+"nom": "Rire & Chansons",
+"url": "https://www.youtube.com/channel/UCuLDz6cQzks_liSg0YqG_LQ",
+"chaine_id": "UCuLDz6cQzks_liSg0YqG_LQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+}
+]

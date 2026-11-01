@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#14161a">
+<title>YO1tv · test du lecteur</title>
+<style>
+/* Étape 0 de YO1tv : vérifier que le lecteur YouTube intégré fonctionne sur GitHub Pages,
+   dans Brave sur tablette Android en portrait (pub, superposition, écran éteint, enchaînement).
+   Données : data/catalogue-exemple.json (catalogue de La Vigie du 1er novembre 2026).
+   Adresse alternative : #v=ID1,ID2,…&t=Titre (compatible avec l'ancien lecteur de la Vigie). */
+:root { --fond: #F3EFE6; --papier: #FBF8F2; --encre: #1F2420; --gris: #5D635C; --trait: #D9D2C3; --accent: #1E3A78 }
+@media (prefers-color-scheme: dark) { :root { --fond: #14161a; --papier: #1d2026; --encre: #E6E4DC; --gris: #A3A69C; --trait: #343842; --accent: #9DB8F0; color-scheme: dark } }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--fond); color: var(--encre); font: 16px/1.45 system-ui, sans-serif }
+header { padding: 10px 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--trait); background: var(--papier) }
+header b { font: 700 22px system-ui } header b span { color: var(--accent) }
+main { max-width: 1100px; margin: 0 auto; padding: 12px 16px 40px }
+.cadre { position: sticky; top: 0; z-index: 2; background: var(--fond); padding-bottom: 6px }
+.video { position: relative; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden }
+.video > div, .video iframe { position: absolute; inset: 0; width: 100%; height: 100% }
+h1 { font-size: 18px; margin: 8px 0 2px } .muet { color: var(--gris); font-size: 14px }
+.ctrl { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 }
+.ctrl button, .ctrl a { border: 1px solid var(--trait); background: var(--papier); color: inherit; border-radius: 999px; padding: 9px 15px; font: 600 15px system-ui; text-decoration: none; cursor: pointer }
+ol { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 6px }
+li button { width: 100%; display: grid; grid-template-columns: 112px 1fr; gap: 10px; align-items: center; text-align: left; border: 1px solid var(--trait); background: var(--papier); color: inherit; border-radius: 10px; padding: 6px; font: inherit; cursor: pointer }
+li button[aria-current="true"] { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent) }
+li img { width: 112px; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; background: #8883 }
+li small { display: block; color: var(--gris) }
+details { margin-top: 14px } pre { font: 12px/1.45 ui-monospace, monospace; white-space: pre-wrap; max-height: 300px; overflow: auto; padding: 8px; border-radius: 8px; background: #8881 }
+</style>
+</head>
+<body>
+<header><b>YO1<span>tv</span></b><span class="muet" id="etat">test du lecteur</span></header>
+<main>
+  <div class="cadre">
+    <div class="video"><div id="lecteur"></div></div>
+    <h1 id="titre">Chargement…</h1><div class="muet" id="chaine"></div>
+    <div class="ctrl">
+      <button id="prec" aria-label="Précédente">⏮</button><button id="pause" aria-label="Lecture ou pause">⏯</button><button id="suiv" aria-label="Suivante">⏭</button>
+      <button id="direct">📡 Direct simulé</button><a id="yt" target="_blank" rel="noopener">Ouvrir sur YouTube</a>
+    </div>
+  </div>
+  <ol id="file"></ol>
+  <details open><summary>Journal technique (à copier pour Claude)</summary><pre id="journal"></pre></details>
+</main>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const sec = d => String(d || "").split(":").reduce((s, x) => s * 60 + (+x || 0), 0);
+const journal = [];
+function log(m) { journal.push(new Date().toLocaleTimeString("fr-FR") + "  " + m); $("journal").textContent = journal.join("\n"); }
+let file = [], i = 0, lecteur = null, vuNote = new Set();
+
+// File de test : 2 vidéos par catégorie + 2 formats courts, ou les identifiants passés dans l'adresse
+async function chargerFile() {
+  const p = new URLSearchParams(location.hash.slice(1)), ids = (p.get("v") || "").split(",").filter(x => /^[\w-]{11}$/.test(x));
+  if (ids.length) return ids.slice(0, 200).map(id => ({ i: id, t: "Vidéo " + id, c: "" }));
+  const cat = await (await fetch("data/catalogue-exemple.json")).json(), out = [], vus = new Set();
+  for (const o of ["humour", "actu", "decouverte", "culture", "divertissement", "analyse"])
+    for (const x of cat.items.filter(x => x.o === o && !x.co).sort((a, b) => (b.p || 1) - (a.p || 1)).slice(0, 2)) if (!vus.has(x.i)) { vus.add(x.i); out.push(x); }
+  const courts = cat.items.filter(x => x.co).slice(0, 2); out.splice(1, 0, courts[0]); out.splice(6, 0, courts[1]);
+  return out.filter(Boolean);
+}
+function rendreFile() {
+  $("file").innerHTML = file.map((x, k) => `<li><button data-k="${k}" aria-current="${k === i}"><img src="https://i.ytimg.com/vi/${x.i}/mqdefault.jpg" alt="" loading="lazy"><span>${esc(x.t)}<small>${esc(x.c)}${x.co ? " · court" : x.du ? " · " + esc(x.du) : ""}</small></span></button></li>`).join("");
+}
+function tete() {
+  const x = file[i]; if (!x) return;
+  $("titre").textContent = x.t; $("chaine").textContent = x.c || ""; $("yt").href = "https://www.youtube.com/watch?v=" + x.i;
+  document.querySelectorAll("#file button").forEach(b => b.setAttribute("aria-current", String(+b.dataset.k === i)));
+}
+function jouer(k, debut = 0) {
+  i = (k + file.length) % file.length; const x = file[i];
+  lecteur?.loadVideoById({ videoId: x.i, startSeconds: debut | 0 });
+  log(`▶ ${i + 1}/${file.length} « ${x.t.slice(0, 60)} »${debut ? ` à ${Math.floor(debut / 60)} min ${debut % 60 | 0} s` : ""}${x.co ? " (court)" : ""}`);
+  tete();
+}
+const ETATS = { "-1": "non démarrée", 0: "terminée", 1: "lecture", 2: "pause", 3: "chargement", 5: "en file" };
+window.onYouTubeIframeAPIReady = () => {
+  log("✓ API IFrame de YouTube chargée.");
+  lecteur = new YT.Player("lecteur", {
+    videoId: file[0]?.i, playerVars: { playsinline: 1, rel: 0, origin: location.origin },
+    events: {
+      onReady: () => { log("✓ Lecteur prêt : le pilotage fonctionne (enchaînement, boutons)."); $("etat").textContent = "lecteur piloté ✓"; },
+      onStateChange: e => { log("état : " + (ETATS[e.data] ?? e.data)); if (e.data === 0) jouer(i + 1); },
+      onError: e => { log(`✗ Erreur ${e.data}${[101, 150].includes(e.data) ? " (intégration interdite par la chaîne)" : e.data === 153 ? " (configuration : référent manquant)" : ""} → suivante.`); setTimeout(() => jouer(i + 1), 1200); }
+    }
+  });
+  // « vue » à 80 % : préfigure l'historique de YO1tv
+  setInterval(() => {
+    if (!lecteur?.getDuration) return; const d = lecteur.getDuration(), t = lecteur.getCurrentTime(), x = file[i];
+    if (d > 0 && t / d > 0.8 && x && !vuNote.has(x.i)) { vuNote.add(x.i); log(`✓ vue à 80 % : ${x.i}`); }
+  }, 5000);
+};
+$("file").onclick = e => { const b = e.target.closest("button[data-k]"); if (b) jouer(+b.dataset.k); };
+$("prec").onclick = () => jouer(i - 1);
+$("suiv").onclick = () => jouer(i + 1);
+$("pause").onclick = () => lecteur?.getPlayerState?.() === 1 ? lecteur.pauseVideo() : lecteur?.playVideo();
+$("direct").onclick = () => {
+  const d = file.map(x => x.co ? 45 : sec(x.du) || 300), tot = d.reduce((a, b) => a + b, 0);
+  let r = Math.floor(Date.now() / 1000) % tot, k = 0; while (r >= d[k]) { r -= d[k]; k++; }
+  log(`📡 Direct simulé : grille de ${Math.round(tot / 60)} min en boucle, calée sur l'horloge.`); jouer(k, r);
+};
+document.addEventListener("visibilitychange", () => log("page " + (document.hidden ? "masquée (écran éteint ou autre appli)" : "de nouveau visible") + " · état lecteur : " + (ETATS[lecteur?.getPlayerState?.()] ?? "?")));
+(async () => {
+  log(`Origine : ${location.origin} · ${navigator.userAgent.match(/Android[^;)]*/)?.[0] || navigator.platform}`);
+  try { file = await chargerFile(); } catch (e) { log("✗ Catalogue illisible : " + e.message); return; }
+  log(`File de ${file.length} vidéos.`); rendreFile(); tete();
+  const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.onerror = () => log("✗ Script de l'API YouTube bloqué."); document.head.append(s);
+})();
+</script>
+</body>
+</html>

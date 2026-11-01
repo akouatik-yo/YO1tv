@@ -1,0 +1,86 @@
+[
+ {
+  "id": "live-lci",
+  "nom": "LCI en direct",
+  "url": "https://www.tf1info.fr/direct/",
+  "poids": 3
+ },
+ {
+  "id": "live-bfm",
+  "nom": "BFMTV en direct",
+  "url": "https://www.bfmtv.com/en-direct/",
+  "poids": 2
+ },
+ {
+  "id": "live-franceinfo",
+  "nom": "franceinfo TV en direct",
+  "url": "https://www.youtube.com/channel/UCO6K_kkdP-lnSCiO3tPx7WA/live",
+  "yt_chaine": "UCO6K_kkdP-lnSCiO3tPx7WA",
+  "poids": 3
+ },
+ {
+  "id": "live-cnews",
+  "nom": "CNews en direct",
+  "url": "https://www.cnews.fr/le-direct",
+  "poids": 1
+ },
+ {
+  "id": "live-france24",
+  "nom": "France 24 en direct",
+  "url": "https://www.youtube.com/channel/UCCCPCZNChQdGa9EkATeye4g/live",
+  "yt_chaine": "UCCCPCZNChQdGa9EkATeye4g",
+  "poids": 3
+ },
+ {
+  "id": "live-euronews",
+  "nom": "Euronews en direct",
+  "url": "https://www.youtube.com/channel/UCW2QcKZiU8aUGg4yxCIditg/live",
+  "yt_chaine": "UCW2QcKZiU8aUGg4yxCIditg",
+  "poids": 1
+ },
+ {
+  "id": "live-lcp",
+  "nom": "LCP Assemblée nationale",
+  "url": "https://lcp.fr/direct-lcp-5434",
+  "poids": 1
+ },
+ {
+  "id": "live-publicsenat",
+  "nom": "Public Sénat",
+  "url": "https://www.publicsenat.fr/direct",
+  "poids": 1
+ },
+ {
+  "id": "live-arte",
+  "nom": "ARTE en direct",
+  "url": "https://www.arte.tv/fr/direct/",
+  "poids": 1
+ },
+ {
+  "id": "live-icip",
+  "nom": "ici Périgord (radio)",
+  "url": "https://www.francebleu.fr/perigord",
+  "poids": 1
+ },
+ {
+  "id": "live-africanews",
+  "nom": "africanews en français (direct)",
+  "url": "https://www.youtube.com/channel/UC25EuGAePOPvPrUA5cmu3dQ/live",
+  "yt_chaine": "UC25EuGAePOPvPrUA5cmu3dQ",
+  "poids": 2
+ },
+ {
+  "id": "live-i24fr",
+  "nom": "i24NEWS français (direct)",
+  "url": "https://www.youtube.com/channel/UCgPYsPyGhhQJQ9zOUQDWDMA/live",
+  "yt_chaine": "UCgPYsPyGhhQJQ9zOUQDWDMA",
+  "poids": 2
+ },
+ {
+  "id": "live-tv5monde",
+  "nom": "TV5MONDE (direct)",
+  "url": "https://www.youtube.com/channel/UCJsZHPR1jqKu-soDmKNMBFg/live",
+  "yt_chaine": "UCJsZHPR1jqKu-soDmKNMBFg",
+  "poids": 2
+ }
+]

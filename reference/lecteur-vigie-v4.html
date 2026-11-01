@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Vigie · Lecteur</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<style>
+/* Lecteur vidéo de La Vigie : page statique hébergée hors de claude.ai (les artefacts interdisent les lecteurs intégrés).
+   Adresses : #v=ID1,ID2,…&t=Titre de la liste   ou   #live=UCxxxx (direct permanent d'une chaîne YouTube). */
+:root { --fond: #F3EFE6; --papier: #FBF8F2; --encre: #1F2420; --gris: #5D635C; --trait: #D9D2C3; --accent: #1E3A78 }
+@media (prefers-color-scheme: dark) { :root { --fond: #1B1D1A; --papier: #232622; --encre: #E6E4DC; --gris: #A3A69C; --trait: #3A3E37; --accent: #9DB8F0; color-scheme: dark } }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--fond); color: var(--encre); font: 15px/1.45 "Helvetica Neue", Arial, sans-serif }
+header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px max(16px, env(safe-area-inset-left)); border-bottom: 1px solid var(--trait); background: var(--papier) }
+header b { font: italic 600 22px Georgia, serif } header b span { color: var(--accent) }
+main { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; padding: 16px max(16px, env(safe-area-inset-left)); max-width: 1500px; margin: 0 auto }
+@media (max-width: 900px) { main { grid-template-columns: 1fr } }
+.cadre-video { position: relative; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden }
+.cadre-video > div, .cadre-video iframe { position: absolute; inset: 0; width: 100%; height: 100% }
+h1 { font: 600 19px/1.3 Georgia, serif; margin: 12px 0 4px }
+.muet { color: var(--gris) }
+ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 80vh; overflow-y: auto }
+li button { width: 100%; text-align: left; border: 1px solid var(--trait); background: var(--papier); border-radius: 8px; padding: 10px 12px; cursor: pointer; font: inherit; color: inherit }
+li button[aria-current="true"] { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent) }
+a { color: var(--accent) }
+.commandes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px }
+.commandes button, .commandes a { border: 1px solid var(--trait); background: var(--papier); border-radius: 999px; padding: 8px 14px; cursor: pointer; font: 600 13px inherit; color: inherit; text-decoration: none }
+</style>
+</head>
+<body>
+<header><b>La <span>Vigie</span> · lecteur</b><span class="muet" id="titreListe"></span></header>
+<main>
+  <div>
+    <div class="cadre-video"><div id="lecteur"></div></div>
+    <h1 id="titreVideo">Chargement…</h1>
+    <div class="commandes"><button id="prec">← Précédente</button><button id="suiv">Suivante →</button><a id="surYoutube" target="_blank" rel="noopener">Ouvrir sur YouTube</a></div>
+    <p class="muet" id="note"></p>
+  </div>
+  <ol id="liste" aria-label="Liste de lecture"></ol>
+</main>
+<script>
+"use strict";
+const p = new URLSearchParams(location.hash.slice(1));
+const ids = (p.get("v") || "").split(",").filter(id => /^[\w-]{11}$/.test(id)).slice(0, 50);
+const direct = /^UC[\w-]{22}$/.test(p.get("live") || "") ? p.get("live") : null;
+document.getElementById("titreListe").textContent = p.get("t") || (direct ? "Direct" : ids.length + " vidéos");
+let i = 0, lecteur = null;
+const titres = {};
+async function titre(id) {
+  if (titres[id]) return titres[id];
+  try { const r = await fetch("https://www.youtube.com/oembed?format=json&url=" + encodeURIComponent("https://www.youtube.com/watch?v=" + id)); const j = await r.json(); return titres[id] = j.title + " · " + j.author_name; }
+  catch { return titres[id] = "Vidéo " + id; }
+}
+function liste() {
+  const ol = document.getElementById("liste"); ol.innerHTML = "";
+  ids.forEach((id, k) => { const li = document.createElement("li"), b = document.createElement("button"); b.textContent = titres[id] || "Vidéo " + (k + 1); b.setAttribute("aria-current", String(k === i)); b.onclick = () => jouer(k); li.append(b); ol.append(li); });
+}
+async function jouer(k) {
+  i = Math.max(0, Math.min(ids.length - 1, k));
+  lecteur?.loadVideoById(ids[i]);
+  document.getElementById("titreVideo").textContent = await titre(ids[i]);
+  document.getElementById("surYoutube").href = "https://www.youtube.com/watch?v=" + ids[i];
+  liste();
+}
+window.onYouTubeIframeAPIReady = () => {
+  const opts = { playerVars: { playsinline: 1, rel: 0, origin: location.origin }, events: {
+    onReady: () => { if (!direct && ids.length) jouer(0); },
+    onStateChange: e => { if (e.data === YT.PlayerState.ENDED && i < ids.length - 1) jouer(i + 1); },
+    onError: () => { document.getElementById("note").textContent = "Cette vidéo refuse la lecture hors de YouTube : utilisez « Ouvrir sur YouTube »."; } } };
+  if (direct) {
+    document.getElementById("titreVideo").textContent = "Direct";
+    document.getElementById("surYoutube").href = `https://www.youtube.com/channel/${direct}/live`;
+    document.querySelector(".cadre-video").innerHTML = `<iframe src="https://www.youtube.com/embed/live_stream?channel=${direct}&autoplay=1&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Direct"></iframe>`;
+    document.getElementById("prec").hidden = document.getElementById("suiv").hidden = true;
+    return;
+  }
+  if (!ids.length) { document.getElementById("titreVideo").textContent = "Aucune vidéo dans l'adresse."; return; }
+  lecteur = new YT.Player("lecteur", { ...opts, videoId: ids[0] });
+  Promise.all(ids.map(titre)).then(liste);
+};
+document.getElementById("prec").onclick = () => jouer(i - 1);
+document.getElementById("suiv").onclick = () => jouer(i + 1);
+const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; document.head.append(s);
+</script>
+</body>
+</html>

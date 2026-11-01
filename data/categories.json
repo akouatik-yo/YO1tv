@@ -1,0 +1,26 @@
+{
+ "actu": {
+  "nom": "Actu",
+  "description": "Reportages, journaux et décryptages courts de l'actualité."
+ },
+ "analyse": {
+  "nom": "Débats et émissions",
+  "description": "Entretiens, débats, émissions et décryptages longs."
+ },
+ "decouverte": {
+  "nom": "Découverte",
+  "description": "Sciences, histoire, géopolitique de fond."
+ },
+ "culture": {
+  "nom": "Culture",
+  "description": "Cinéma, musique, livres, arts et spectacles."
+ },
+ "divertissement": {
+  "nom": "Divertissement",
+  "description": "Concepts, jeux, vlogs, curiosités."
+ },
+ "humour": {
+  "nom": "Humour",
+  "description": "Chroniques d'humour, sketchs, stand-up ; formats courts (co=1) inclus."
+ }
+}
