@@ -18,12 +18,13 @@
 | Onglet test dans l'artefact, Brave Android | « Ce contenu est bloqué » : iframe interdite par la page d'artefact ; aucune réponse du lecteur. | testé |
 | Page ouverte depuis le disque (`file://`) | YouTube « Video player configuration error — Error 153 » (pas de référent). | testé |
 | `http://localhost` (Chromium automatisé) | API IFrame chargée, lecteur prêt et piloté ; certaines vidéos en erreur 150, probablement à cause du navigateur automatisé/serveur. | testé / hypothèse pour les 150 |
-| GitHub Pages, Brave tablette | **À faire** (`index.html` de ce dépôt). | — |
+| **GitHub Pages, Brave, tablette Android 10 en portrait** | **Tout fonctionne** : API chargée, lecteur piloté, enchaînement automatique (court terminé → suivante), boutons, « vue à 80 % », **sans publicité, lecture écran éteint, incrustation**. Son activé au démarrage, mais **sous-titres activés aussi** (à couper par défaut). | testé par Yoann |
 
 Ce qu'on sait du lecteur officiel (API IFrame, https://developers.google.com/youtube/iframe_api_reference) :
 - `loadVideoById({videoId, startSeconds})`, `playVideo`, `pauseVideo`, `seekTo`, `getCurrentTime`, `getDuration`, `getPlayerState`, volume, vitesse ; événements `onReady`, `onStateChange` (0 = terminée → enchaîner), `onError` (2, 5, 100, 101/150 = intégration interdite, 153 = référent manquant).
 - Paramètres utiles : `playsinline=1`, `rel=0`, `origin=<location.origin>`, `<meta name="referrer" content="strict-origin-when-cross-origin">`.
-- Impossible par le code : supprimer la pub, lecture écran éteint, son automatique sans geste initial, lire les vidéos interdites d'intégration ou soumises à l'âge (≈ 5-10 % des vidéos : estimation). Brave peut faire mieux côté navigateur : **inconnu pour un lecteur intégré**.
+- Journal du test sur tablette (extrait) : `Origine : https://akouatik-yo.github.io · Android 10` → `API IFrame chargée` → `Lecteur prêt` → `lecture` → `page masquée (écran éteint) · état lecteur : lecture` → `vue à 80 %` → `terminée` → `▶ 3/14` (enchaînement)… Démarrage d'une vidéo : 1 à 12 s entre « chargement » et « lecture ».
+- Impossible par le code : supprimer la pub, lecture écran éteint, son automatique sans geste initial, lire les vidéos interdites d'intégration ou soumises à l'âge (≈ 5-10 % des vidéos : estimation). Brave le fait côté navigateur, **y compris pour le lecteur intégré sur Pages** (testé).
 - Variante sans script externe (testée dans l'artefact, utile si un jour le script est bloqué) : iframe `…/embed/ID?enablejsapi=1` pilotée par `postMessage` (`{"event":"listening"}` puis `{"event":"command","func":"loadVideoById","args":[…]}`), réponses `infoDelivery` / `onStateChange` / `onError`. Code dans l'historique du dépôt privé (commit « onglet de test du lecteur YouTube intégré »).
 
 ## 3. Format du catalogue vidéo

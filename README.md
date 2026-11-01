@@ -2,7 +2,7 @@
 
 Télé personnelle construite sur le catalogue vidéo quotidien de La Vigie : diffusion continue par canaux, j'aime / je n'aime pas, « plus tard », curseur d'humeur. Page statique servie par GitHub Pages, lecteur YouTube officiel.
 
-**État (1er novembre 2026) : lot 0, test du lecteur.**
+**État (1er novembre 2026) : lot 0 réussi sur la tablette (sans pub, écran éteint, incrustation). Prochaine étape : v1 construite en autonomie par Claude (cf. `CAHIER-DES-CHARGES.md` §9 et `CLAUDE.md`).**
 
 - [`CAHIER-DES-CHARGES.md`](CAHIER-DES-CHARGES.md) : objectifs, fonctions par lots, questions ouvertes.
 - [`CONTEXTE.md`](CONTEXTE.md) : tout ce qui a été appris et construit côté Vigie (contraintes, format du catalogue, sources, tests).
