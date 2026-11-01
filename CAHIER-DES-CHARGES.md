@@ -125,6 +125,17 @@ Format des vidéos : voir `CONTEXTE.md` §3 (champs `i t c sid d o p du co`).
 | Deuxième axe d'humeur, mode réveil | Voir §8. |
 | Lot 4 (synchronisation vers le dépôt privé) et publication quotidienne du catalogue | Hors v1 comme prévu ; format prêt : `data/AAAA-MM-JJ.json` + `data/index.json` (`{"jours":[…]}`), cf. README. |
 
+## 8 ter. Évolutions du 1er novembre 2026 (soir), demandées par Yoann
+
+| Demande | Choix |
+|---|---|
+| Commandes de l'appli en plein écran | Le bouton « Plein écran » met **toute la page** en plein écran avec une mise en page « immersive » : la vidéo en grand et une barre YO1tv (précédente, lecture, suivante, canal suivant, j'aime, bof, plus tard, catégorie, replier, quitter). Si le navigateur refuse le vrai plein écran (ou dans le raccourci déjà plein écran), la même mise en page sert de faux plein écran. Le bouton plein écran de YouTube est masqué (`fs: 0`) pour ne pas retomber dans un plein écran sans commandes. |
+| Signaler une vidéo mal classée | Bouton « Catégorie » : on choisit la bonne. Effet immédiat sur la vidéo ; après 3 corrections dans le même sens pour une chaîne (≥ 75 %), ses autres vidéos suivent. Les corrections partent vers la Vigie avec les retours. |
+| Collecte et grilles par la routine de la Vigie | **Étape 7 bis** de la routine du matin (sans IA) : `outils/yo1tv.py jour` publie `data/AAAA-MM-JJ.json` et construit `data/grilles/AAAA-MM-JJ.json`. **YO1 Mix** : nuit calme (pépites, découverte), matinale d'actu et de chroniques, **de 10 h à 22 h un cycle de 9 cases** (actu, chronique, découverte/culture/divertissement/humour/pépite en rotation, actu, débat court, humour, pépite, chronique, formats courts) avec un **journal de 3 vidéos d'actu à 13 h et à 20 h**, soirée de débats longs. La page garde un calcul local en secours. |
+| Routine hebdomadaire séparée | **Oui** : « YO1tv — pépites et retours », chaque dimanche soir. Raisons : la routine du matin est déjà longue (25-30 tours), et le choix de pépites demande du jugement (IA) mais pas chaque jour. Le script lit la liste YouTube « vidéos populaires » (`UULP…`) de 45 chaînes hors actualité par semaine (rotation), écarte le déjà-vu et le court, l'IA garde 25-40 % avec une note de qualité (`q` 1-3) et un éventuel **écho à l'actualité** de la semaine (priorité pendant 7 jours). Les pépites comblent les canaux et remplacent une partie des contenus faibles ; une pépite ne repasse pas avant 21 jours. Les Guignols (archives, `data/sources-pepites.json`) sont ajoutés comme source d'archives seulement. |
+| Boucle des goûts (lot 4) | **Sans jeton** : Réglages → « Envoyer mes retours » ouvre la page GitHub de création de fichier du dépôt privé, pré-remplie (`retours/yo1tv-….json`) ; il suffit de valider. La routine du dimanche applique des ajustements **bornés et réversibles** : poids d'une chaîne ±1 (votes cumulés ≥ 4 ou ≤ −4, chaîne masquée), catégorie d'une chaîne non mixte après 3 corrections concordantes ; rien n'est désactivé. Rappel dans YO1tv le dimanche s'il y a du nouveau. |
+| Pistes du §8 bis restantes | Faits : rendez-vous « journal » (dans les grilles de la routine), stock d'archives, bilan « Ta semaine » (Réglages). Toujours en attente : Média Session (à tester sur la tablette d'abord), service worker (inutile). |
+
 ## 9. Consignes pour l'instance qui reprend YO1tv
 
 Yoann veut une **première version poussée sans autre intervention de sa part**, sur laquelle on itérera ensuite. Donc :

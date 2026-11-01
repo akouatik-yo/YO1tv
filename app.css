@@ -150,3 +150,23 @@ kbd { font: 600 13px ui-monospace, monospace; border: 1px solid var(--trait); bo
   .haut { gap: 8px; padding-left: 12px; padding-right: 12px }
   .horloge { display: none }
 }
+
+/* Plein écran immersif : vidéo + barre de commandes YO1tv (repliable en poignée). Placé en fin de feuille pour l'emporter. */
+.barre-im, .im-poignee { display: none }
+body.immersif { display: block; overflow: hidden; height: 100vh; height: 100dvh }
+body.immersif .haut, body.immersif .infos, body.immersif main, body.immersif .banniere { display: none }
+body.immersif .ecran { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; background: #000 }
+body.immersif .video { flex: 1; min-height: 0; width: 100%; height: auto; max-height: none; aspect-ratio: auto }
+body.immersif .barre-im { display: flex; align-items: center; gap: 4px; padding: 6px 8px; padding-bottom: max(6px, env(safe-area-inset-bottom)); background: #111318; color: #ECEAE3; border-top: 1px solid #2c313b }
+body.immersif .barre-im button { flex: none; width: 48px; height: 48px; display: grid; place-items: center; border: 0; border-radius: 12px; background: #1e222a; color: #ECEAE3 }
+body.immersif .barre-im button:disabled { opacity: .35 }
+body.immersif .barre-im button[aria-pressed="true"] { background: #3D8EF7; color: #fff }
+#imBof[aria-pressed="true"] { background: #F08A80; color: #1a0f0e }
+.im-titre { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 0 8px; font-size: 14px; line-height: 1.25 }
+.im-titre b { color: #8DB4F5; font-size: 12px }
+.im-titre span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+body.immersif.reduit .barre-im { display: none }
+body.immersif.reduit .im-poignee { display: grid; place-items: center; position: absolute; right: 12px; bottom: 12px; z-index: 3; width: 48px; height: 48px; border-radius: 50%; border: 1px solid #fff4; background: #000a; color: #fff }
+@media (max-width: 640px) { body.immersif .barre-im { flex-wrap: wrap } .im-titre { order: -1; flex-basis: 100%; padding: 2px 4px 6px } body.immersif .barre-im button { width: 44px; height: 44px } }
+body.immersif .toast { bottom: calc(76px + env(safe-area-inset-bottom)) }
+body.immersif.reduit .toast { bottom: calc(18px + env(safe-area-inset-bottom)) }
