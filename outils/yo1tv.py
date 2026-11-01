@@ -5,7 +5,7 @@ Commandes (toutes acceptent --depot DOSSIER, racine du dépôt YO1tv, par défau
   jour CATALOGUE DATE      catalogue du jour de la Vigie (out/videos_jour.json) → data/DATE.json, data/index.json,
                            puis grilles data/grilles/DATE.json. Appelée chaque matin par la routine de la Vigie.
   grilles DATE             recalcule seulement les grilles du jour.
-  candidats [--n 45 | --toutes] [--sortie F]
+  candidats [--n 45 | --toutes] [--par 12] [--sortie F]
                            pépites possibles : vidéos longues les plus populaires (liste YouTube « UULP ») des chaînes
                            hors actualité ; affiche une ligne par candidate et écrit le détail dans F (JSON).
   contexte                 titres d'actualité des 7 derniers catalogues (pour repérer les archives qui y font écho).
@@ -181,6 +181,7 @@ def sources_pepites(depot):
 
 def cmd_candidats(depot):
     n, toutes, sortie = int(arg("--n", 45)), bool(arg("--toutes", False)), arg("--sortie", "/tmp/yo1tv-candidats.json")
+    par_chaine = int(arg("--par", PAR_CHAINE))
     stock = charger_stock(depot)
     connus = {x["i"] for x in stock["items"]} | set(stock["ecartes"])
     srcs = sources_pepites(depot)
@@ -206,7 +207,7 @@ def cmd_candidats(depot):
             stock["rotation"][src["id"]] = jour
             pris = 0
             for v in vids:
-                if v["i"] in connus or v["du_s"] < DUREE_MIN_PEPITE or pris >= PAR_CHAINE:
+                if v["i"] in connus or v["du_s"] < DUREE_MIN_PEPITE or pris >= par_chaine:
                     continue
                 connus.add(v["i"])
                 pris += 1
