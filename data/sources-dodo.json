@@ -3,5 +3,13 @@
  {"id": "dodo-balade", "nom": "Balade Mentale", "sid": "yt-balade", "liste": "UUS_7tplUgzJG4DhA16re5Yg", "th": "balade mentale", "prio": 1.3},
  {"id": "dodo-arte-sciences", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22uGrfWlKWbsC527HNjlf7le", "th": "documentaire sciences", "prio": 1},
  {"id": "dodo-arte-astro", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22vEAr4Kb1Bj1nMK7rmjJtFQ", "th": "documentaire astronomie", "prio": 1},
- {"id": "dodo-arte-nature", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22uNR0ot9Cws5lK68SUoKp_J", "th": "documentaire nature", "prio": 1}
+ {"id": "dodo-arte-nature", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22uNR0ot9Cws5lK68SUoKp_J", "th": "documentaire nature", "prio": 1},
+ {"id": "dodo-evasion-nature", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqTodqECMMUrER9ybE9xMo9n0", "th": "documentaire nature", "prio": 1},
+ {"id": "dodo-evasion-montagne", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqTqwSNhr1SZE7hJhVXwhToHq", "th": "documentaire montagne", "prio": 1},
+ {"id": "dodo-evasion-mers", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqTp9UlJ_RbijyCjvUxaTa_3C", "th": "documentaire océans", "prio": 1},
+ {"id": "dodo-evasion-rivages", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqTq2rtnYHkKpO7eEUZ4RWhw_", "th": "documentaire nature", "prio": 1},
+ {"id": "dodo-evasion-oiseaux", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqTpVu_hItajI9Bir6y2HCv-X", "th": "documentaire oiseaux", "prio": 1},
+ {"id": "dodo-evasion-astro", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqToxF8uFR2dz1GE1nEAq-80v", "th": "documentaire astronomie", "prio": 1},
+ {"id": "dodo-evasion-complets", "nom": "ARTE Évasion", "sid": "yt-arteevasion", "liste": "PL_UdcBNXOqToYl7tpnJ7BX3qipqa9cV5z", "th": "documentaire", "prio": 1},
+ {"id": "dodo-cps", "nom": "C'est pas sorcier", "sid": "yt-cestpassorcier", "liste": "UULFENv8pH4LkzvuSV_qHIcslg", "th": "C'est pas sorcier", "prio": 1}
 ]

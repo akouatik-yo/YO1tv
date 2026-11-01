@@ -11,8 +11,9 @@ Télé personnelle construite sur le catalogue vidéo quotidien de La Vigie : on
 - **Lecteur** : sous-titres coupés par défaut (bouton pour les remettre), enchaînement automatique, vidéos non intégrables sautées et signalées avec lien « Ouvrir sur YouTube », vue à 80 % → ne revient plus, reprise là où on s'était arrêté.
 - **Goûts** : J'aime / Bof (pèse sur la chaîne et la catégorie ; « Bof » passe à la suivante ; proposition de masquer une chaîne après plusieurs « Bof »), Plus tard (ce soir, demain, une semaine, date libre), curseur d'humeur « à plat » ↔ « curieux », minuterie de sommeil, export/import JSON.
 - **Liens de la Vigie** compatibles : `#v=ID1,ID2,…&t=Titre` (playlist), `#live=UC…` (direct). Aussi : `#canal=rire`.
-- **Dodo** : minuterie, ou programme de documentaires calmes pour s'endormir (arrêt au bout de 3 h, alerte 5 min avant, prolonger, son qui baisse, écran noir).
-- **Plein écran immersif** avec les commandes YO1tv (barre repliable) ; bouton **Catégorie** pour corriger un classement ; **✨ Pépites** À la carte ; **Ta semaine** et **Envoyer mes retours** dans les réglages.
+- **Dodo** : minuterie, ou programme pour s'endormir : 2 ou 3 « 42 » (ARTE), 2 documentaires de 44 min et plus, puis Balade Mentale et documentaires (ARTE, ARTE Évasion, C'est pas sorcier) en alternance (arrêt au bout de 3 h, alerte 5 min avant, prolonger, son qui baisse, écran noir).
+- **Grilles sans fin** : quand il reste moins de 4 h de programme jouable sur un canal (fin de soirée, « Suivante » répétés, vidéos déjà vues), la grille se prolonge de 6 h.
+- **Plein écran immersif** avec les commandes YO1tv (barre repliable) ; bouton **Catégorie** pour corriger un classement ; **✨ Pépites** et **🎭 Spectacles** (spectacles entiers, aussi classés humour) À la carte ; **Ta semaine** et **Envoyer mes retours** dans les réglages.
 - Paysage sur la tablette : deux colonnes (lecteur et commandes à gauche, programmes à droite) ; bouton « Plein écran » pour l'image seule. Raccourcis clavier dans les réglages.
 
 Choix de conception et questions tranchées : [`CAHIER-DES-CHARGES.md`](CAHIER-DES-CHARGES.md) §8 et §8 bis.

@@ -243,11 +243,14 @@ def cmd_integrer(depot, decisions, candidats):
             x["th"] = str(g["th"])[:60]
         if g.get("dodo") and c["du_s"] >= DODO_MIN:
             x["dodo"] = 1
+        if g.get("sp"):
+            x["sp"] = 1
         if g.get("echo"):
             x["echo"], x["echo_fin"] = str(g["echo"])[:120], (jour + timedelta(days=int(g.get("echo_jours", 7)))).isoformat()
         stock["items"].append(x)
         dans.add(x["i"])
         gardes += 1
+    marquer_spectacles(stock)
     stock["ecartes"] = (stock["ecartes"] + [i for i in cands if i not in dans])[-ECARTES_MAX:]
     if len(stock["items"]) > STOCK_MAX:   # on garde les meilleures, puis les plus récentes
         stock["items"].sort(key=lambda x: x.get("ajoute", ""), reverse=True)
@@ -262,6 +265,19 @@ def cmd_integrer(depot, decisions, candidats):
 
 
 DODO_MIN = 1200   # 20 min
+SPECTACLE_MIN = 2400   # 40 min
+# Titres à écarter du programme dodo (sujets violents ou angoissants), même dans les listes choisies.
+DODO_EXCLU = re.compile(r"guerre|crime|criminel|meurtr|tueur|mafia|attentat|terroris|nazi|hitler|staline|génocide|massacre|catastrophe"
+                        r"|horreur|terreur|prison|drogue|enquête|choc|démon|cancer|maladie|amiante|épave|élection|replay live|🔴", re.I)
+
+
+def marquer_spectacles(stock):
+    """Spectacles entiers (catégorie à part dans YO1tv, en plus de l'humour) : thème « spectacle », ou stand-up de 40 min et plus."""
+    for x in stock["items"]:
+        th = (x.get("th") or "").lower()
+        if not x.get("sp") and x["o"] in ("humour", "divertissement") and secondes(x.get("du")) >= SPECTACLE_MIN \
+                and (th == "spectacle" or th == "stand-up"):
+            x["sp"] = 1
 
 
 def cmd_dodo(depot):
@@ -274,7 +290,7 @@ def cmd_dodo(depot):
         res = list(ex.map(lambda s: (s, liste_youtube(s["liste"])), srcs))
     for src, vids in res:
         for v in vids:
-            if v["du_s"] < DODO_MIN:
+            if v["du_s"] < src.get("min", DODO_MIN) or DODO_EXCLU.search(v["t"]):
                 continue
             x = par_id.get(v["i"])
             if x:
@@ -292,8 +308,13 @@ def cmd_dodo(depot):
     sids = {s["sid"] for s in srcs}
     for x in stock["items"]:
         if not x.get("dodo") and x.get("sid") in sids and x["o"] == "decouverte" and secondes(x.get("du")) >= DODO_MIN \
-                and x.get("th") not in ("reportage", "enquête", "géopolitique"):
+                and x.get("th") not in ("reportage", "enquête", "géopolitique") and not DODO_EXCLU.search(x["t"]):
             x["dodo"], marque = 1, marque + 1
+    for x in stock["items"]:   # retrait des sujets angoissants marqués auparavant
+        if x.get("dodo") and DODO_EXCLU.search(x["t"]):
+            del x["dodo"]
+            x.pop("dodo_prio", None)
+    marquer_spectacles(stock)
     ecrire(f"{depot}/data/stock.json", stock)
     d = [x for x in stock["items"] if x.get("dodo")]
     print(f"Dodo : {ajout} ajoutées, {marque} marquées ; fonds dodo : {len(d)} vidéos, {sum(secondes(x['du']) for x in d) / 3600:.1f} h")

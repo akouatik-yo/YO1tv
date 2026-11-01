@@ -71,10 +71,10 @@ function sauver(tout) {
   tout ? f() : (tSauve = setTimeout(f, 250));
 }
 addEventListener("pagehide", () => sauver(true));
-const mini = x => ({ i: x.i, t: x.t, tf: x.tf, c: x.c, sid: x.sid, o: x.o, du: x.du, co: x.co, d: x.d, p: x.p, pep: x.pep, q: x.q, th: x.th });
+const mini = x => ({ i: x.i, t: x.t, tf: x.tf, c: x.c, sid: x.sid, o: x.o, du: x.du, co: x.co, d: x.d, p: x.p, pep: x.pep, q: x.q, th: x.th, sp: x.sp });
 
 /* ---------- Catalogues ---------- */
-let CAT = new Map(), DERNIER = null, JOURS = [], DIRECTS = [], SECOURS = false, GRILLES_SERVEUR = null, NB_PEPITES = 0;
+let CAT = new Map(), DERNIER = null, JOURS = [], DIRECTS = [], SECOURS = false, GRILLES_SERVEUR = null, GRILLES_JOUR = null, NB_PEPITES = 0;
 async function lireJson(url, opts) { const r = await fetch(url, opts); if (!r.ok) throw new Error(url + " : " + r.status); return r.json(); }
 async function chargerCatalogues() {
   const auj = paris().jour;
@@ -94,7 +94,7 @@ async function chargerCatalogues() {
   // Pépites : archives choisies chaque dimanche par la routine hebdomadaire (data/stock.json).
   try { for (const x of (await lireJson("data/stock.json", { cache: "no-cache" })).items || []) if (/^[\w-]{11}$/.test(x.i) && CATS[x.o] && !CAT.has(x.i)) { x._j = "stock"; x.pep = 1; CAT.set(x.i, x); NB_PEPITES++; } } catch { }
   // Grilles du jour préparées par la tâche du matin (data/grilles/AAAA-MM-JJ.json) ; sinon, calcul dans la page.
-  try { GRILLES_SERVEUR = (await lireJson(`data/grilles/${auj}.json`, { cache: "no-cache" })).canaux || null; } catch { GRILLES_SERVEUR = null; }
+  try { GRILLES_SERVEUR = (await lireJson(`data/grilles/${auj}.json`, { cache: "no-cache" })).canaux || null; GRILLES_JOUR = auj; } catch { GRILLES_SERVEUR = null; }
   appliquerCorrections();
   try { DIRECTS = (await lireJson("data/directs.json")).filter(d => /^UC[\w-]{22}$/.test(d.yt_chaine || "")).sort((a, b) => (b.poids || 1) - (a.poids || 1)); } catch { DIRECTS = []; }
 }
@@ -117,6 +117,8 @@ function poids(x, canal) {
   return w;
 }
 const masquee = x => S.masquees.includes(x.sid);
+// Spectacles entiers : marque « sp » du stock, ou long format d'humour annoncé comme tel. Ils restent aussi dans l'humour.
+const estSpectacle = x => !!x.sp || x.o === "humour" && !x.co && duree(x) >= 2400 && /spectacle|one.?(wo)?man.?show/i.test(x.t || "");
 const jouable = (x, souple) => !!x && !S.bloquees[x.i] && !masquee(x) && (souple || !S.vus[x.i]);
 
 /* ---------- Grille du jour (télé) ---------- */
@@ -140,25 +142,48 @@ function passe(longs, courts, c) {
   return out;
 }
 // garder : début de grille déjà diffusé (conservé tel quel). Retourne [[id, durée, rediffusion?], …] couvrant ≥ 24 h.
-function construire(canal, garder = [], gen = 0) {
+// cible : durée totale visée (24 h ; davantage quand on prolonge une grille épuisée).
+function construire(canal, garder = [], gen = 0, cible = JOUR_S) {
   const c = CANAL[canal], gardes = new Set(garder.map(g => g[0]));
-  const pool = [...CAT.values()].filter(x => c.cats.includes(x.o) && !gardes.has(x.i) && jouable(x) && (!x.co || (c.courts && S.courtsTele)));
+  const okC = x => c.cats.includes(x.o) && (!x.co || (c.courts && S.courtsTele));
+  let pool = [...CAT.values()].filter(x => okC(x) && !gardes.has(x.i) && jouable(x)), rediff = 0;
+  if (!pool.length && garder.length) {   // tout le canal est déjà dans la grille : rediffusions, hors les 40 derniers passages
+    const recents = new Set(garder.slice(-40).map(g => g[0]));
+    pool = [...CAT.values()].filter(x => okC(x) && !recents.has(x.i) && jouable(x));                 // d'abord ce qui n'a pas été vu
+    if (!pool.length) pool = [...CAT.values()].filter(x => okC(x) && !recents.has(x.i) && jouable(x, true));
+    rediff = 1;
+  }
   const rnd = mulberry(hash(paris().jour + "|" + canal + "|" + gen));
   const items = garder.slice(); let t = items.reduce((s, g) => s + g[1], 0);
   const longs = pool.filter(x => !x.co), courts = pool.filter(x => x.co);
-  for (let r = 0; t < JOUR_S && r < 8 && pool.length; r++) {   // r > 0 : rediffusion (catalogue plus court que 24 h)
+  for (let r = 0; t < cible && r < 8 && pool.length; r++) {   // r > 0 : rediffusion (catalogue plus court que la cible)
     for (const x of passe(varier(tirage(longs, canal, rnd)), tirage(courts, canal, rnd), c)) {
-      items.push(r ? [x.i, duree(x), 1] : [x.i, duree(x)]); t += duree(x); if (t >= JOUR_S) break;
+      items.push(r || rediff ? [x.i, duree(x), 1] : [x.i, duree(x)]); t += duree(x); if (t >= cible) break;
     }
   }
   return items;
+}
+// Une grille ne s'épuise jamais : quand il reste moins de 4 h de programme jouable après la position k
+// (à force de « Suivante », de vidéos déjà vues, ou en fin de soirée), on la prolonge de 6 h.
+const RESERVE_S = 4 * 3600, RALLONGE_S = 6 * 3600;
+function etendre(canal, k) {
+  const g = S.grilles[paris().jour]?.[canal]; if (!g) return false;
+  const f = fileDe(g); let reste = 0;
+  for (let j = Math.max(k, 0); j < f.length && reste < RESERVE_S; j++) if (f[j].x && jouable(f[j].x, f[j].r)) reste += f[j].d;
+  if (reste >= RESERVE_S) return false;
+  const n = g.items.length, total = g.items.reduce((s, e) => s + e[1], 0);
+  g.items = construire(canal, g.items, 1000 + n, total + RALLONGE_S);
+  if (g.items.length === n) return false;
+  sauver();
+  if (cour.src === "tele" && cour.canal === canal) cour.file = fileDe(g);
+  return true;
 }
 const indexA = (deb, s) => { let k = 0; while (k < deb.length - 1 && deb[k + 1] <= s) k++; return k; };
 const debuts = items => { let t = 0; return items.map(g => { const d = t; t += g[1]; return d; }); };
 function grille(canal) {
   const j = paris().jour; S.grilles[j] ||= {};
   let g = S.grilles[j][canal];
-  const srv = (GRILLES_SERVEUR?.[canal] || []).filter(e => CAT.has(e[0]));
+  const srv = GRILLES_JOUR === j ? (GRILLES_SERVEUR?.[canal] || []).filter(e => CAT.has(e[0])) : [];   // jamais la grille de la veille après minuit
   if (srv.length && !g?.srv) {   // grille de la routine (arrivée éventuellement après une première ouverture dans la journée)
     g = S.grilles[j][canal] = { cat: DERNIER, gen: 0, items: srv, srv: 1 };
     if (S.pos[j]) delete S.pos[j][canal];
@@ -274,9 +299,10 @@ function jouer(x) {
   afficher(); surveillerDemarrage();
 }
 function aller(k, dir = 1, souple = false) {
+  if (cour.src === "tele" && dir > 0 && cour.jour === paris().jour) etendre(cour.canal, k);
   const f = cour.file;
   const okCourt = e => !(cour.src === "tele" && !S.courtsTele && e.x?.co);
-  while (k >= 0 && k < f.length && !(jouable(f[k].x, souple || cour.souple) && okCourt(f[k]))) k += dir;
+  while (k >= 0 && k < f.length && !(jouable(f[k].x, souple || cour.souple || f[k].r) && okCourt(f[k]))) k += dir;
   if (k < 0 || k >= f.length) {
     if (dir < 0) return toast("Pas de vidéo avant celle-ci.");
     if (cour.src === "dodo") { finDodo(); return; }
@@ -297,7 +323,9 @@ function demarrerTele(canal = S.canal) {
   if (!CANAL[canal]) canal = "mix";
   S.canal = canal; sauver(); majCanaux();
   if (CANAL[canal].direct) return demarrerDirect(S.direct);
-  const g = grille(canal), j = paris().jour, file = fileDe(g);
+  const g = grille(canal), j = paris().jour;
+  etendre(canal, Math.max(indexA(debuts(g.items), paris().s), S.pos[j]?.[canal] ?? -1));
+  const file = fileDe(g);
   if (!file.length) { cour = { src: "tele", canal, jour: j, file, k: -1, x: null }; afficher(); annonce("Rien à diffuser sur ce canal pour l'instant (catalogue vide ou tout est déjà vu)."); return; }
   // On tombe sur la vidéo prévue à cette heure, au début ; si on avait déjà avancé plus loin dans la grille, on reprend là.
   const k = Math.min(Math.max(indexA(file.map(e => e.deb), paris().s), S.pos[j]?.[canal] ?? -1), file.length - 1);
@@ -340,6 +368,7 @@ function majVotes() {
 function metaDe(x, e) {
   const bits = [CATS[x.o] || ""];
   if (x.pep) bits.push("pépite" + (x.th ? " · " + x.th : ""));
+  if (estSpectacle(x) && !/spectacle/i.test(x.th || "")) bits.push("spectacle");
   bits.push(x.co ? "format court" : x.du ? fmtDuree(enSec(x.du)) : "durée inconnue");
   if (x.d) { const h = (Date.now() - Date.parse(x.d)) / 36e5; if (h >= 0) bits.push(h < 1 ? "il y a moins d'une heure" : h < 48 ? `il y a ${Math.round(h)} h` : `il y a ${Math.round(h / 24)} j`); }
   return bits.filter(Boolean).join(" · ");
@@ -414,6 +443,7 @@ function listeCarte() {
   if (F.vue === "tard") return S.plusTard.slice().sort((a, b) => a.q - b.q).map(p => ({ x: CAT.get(p.x.i) || p.x, tard: p.q }));
   if (F.vue === "hist") return S.hist.map(h => ({ x: CAT.get(h.i) || h }));
   if (F.vue === "playlist") return PLAYLIST.map(x => ({ x }));
+  if (F.vue === "spec") return [...CAT.values()].filter(x => estSpectacle(x) && jouable(x, !S.cacherVues)).sort((a, b) => poids(b, "carte") - poids(a, "carte")).map(x => ({ x }));
   if (F.vue === "pep") return [...CAT.values()].filter(x => x.pep && jouable(x, !S.cacherVues) && (F.cat === "tout" || x.o === F.cat))
     .sort((a, b) => ((b.echo_fin || "") >= paris().jour) - ((a.echo_fin || "") >= paris().jour) || poids(b, "carte") - poids(a, "carte")).map(x => ({ x }));
   const q = sansAccent(F.q);
@@ -425,7 +455,7 @@ function listeCarte() {
 }
 let LISTE = [];
 function rendreCarte() {
-  const vues = [["liste", "Catalogue"], ...(NB_PEPITES ? [["pep", "✨ Pépites"]] : []), ["tard", `⏰ Plus tard${S.plusTard.length ? " (" + S.plusTard.length + ")" : ""}`], ["hist", "Historique"]];
+  const vues = [["liste", "Catalogue"], ...(NB_PEPITES ? [["pep", "✨ Pépites"]] : []), ...([...CAT.values()].some(estSpectacle) ? [["spec", "🎭 Spectacles"]] : []), ["tard", `⏰ Plus tard${S.plusTard.length ? " (" + S.plusTard.length + ")" : ""}`], ["hist", "Historique"]];
   if (PLAYLIST.length) vues.unshift(["playlist", "Playlist" + (PLAYLIST.titre ? " · " + court(PLAYLIST.titre, 24) : "")]);
   $("#pucesVue").innerHTML = vues.map(([v, n]) => `<button type="button" data-vue="${v}" aria-pressed="${F.vue === v}">${esc(n)}</button>`).join("")
     + (F.chaine ? `<button type="button" data-chaine="" aria-pressed="true">✕ ${esc(S.noms[F.chaine] || [...CAT.values()].find(x => x.sid === F.chaine)?.c || F.chaine)}</button>` : "");
@@ -440,6 +470,7 @@ function rendreCarte() {
   const now = maintenant(), curId = cour.src === "carte" ? cour.x?.i : null;
   $("#noteCarte").textContent = F.vue === "tard" ? (LISTE.length ? "Les vidéos mises de côté reviennent en tête du catalogue à la date dite." : "")
     : F.vue === "hist" ? (LISTE.length ? "Les 150 dernières vidéos vues (à 80 %)." : "")
+    : F.vue === "spec" ? `${LISTE.length} spectacle${LISTE.length > 1 ? "s" : ""} en entier (ils passent aussi dans l'humour).`
     : F.vue === "pep" ? `${LISTE.length} pépites tirées de l'historique des chaînes, choisies chaque dimanche ; celles qui font écho à l'actualité d'abord.` : F.vue === "liste" ? `${LISTE.length} vidéo${LISTE.length > 1 ? "s" : ""}, classées selon tes goûts et ton humeur.` : "";
   $("#carte").innerHTML = LISTE.slice(0, F.n).map((e, k) => ligne(e.x, {
     data: `data-k="${k}"`, cur: e.x.i === curId, vu: F.vue !== "hist" && !!S.vus[e.x.i],
@@ -538,12 +569,15 @@ function feuilleHumeur() {
 const majHumeur = () => $("#txtHumeur").textContent = S.humeur < 30 ? "À plat" : S.humeur > 70 ? "Curieux" : "Humeur";
 /* ---------- Dodo : minuterie et programme pour s'endormir ----------
    Programme dodo : documentaires calmes de 20 min et plus (marque « dodo » du stock : 42 d'ARTE, Balade Mentale,
-   documentaires ARTE…), au moins 6 h de file pour pouvoir passer ce qui ne convient pas, arrêt au bout de la durée choisie
+   documentaires ARTE et ARTE Évasion, C'est pas sorcier), dans cet ordre : 2 ou 3 « 42 », 2 documentaires de 44 min et plus,
+   puis Balade Mentale et documentaires en alternance ; au moins 6 h de file pour pouvoir passer ce qui ne convient pas, arrêt au bout de la durée choisie
    (3 h par défaut) même en cours de vidéo. Alerte 5 min avant avec « Prolonger », son qui baisse doucement sur les
    2 dernières minutes, écran noir facultatif. Ce qu'on regarde en s'endormant ne compte pas comme « vu » (rotation à part),
    et « Bof » en mode dodo retire la vidéo du programme. Écran éteint, le navigateur ralentit les minuteries : l'arrêt
    peut alors avoir jusqu'à une minute de retard. */
-const DODO_MIN_S = 1200, DODO_FILE_S = 6 * 3600, FONDU_S = 120, ALERTE_S = 300;
+const DODO_MIN_S = 1200, DODO_LONG_S = 2640, DODO_FILE_S = 6 * 3600, FONDU_S = 120, ALERTE_S = 300;
+const DODO_FACTEUR = { "yt-cestpassorcier": .6 };   // C'est pas sorcier : un peu moins souvent que les documentaires ARTE
+const genreDodo = x => x.sid === "yt-balade" ? "balade" : x.th === "42 (ARTE)" || /\b42\b.{0,4}(la )?réponse/i.test(x.t || "") ? "42" : "doc";
 const dureeDodoDefaut = () => S.dodoDuree || 180;
 function fmtMin(m) { m = Math.max(0, Math.round(m)); return m >= 60 ? `${m / 60 | 0} h${m % 60 ? " " + deux(m % 60) : ""}` : `${m} min`; }
 function feuilleDodo() {
@@ -552,7 +586,7 @@ function feuilleDodo() {
   feuille(`<h2>Dodo</h2>
     <p>${enCours ? (dodo.fin ? `Arrêt dans ${fmtMin(reste)} (vers ${hhmm(paris(dodo.fin).s)}).` : "Arrêt à la fin de la vidéo en cours.") : "Pour s'endormir devant la télé sans la laisser tourner toute la nuit."}</p>
     <h3>Programme pour s'endormir</h3>
-    <p>Documentaires calmes de 20 min et plus (42 d'ARTE, Balade Mentale, documentaires ARTE…), au moins 6 h de programme pour pouvoir passer ceux qui ne conviennent pas. ${n} vidéos disponibles.</p>
+    <p>Deux ou trois épisodes de 42 (ARTE) pour commencer, deux documentaires longs, puis Balade Mentale et documentaires en alternance (ARTE, ARTE Évasion, C'est pas sorcier), tous de 20 min et plus. Au moins 6 h de programme, pour pouvoir passer ce qui ne convient pas. ${n} vidéos disponibles.</p>
     <div class="choix">${[90, 120, 180, 240].map(m => `<button type="button" data-prog="${m}" aria-pressed="${m === dureeDodoDefaut()}">Arrêt après ${fmtMin(m)}</button>`).join("")}</div>
     <div class="choix"><button type="button" data-opt="dodoNoir" aria-pressed="${!!S.dodoNoir}">Écran noir (le son continue)</button><button type="button" data-opt="dodoFondu" aria-pressed="${S.dodoFondu !== false}">Baisse progressive du son</button></div>
     <h3>Minuterie seule (le programme en cours continue)</h3>
@@ -581,12 +615,21 @@ function lancerDodo(minutes = dureeDodoDefaut()) {
   if (pool.reduce((a, x) => a + duree(x), 0) < DODO_FILE_S)   // secours : documentaires longs du catalogue
     pool = pool.concat([...CAT.values()].filter(x => !x.dodo && x.o === "decouverte" && !x.co && duree(x) >= DODO_MIN_S && duree(x) <= 5400 && !S.bloquees[x.i] && !masquee(x) && !S.dodoNon[x.i]));
   if (!pool.length) return toast("Pas encore de documentaires pour le programme dodo.");
-  // Jamais passées en dodo d'abord, puis les plus anciennement passées ; à égalité, tirage pondéré (priorité 42 et Balade Mentale).
+  // Dans chaque genre : jamais passées en dodo d'abord, puis les plus anciennement passées ; à égalité, tirage pondéré.
   const rnd = mulberry(hash("dodo|" + paris().jour + "|" + Date.now()));
-  const cle = x => (S.dodoVus[x.i] || 0) - Math.pow(rnd(), 1 / ((x.q || 2) * (x.dodo_prio ? 1.3 : 1))) * 864e5;
-  const tri = varier(pool.sort((a, b) => cle(a) - cle(b)));
-  const file = []; let t = 0;
-  for (const x of tri) { file.push({ x }); t += duree(x); if (t >= DODO_FILE_S) break; }
+  const cle = x => (S.dodoVus[x.i] || 0) - Math.pow(rnd(), 1 / ((x.q || 2) * (DODO_FACTEUR[x.sid] || 1))) * 864e5;
+  const tas = { "42": [], balade: [], doc: [] };
+  for (const x of pool.sort((a, b) => cle(a) - cle(b))) tas[genreDodo(x)].push(x);
+  const pris = new Set(), file = []; let t = 0;
+  const prendre = (genre, filtre = () => true) => tas[genre].find(x => !pris.has(x.i) && filtre(x)) || null;
+  const poser = x => { if (!x) return false; pris.add(x.i); file.push({ x }); t += duree(x); return true; };
+  // Ordre voulu : deux ou trois 42 pour commencer, deux documentaires longs (44 min et plus), puis Balade Mentale et documentaires en alternance.
+  for (let n = 2 + (rnd() < .5); n > 0; n--) poser(prendre("42"));
+  for (let n = 2; n > 0; n--) poser(prendre("doc", x => duree(x) >= DODO_LONG_S)) || poser(prendre("doc")) || poser(prendre("balade"));
+  for (let tour = 0; t < DODO_FILE_S; tour++) {
+    const voulu = tour % 2 ? "doc" : "balade", autre = tour % 2 ? "balade" : "doc";
+    if (!(poser(prendre(voulu)) || poser(prendre(autre)) || poser(prendre("42")))) break;
+  }
   cour = { src: "dodo", file, k: -1, x: null, souple: true };
   reglerDodo(minutes * 60000);
   if (S.dodoNoir) ecranNoir(true);
@@ -631,7 +674,7 @@ function finDodo() {
 function feuilleGrille() {
   if (cour.src !== "tele") return toast("La grille n'existe qu'en mode Télé, sur un canal.");
   const f = cour.file;
-  feuille(`<h2>${esc(CANAL[cour.canal].nom)} · ${esc(joliJour(cour.jour))}</h2><p>${f.length} programmes, de minuit à minuit (heure de Paris). Toucher un programme pour y aller.</p>
+  feuille(`<h2>${esc(CANAL[cour.canal].nom)} · ${esc(joliJour(cour.jour))}</h2><p>${f.length} programmes à partir de minuit (heure de Paris) ; la grille se prolonge d'elle-même quand elle s'épuise. Toucher un programme pour y aller.</p>
     <ol class="grille-liste">${f.map((e, j) => e.x ? `<li class="${j === cour.k ? "en-cours" : ""}"><button type="button" data-j="${j}"><span class="h">${hhmm(e.deb)}</span><span>${e.r ? "<span class='marque discret'>rediff</span>" : ""}${S.vus[e.x.i] ? "<span class='marque discret'>vu</span>" : ""}${esc(titreDe(e.x))}<small>${esc(e.x.c || "")} · ${esc(CATS[e.x.o] || "")}</small></span></button></li>` : "").join("")}</ol>`,
     el => {
       el.querySelector(".en-cours")?.scrollIntoView({ block: "center" });
