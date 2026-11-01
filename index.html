@@ -74,6 +74,7 @@
     <button data-cmd="bof" id="imBof" aria-pressed="false" aria-label="Bof"><svg><use href="#i-bof"/></svg></button>
     <button data-cmd="tard" id="imTard" aria-label="Plus tard"><svg><use href="#i-tard"/></svg></button>
     <button data-cmd="cat" id="imCat" aria-label="Mal classée"><svg><use href="#i-cat"/></svg></button>
+    <button data-cmd="dodo" aria-label="Dodo"><svg><use href="#i-dodo"/></svg></button>
     <button data-cmd="reduire" aria-label="Replier la barre"><svg><use href="#i-bas"/></svg></button>
     <button data-cmd="sortir" aria-label="Quitter le plein écran"><svg><use href="#i-fermer"/></svg></button>
   </div>
@@ -122,6 +123,9 @@
   </section>
 </main>
 
+<div class="nuit" id="nuit" hidden><span id="nuitHeure"></span><small>Écran noir : le son continue. Toucher pour rallumer.</small></div>
+<div class="alerte-dodo" id="alerteDodo" role="alertdialog" aria-live="assertive" hidden><b id="alerteTxt">🌙 Arrêt dans 5 min</b>
+  <span><button type="button" data-plus="15">+15 min</button><button type="button" data-plus="30">+30 min</button><button type="button" data-plus="60">+1 h</button><button type="button" data-plus="0">Arrêter</button></span></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastTxt"></span><span id="toastAct"></span></div>
 
 <dialog id="dlg"><form method="dialog" class="feuille"><div id="dlgCorps"></div><button class="fermer" value="x">Fermer</button></form></dialog>

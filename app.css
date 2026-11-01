@@ -56,7 +56,7 @@ h1 { font-size: 20px; line-height: 1.25; margin: 4px 0 2px; display: -webkit-box
 .lien-chaine:empty { display: none }
 .progres { height: 3px; background: var(--trait); border-radius: 2px; margin: 6px 0 8px; overflow: hidden }
 .progres i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .5s linear }
-.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(66px, 1fr)); gap: 6px }
+.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(62px, 1fr)); gap: 6px }
 .actions button { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 56px; padding: 6px 2px; border: 1px solid var(--trait); background: var(--carte); border-radius: var(--rayon); font-size: 12px; font-weight: 600; color: var(--gris) }
 .actions button svg { color: var(--encre) }
 .actions button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent) }
@@ -170,3 +170,11 @@ body.immersif.reduit .im-poignee { display: grid; place-items: center; position:
 @media (max-width: 640px) { body.immersif .barre-im { flex-wrap: wrap } .im-titre { order: -1; flex-basis: 100%; padding: 2px 4px 6px } body.immersif .barre-im button { width: 44px; height: 44px } }
 body.immersif .toast { bottom: calc(76px + env(safe-area-inset-bottom)) }
 body.immersif.reduit .toast { bottom: calc(18px + env(safe-area-inset-bottom)) }
+
+/* Dodo : écran noir et alerte avant l'arrêt */
+.nuit { position: fixed; inset: 0; z-index: 40; background: #000; color: #555; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font: 600 28px ui-monospace, monospace; cursor: pointer }
+.nuit small { font: 14px system-ui; color: #3a3a3a }
+.alerte-dodo { position: fixed; left: 0; right: 0; top: calc(12px + env(safe-area-inset-top)); margin: 0 auto; width: max-content; max-width: calc(100vw - 24px); z-index: 50; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; padding: 12px 14px; border-radius: 16px; background: #1b2233; color: #E8ECF5; border: 1px solid #3D8EF7; box-shadow: 0 10px 30px #000a; font-size: 16px }
+.alerte-dodo span { display: flex; gap: 6px; flex-wrap: wrap }
+.alerte-dodo button { min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid #3d4a66; background: #262f45; color: inherit; font-weight: 700 }
+.alerte-dodo button[data-plus="0"] { background: transparent }

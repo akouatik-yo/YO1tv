@@ -11,6 +11,7 @@ Télé personnelle construite sur le catalogue vidéo quotidien de La Vigie : on
 - **Lecteur** : sous-titres coupés par défaut (bouton pour les remettre), enchaînement automatique, vidéos non intégrables sautées et signalées avec lien « Ouvrir sur YouTube », vue à 80 % → ne revient plus, reprise là où on s'était arrêté.
 - **Goûts** : J'aime / Bof (pèse sur la chaîne et la catégorie ; « Bof » passe à la suivante ; proposition de masquer une chaîne après plusieurs « Bof »), Plus tard (ce soir, demain, une semaine, date libre), curseur d'humeur « à plat » ↔ « curieux », minuterie de sommeil, export/import JSON.
 - **Liens de la Vigie** compatibles : `#v=ID1,ID2,…&t=Titre` (playlist), `#live=UC…` (direct). Aussi : `#canal=rire`.
+- **Dodo** : minuterie, ou programme de documentaires calmes pour s'endormir (arrêt au bout de 3 h, alerte 5 min avant, prolonger, son qui baisse, écran noir).
 - **Plein écran immersif** avec les commandes YO1tv (barre repliable) ; bouton **Catégorie** pour corriger un classement ; **✨ Pépites** À la carte ; **Ta semaine** et **Envoyer mes retours** dans les réglages.
 - Paysage sur la tablette : deux colonnes (lecteur et commandes à gauche, programmes à droite) ; bouton « Plein écran » pour l'image seule. Raccourcis clavier dans les réglages.
 
@@ -25,15 +26,15 @@ Choix de conception et questions tranchées : [`CAHIER-DES-CHARGES.md`](CAHIER-D
 
 ## Circulation des données
 
-- **Chaque matin** (routine de la Vigie, étape 7 bis, sans IA) : `python3 outils/yo1tv.py jour out/videos_jour.json DATE` → `data/DATE.json` (champs privés retirés), `data/index.json` (8 jours), `data/grilles/DATE.json` (grilles des 4 canaux), `data/diffusions.json` (ce qui est passé, pour ne pas répéter).
-- **Chaque dimanche soir** (routine « YO1tv — pépites et retours », prompt dans le dépôt privé) : `candidats` (listes « vidéos populaires » des chaînes hors actu, rotation de 45 chaînes) → choix par l'IA → `integrer` → `data/stock.json` ; puis traitement des retours de goûts.
+- **Chaque matin** (tâche planifiée dans la conversation « atelier YO1tv », après la routine de la Vigie) : lecture du catalogue `videos/DATE` dans la base de la Vigie, puis `python3 outils/yo1tv.py jour fichier.json DATE` → `data/DATE.json` (champs privés retirés), `data/index.json` (8 jours), `data/grilles/DATE.json` (grilles des 4 canaux), `data/diffusions.json` (ce qui est passé, pour ne pas répéter).
+- **Chaque dimanche soir** (tâche « YO1tv — pépites et retours » dans l'atelier, consignes dans le dépôt privé) : `dodo` (fonds du programme dodo), `candidats` (listes « vidéos populaires » des chaînes hors actu, rotation de 45 chaînes) → choix par l'IA → `integrer` → `data/stock.json` ; puis traitement des retours de goûts.
 - **Depuis la tablette** : Réglages → « Envoyer mes retours » → fichier `retours/yo1tv-….json` dans le dépôt privé (page GitHub pré-remplie, à valider).
 
 Sans grilles du jour, la page les calcule elle-même ; sans nouveau catalogue, elle reprend le dernier et l'indique par un bandeau.
 
 ## Ce qui reste
 
-- Vérifier après la première nuit que la routine de la Vigie a bien pu attacher ce dépôt et pousser (sinon : grilles calculées dans la page, catalogue figé).
+- Créer la conversation « atelier YO1tv » (avec les deux dépôts) et y brancher les deux tâches planifiées ; d'ici là, catalogue figé au 1er novembre et grilles calculées dans la page.
 - Média Session (commandes de l'écran verrouillé) : à tester sur la tablette avant de coder.
 - À vérifier sur la tablette : sous-titres bien coupés, canal Direct, bouton « Allumer », glisser pour zapper, minuterie écran éteint.
 

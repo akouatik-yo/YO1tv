@@ -8,6 +8,8 @@ Commandes (toutes acceptent --depot DOSSIER, racine du dépôt YO1tv, par défau
   candidats [--n 45 | --toutes] [--par 12] [--sortie F]
                            pépites possibles : vidéos longues les plus populaires (liste YouTube « UULP ») des chaînes
                            hors actualité ; affiche une ligne par candidate et écrit le détail dans F (JSON).
+  dodo                     fonds « dodo » : documentaires calmes de 20 min ou plus tirés des listes de data/sources-dodo.json
+                           (42 d'ARTE, Balade Mentale, documentaires ARTE), versés au stock avec la marque dodo (sans IA).
   contexte                 titres d'actualité des 7 derniers catalogues (pour repérer les archives qui y font écho).
   integrer DECISIONS CANDIDATS
                            ajoute au stock (data/stock.json) les pépites retenues ; les autres candidates sont écartées
@@ -239,6 +241,8 @@ def cmd_integrer(depot, decisions, candidats):
              "q": max(1, min(3, int(g.get("q", 2)))), "vues": c["vues"], "ajoute": jour.isoformat(), "pep": 1}
         if g.get("th"):
             x["th"] = str(g["th"])[:60]
+        if g.get("dodo") and c["du_s"] >= DODO_MIN:
+            x["dodo"] = 1
         if g.get("echo"):
             x["echo"], x["echo_fin"] = str(g["echo"])[:120], (jour + timedelta(days=int(g.get("echo_jours", 7)))).isoformat()
         stock["items"].append(x)
@@ -255,6 +259,44 @@ def cmd_integrer(depot, decisions, candidats):
     for x in stock["items"]:
         par[x["o"]] = par.get(x["o"], 0) + 1
     print(f"{gardes} pépites ajoutées ; stock : {len(stock['items'])} ({par}) ; écartées connues : {len(stock['ecartes'])}")
+
+
+DODO_MIN = 1200   # 20 min
+
+
+def cmd_dodo(depot):
+    """Les listes de sources-dodo.json sont déjà choisies par leurs éditeurs : pas de tri par IA, seulement la durée."""
+    stock, jour = charger_stock(depot), datetime.now(PARIS).date().isoformat()
+    par_id = {x["i"]: x for x in stock["items"]}
+    ajout = marque = 0
+    srcs = lire(f"{depot}/data/sources-dodo.json", []) or []
+    with cf.ThreadPoolExecutor(5) as ex:
+        res = list(ex.map(lambda s: (s, liste_youtube(s["liste"])), srcs))
+    for src, vids in res:
+        for v in vids:
+            if v["du_s"] < DODO_MIN:
+                continue
+            x = par_id.get(v["i"])
+            if x:
+                if not x.get("dodo"):
+                    x["dodo"], marque = 1, marque + 1
+                continue
+            x = {"i": v["i"], "t": v["t"], "c": src["nom"], "sid": src["sid"], "o": "decouverte", "du": fmt_du(v["du_s"]),
+                 "q": 2, "vues": v["vues"], "ajoute": jour, "pep": 1, "dodo": 1, "th": src["th"]}
+            if src.get("prio", 1) > 1:
+                x["dodo_prio"] = 1
+            stock["items"].append(x)
+            par_id[x["i"]] = x
+            ajout += 1
+    # pépites déjà en stock qui conviennent : découverte de 20 min et plus des sources « dodo »
+    sids = {s["sid"] for s in srcs}
+    for x in stock["items"]:
+        if not x.get("dodo") and x.get("sid") in sids and x["o"] == "decouverte" and secondes(x.get("du")) >= DODO_MIN \
+                and x.get("th") not in ("reportage", "enquête", "géopolitique"):
+            x["dodo"], marque = 1, marque + 1
+    ecrire(f"{depot}/data/stock.json", stock)
+    d = [x for x in stock["items"] if x.get("dodo")]
+    print(f"Dodo : {ajout} ajoutées, {marque} marquées ; fonds dodo : {len(d)} vidéos, {sum(secondes(x['du']) for x in d) / 3600:.1f} h")
 
 
 def cmd_contexte(depot):
@@ -477,6 +519,8 @@ def main():
         cmd_grilles(depot, a[0])
     elif c == "candidats":
         cmd_candidats(depot)
+    elif c == "dodo":
+        cmd_dodo(depot)
     elif c == "contexte":
         cmd_contexte(depot)
     elif c == "integrer" and len(a) == 2:

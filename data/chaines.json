@@ -1202,16 +1202,6 @@
 "actif": true
 },
 {
-"id": "yt-lewoop",
-"nom": "Woop",
-"url": "https://www.youtube.com/channel/UCdsopirJ8XJilmg2Jvgc6AA",
-"chaine_id": "UCdsopirJ8XJilmg2Jvgc6AA",
-"onglet": "humour",
-"poids": 1,
-"courts": true,
-"actif": true
-},
-{
 "id": "yt-leshowjaunekevintran",
 "nom": "Kevin Tran (Le Show Jaune)",
 "url": "https://www.youtube.com/channel/UCYD22MFqaNqXp-ogTMosW_A",
@@ -1701,16 +1691,6 @@
 "actif": true
 },
 {
-"id": "yt-jeremynadeausecondechain",
-"nom": "Jérémy Nadeau (seconde chaîne)",
-"url": "https://www.youtube.com/channel/UCQLZkqvxRYqwJAlsl-ybsww",
-"chaine_id": "UCQLZkqvxRYqwJAlsl-ybsww",
-"onglet": "humour",
-"poids": 1,
-"courts": true,
-"actif": true
-},
-{
 "id": "yt-rosalievaillancourt",
 "nom": "Rosalie Vaillancourt",
 "url": "https://www.youtube.com/channel/UCKa57aOo6ger9DQ1NgOm9dQ",
@@ -2059,16 +2039,6 @@
 "actif": true
 },
 {
-"id": "yt-peppeetciccio",
-"nom": "Peppe et Ciccio",
-"url": "https://www.youtube.com/channel/UCjw6UfOTw7Yza7eGaWdre9A",
-"chaine_id": "UCjw6UfOTw7Yza7eGaWdre9A",
-"onglet": "humour",
-"poids": 1,
-"courts": true,
-"actif": true
-},
-{
 "id": "yt-natootwo",
 "nom": "Natoo Two",
 "url": "https://www.youtube.com/channel/UCgyF_Dcv-q87s-1szIQ6U5Q",
@@ -2143,16 +2113,6 @@
 "nom": "ComediHa!",
 "url": "https://www.youtube.com/channel/UCMwotCqCa0qxV6dOLnFMHpQ",
 "chaine_id": "UCMwotCqCa0qxV6dOLnFMHpQ",
-"onglet": "humour",
-"poids": 1,
-"courts": true,
-"actif": true
-},
-{
-"id": "yt-nathalienicole",
-"nom": "Nathalie Nicole",
-"url": "https://www.youtube.com/channel/UCm6xk6yw6gDhbANblPzOHDw",
-"chaine_id": "UCm6xk6yw6gDhbANblPzOHDw",
 "onglet": "humour",
 "poids": 1,
 "courts": true,

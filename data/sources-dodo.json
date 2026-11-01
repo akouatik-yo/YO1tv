@@ -1,0 +1,7 @@
+[
+ {"id": "dodo-42", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22s1vddGJB3NNRSI45jEy_sE", "th": "42 (ARTE)", "prio": 1.3},
+ {"id": "dodo-balade", "nom": "Balade Mentale", "sid": "yt-balade", "liste": "UUS_7tplUgzJG4DhA16re5Yg", "th": "balade mentale", "prio": 1.3},
+ {"id": "dodo-arte-sciences", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22uGrfWlKWbsC527HNjlf7le", "th": "documentaire sciences", "prio": 1},
+ {"id": "dodo-arte-astro", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22vEAr4Kb1Bj1nMK7rmjJtFQ", "th": "documentaire astronomie", "prio": 1},
+ {"id": "dodo-arte-nature", "nom": "ARTE", "sid": "yt-arte", "liste": "PLCwXWOyIR22uNR0ot9Cws5lK68SUoKp_J", "th": "documentaire nature", "prio": 1}
+]

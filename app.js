@@ -50,7 +50,7 @@ const CLE = "yo1tv.v1";
 const defaut = () => ({
   v: 1, vus: {}, hist: [], prog: {}, votes: {}, gouts: { ch: {}, cat: {} }, masquees: [], noms: {}, plusTard: [], bloquees: {},
   humeur: 50, cc: false, theme: "sombre", canal: "mix", mode: "tele", format: "avec", courtsTele: true, cacherVues: true,
-  direct: 0, grilles: {}, pos: {}, corr: {}, modif: 0, envoi: 0
+  direct: 0, grilles: {}, pos: {}, corr: {}, modif: 0, envoi: 0, dodoVus: {}, dodoNon: {}, dodoDuree: 180, dodoNoir: false, dodoFondu: true
 });
 function lireStock() {
   let s; try { s = Object.assign(defaut(), JSON.parse(localStorage.getItem(CLE)) || {}); } catch { s = defaut(); }
@@ -180,7 +180,7 @@ const fileDe = g => { const deb = debuts(g.items); return g.items.map(([id, d, r
 /* ---------- Lecteur YouTube ---------- */
 let API = false, L = null, pret = false, enDirect = false, demande = null, etatL = -1, ccFait = null, tAllumer = 0, nbErr = 0, tProg = 0;
 let cour = { src: null, file: [], k: -1, x: null };
-const dodo = { fin: 0, finVideo: false };
+const dodo = { fin: 0, finVideo: false, alerte: false, volume: null };
 function placeLecteur() {
   const v = $("#video"); v.querySelector("#lecteur")?.remove();
   const d = document.createElement("div"); d.id = "lecteur"; v.prepend(d);
@@ -249,6 +249,7 @@ function surveillerDemarrage() {
   }, 4000);
 }
 function marquerVu(x) {
+  if (x && cour.src === "dodo") { S.dodoVus[x.i] = Date.now(); sauver(); return; }   // en s'endormant, rien ne compte comme « vu »
   if (!x || S.vus[x.i]) return;
   S.vus[x.i] = Date.now(); delete S.prog[x.i];
   S.hist = [{ ...mini(x), vu: Date.now() }, ...S.hist.filter(h => h.i !== x.i)].slice(0, 150);
@@ -262,7 +263,7 @@ setInterval(() => {
   const x = cour.x; if (!(d > 0)) return;
   $("#progres").style.width = clamp(100 * t / d, 0, 100) + "%";
   if (t / d >= .8) marquerVu(x);
-  else if (!S.vus[x.i] && t > 15 && Date.now() - tProg > 10000) { S.prog[x.i] = Math.floor(t); tProg = Date.now(); sauver(); }
+  else if (cour.src !== "dodo" && !S.vus[x.i] && t > 15 && Date.now() - tProg > 10000) { S.prog[x.i] = Math.floor(t); tProg = Date.now(); sauver(); }
 }, 2000);
 
 /* ---------- Navigation dans les files ---------- */
@@ -278,6 +279,7 @@ function aller(k, dir = 1, souple = false) {
   while (k >= 0 && k < f.length && !(jouable(f[k].x, souple || cour.souple) && okCourt(f[k]))) k += dir;
   if (k < 0 || k >= f.length) {
     if (dir < 0) return toast("Pas de vidéo avant celle-ci.");
+    if (cour.src === "dodo") { finDodo(); return; }
     if (cour.src === "carte") { toast("Fin de la liste. Retour à la télé."); return demarrerTele(S.canal); }
     annonce("Fin des programmes de ce canal pour aujourd'hui. Zappe sur un autre canal !"); return;
   }
@@ -323,7 +325,7 @@ const court = (s, n = 60) => s.length > n ? s.slice(0, n - 1) + "…" : s;
 function annonce(t) { const a = $("#annonce"); a.textContent = t; a.hidden = false; }
 function majHorloge() { const s = paris().s; $("#horloge").textContent = hhmm(s); }
 function majCanaux() {
-  $("#canaux").innerHTML = CANAUX.map((c, k) => `<button role="tab" data-canal="${c.id}" aria-selected="${cour.src !== "carte" && S.canal === c.id}"><b>${k + 1}</b>${esc(c.nom)}</button>`).join("");
+  $("#canaux").innerHTML = CANAUX.map((c, k) => `<button role="tab" data-canal="${c.id}" aria-selected="${(cour.src === "tele" || cour.src === "direct") && S.canal === c.id}"><b>${k + 1}</b>${esc(c.nom)}</button>`).join("");
 }
 function majPause() {
   const lecture = etatL === 1 || etatL === 3;
@@ -356,7 +358,7 @@ function afficher() {
   const x = cour.x;
   if (!x) { $("#titre").textContent = "Rien à l'antenne"; $("#chaine").textContent = ""; $("#meta").textContent = ""; $("#surtitre").textContent = ""; $("#badges").innerHTML = ""; rendreListe(); return; }
   const e = cour.file[cour.k] || {};
-  $("#surtitre").textContent = cour.src === "tele" ? `${CANAL[cour.canal].nom} · ${hhmm(e.deb)} – ${hhmm(e.deb + e.d)}` : (F.vue === "playlist" && PLAYLIST.titre ? "Playlist · " + PLAYLIST.titre : "À la carte · " + (cour.k + 1) + "/" + cour.file.length);
+  $("#surtitre").textContent = cour.src === "dodo" ? `🌙 Programme dodo · ${cour.k + 1}/${cour.file.length}${dodo.fin ? " · arrêt vers " + hhmm(paris(dodo.fin).s) : ""}` : cour.src === "tele" ? `${CANAL[cour.canal].nom} · ${hhmm(e.deb)} – ${hhmm(e.deb + e.d)}` : (F.vue === "playlist" && PLAYLIST.titre ? "Playlist · " + PLAYLIST.titre : "À la carte · " + (cour.k + 1) + "/" + cour.file.length);
   const b = [];
   if (e.r) b.push(`<span class="badge">rediffusion</span>`);
   if (S.vus[x.i]) b.push(`<span class="badge">déjà vue</span>`);
@@ -391,7 +393,7 @@ function rendreTele() {
     el.querySelectorAll("button").forEach(b => b.style.gridTemplateColumns = "1fr");
     return;
   }
-  $("#vueTele .titre-section span").textContent = cour.src === "tele" ? "Et ensuite sur " + CANAL[cour.canal].nom : "Et ensuite (à la carte)";
+  $("#vueTele .titre-section span").textContent = cour.src === "tele" ? "Et ensuite sur " + CANAL[cour.canal].nom : cour.src === "dodo" ? "Programme dodo" : "Et ensuite (à la carte)";
   const f = cour.file || [], out = [];
   for (let j = Math.max(cour.k, 0); j < f.length && out.length < 14; j++) {
     const e = f[j]; if (!e.x || S.bloquees[e.x.i] || masquee(e.x)) continue;
@@ -476,6 +478,7 @@ function voter(v, x = cour.x, silencieux) {
   else if (nv === -1) {
     if ((S.gouts.ch[x.sid] || 0) <= -3 && x.sid && !masquee(x)) toast(`Plusieurs « bof » pour ${x.c}. La masquer ?`, { action: "Masquer", fn: () => masquer(x) });
     else toast(`Noté : moins de ${x.c || "cette chaîne"}.`, { action: "Annuler", fn: () => voter(-1, x, true) });
+    if (cour.src === "dodo" && x === cour.x) { S.dodoNon[x.i] = 1; sauver(); toast("Retirée du programme dodo.", { action: "Annuler", fn: () => { delete S.dodoNon[x.i]; voter(-1, x, true); sauver(); } }); }
     if (x === cour.x) suivant(1);
   }
 }
@@ -533,23 +536,97 @@ function feuilleHumeur() {
     });
 }
 const majHumeur = () => $("#txtHumeur").textContent = S.humeur < 30 ? "À plat" : S.humeur > 70 ? "Curieux" : "Humeur";
+/* ---------- Dodo : minuterie et programme pour s'endormir ----------
+   Programme dodo : documentaires calmes de 20 min et plus (marque « dodo » du stock : 42 d'ARTE, Balade Mentale,
+   documentaires ARTE…), au moins 6 h de file pour pouvoir passer ce qui ne convient pas, arrêt au bout de la durée choisie
+   (3 h par défaut) même en cours de vidéo. Alerte 5 min avant avec « Prolonger », son qui baisse doucement sur les
+   2 dernières minutes, écran noir facultatif. Ce qu'on regarde en s'endormant ne compte pas comme « vu » (rotation à part),
+   et « Bof » en mode dodo retire la vidéo du programme. Écran éteint, le navigateur ralentit les minuteries : l'arrêt
+   peut alors avoir jusqu'à une minute de retard. */
+const DODO_MIN_S = 1200, DODO_FILE_S = 6 * 3600, FONDU_S = 120, ALERTE_S = 300;
+const dureeDodoDefaut = () => S.dodoDuree || 180;
+function fmtMin(m) { m = Math.max(0, Math.round(m)); return m >= 60 ? `${m / 60 | 0} h${m % 60 ? " " + deux(m % 60) : ""}` : `${m} min`; }
 function feuilleDodo() {
-  const reste = dodo.fin ? Math.ceil((dodo.fin - maintenant()) / 60000) : 0;
-  feuille(`<h2>Minuterie de sommeil</h2><p>${dodo.fin ? `Arrêt dans ${reste} min.` : dodo.finVideo ? "Arrêt à la fin de la vidéo en cours." : "La lecture se met en pause au bout du temps choisi."}</p>
-    <div class="choix">${[15, 30, 45, 60, 90].map(m => `<button type="button" data-m="${m}">${m} min</button>`).join("")}<button type="button" data-m="fin">Fin de cette vidéo</button>${dodo.fin || dodo.finVideo ? `<button type="button" data-m="0">Désactiver</button>` : ""}</div>`,
+  const reste = dodo.fin ? (dodo.fin - maintenant()) / 60000 : 0, enCours = dodo.fin || dodo.finVideo;
+  const n = poolDodo().length;
+  feuille(`<h2>Dodo</h2>
+    <p>${enCours ? (dodo.fin ? `Arrêt dans ${fmtMin(reste)} (vers ${hhmm(paris(dodo.fin).s)}).` : "Arrêt à la fin de la vidéo en cours.") : "Pour s'endormir devant la télé sans la laisser tourner toute la nuit."}</p>
+    <h3>Programme pour s'endormir</h3>
+    <p>Documentaires calmes de 20 min et plus (42 d'ARTE, Balade Mentale, documentaires ARTE…), au moins 6 h de programme pour pouvoir passer ceux qui ne conviennent pas. ${n} vidéos disponibles.</p>
+    <div class="choix">${[90, 120, 180, 240].map(m => `<button type="button" data-prog="${m}" aria-pressed="${m === dureeDodoDefaut()}">Arrêt après ${fmtMin(m)}</button>`).join("")}</div>
+    <div class="choix"><button type="button" data-opt="dodoNoir" aria-pressed="${!!S.dodoNoir}">Écran noir (le son continue)</button><button type="button" data-opt="dodoFondu" aria-pressed="${S.dodoFondu !== false}">Baisse progressive du son</button></div>
+    <h3>Minuterie seule (le programme en cours continue)</h3>
+    <div class="choix">${[15, 30, 45, 60, 90].map(m => `<button type="button" data-m="${m}">${m} min</button>`).join("")}<button type="button" data-m="fin">Fin de cette vidéo</button>${enCours ? `<button type="button" data-m="0">Désactiver</button>` : ""}</div>`,
     el => el.onclick = e => {
+      const o = e.target.closest("[data-opt]");
+      if (o) { const k = o.dataset.opt; S[k] = k === "dodoFondu" ? S[k] === false : !S[k]; sauver(); o.setAttribute("aria-pressed", k === "dodoFondu" ? S[k] !== false : S[k]); return; }
+      const p = e.target.closest("[data-prog]");
+      if (p) { S.dodoDuree = +p.dataset.prog; sauver(); fermer(); lancerDodo(+p.dataset.prog); return; }
       const b = e.target.closest("[data-m]"); if (!b) return; const m = b.dataset.m;
-      dodo.fin = 0; dodo.finVideo = false;
-      if (m === "fin") dodo.finVideo = true; else if (+m) dodo.fin = maintenant() + m * 60000;
-      majDodo(); fermer(); toast(+m ? `🌙 Pause dans ${m} min.` : m === "fin" ? "🌙 Pause à la fin de cette vidéo." : "Minuterie désactivée.");
+      reglerDodo(m === "fin" ? "fin" : +m * 60000); fermer();
+      toast(+m ? `🌙 Pause dans ${m} min.` : m === "fin" ? "🌙 Pause à la fin de cette vidéo." : "Minuterie désactivée.");
     });
 }
+function reglerDodo(ms) {
+  restaurerVolume();
+  dodo.fin = 0; dodo.finVideo = false; dodo.alerte = false;
+  if (ms === "fin") dodo.finVideo = true; else if (ms > 0) dodo.fin = maintenant() + ms;
+  $("#alerteDodo").hidden = true; majDodo();
+}
+function poolDodo() {
+  return [...CAT.values()].filter(x => x.dodo && duree(x) >= DODO_MIN_S && !S.bloquees[x.i] && !masquee(x) && !S.dodoNon[x.i]);
+}
+function lancerDodo(minutes = dureeDodoDefaut()) {
+  let pool = poolDodo();
+  if (pool.reduce((a, x) => a + duree(x), 0) < DODO_FILE_S)   // secours : documentaires longs du catalogue
+    pool = pool.concat([...CAT.values()].filter(x => !x.dodo && x.o === "decouverte" && !x.co && duree(x) >= DODO_MIN_S && duree(x) <= 5400 && !S.bloquees[x.i] && !masquee(x) && !S.dodoNon[x.i]));
+  if (!pool.length) return toast("Pas encore de documentaires pour le programme dodo.");
+  // Jamais passées en dodo d'abord, puis les plus anciennement passées ; à égalité, tirage pondéré (priorité 42 et Balade Mentale).
+  const rnd = mulberry(hash("dodo|" + paris().jour + "|" + Date.now()));
+  const cle = x => (S.dodoVus[x.i] || 0) - Math.pow(rnd(), 1 / ((x.q || 2) * (x.dodo_prio ? 1.3 : 1))) * 864e5;
+  const tri = varier(pool.sort((a, b) => cle(a) - cle(b)));
+  const file = []; let t = 0;
+  for (const x of tri) { file.push({ x }); t += duree(x); if (t >= DODO_FILE_S) break; }
+  cour = { src: "dodo", file, k: -1, x: null, souple: true };
+  reglerDodo(minutes * 60000);
+  if (S.dodoNoir) ecranNoir(true);
+  aller(0, 1, true);
+  toast(`🌙 Programme dodo : ${file.length} documentaires (${fmtDuree(t)}), arrêt vers ${hhmm(paris(dodo.fin).s)}.`);
+}
+function ecranNoir(on) { $("#nuit").hidden = !on; if (on) majNuit(); }
+function majNuit() { if (!$("#nuit").hidden) $("#nuitHeure").textContent = hhmm(paris().s) + (dodo.fin ? ` · arrêt vers ${hhmm(paris(dodo.fin).s)}` : ""); }
 function majDodo() {
   const on = !!(dodo.fin || dodo.finVideo); $("#bDodo").setAttribute("aria-pressed", on);
-  $("#txtDodo").textContent = dodo.fin ? `Dodo ${Math.max(0, Math.ceil((dodo.fin - maintenant()) / 60000))} min` : dodo.finVideo ? "Dodo : fin" : "Dodo";
+  $("#txtDodo").textContent = dodo.fin ? `Dodo ${fmtMin((dodo.fin - maintenant()) / 60000)}` : dodo.finVideo ? "Dodo : fin" : "Dodo";
 }
-function verifDodo() { if (dodo.fin && maintenant() >= dodo.fin) finDodo(); else if (dodo.fin) majDodo(); }
-function finDodo() { dodo.fin = 0; dodo.finVideo = false; try { L?.pauseVideo?.(); } catch { } majDodo(); toast("🌙 Bonne nuit. Touche Lecture pour reprendre."); }
+function prolonger(min) {
+  if (!dodo.fin) return;
+  restaurerVolume();
+  dodo.fin = Math.max(dodo.fin, maintenant()) + min * 60000; dodo.alerte = false;
+  $("#alerteDodo").hidden = true; majDodo(); majNuit();
+  toast(`🌙 Prolongé : arrêt vers ${hhmm(paris(dodo.fin).s)}.`);
+}
+function restaurerVolume() { if (dodo.volume != null) { try { L?.setVolume?.(dodo.volume); } catch { } dodo.volume = null; } }
+function verifDodo() {
+  if (!dodo.fin) return;
+  const reste = (dodo.fin - maintenant()) / 1000;
+  if (reste <= 0) return finDodo();
+  if (reste <= ALERTE_S && !dodo.alerte) {
+    dodo.alerte = true; $("#alerteDodo").hidden = false;
+    $("#alerteTxt").textContent = `🌙 Arrêt dans ${Math.ceil(reste / 60)} min`;
+  } else if (dodo.alerte) $("#alerteTxt").textContent = `🌙 Arrêt dans ${Math.ceil(reste / 60)} min`;
+  if (reste <= FONDU_S && S.dodoFondu !== false && L?.setVolume) {   // le son baisse doucement
+    try { if (dodo.volume == null) dodo.volume = L.getVolume?.() ?? 100; L.setVolume(Math.round(dodo.volume * Math.max(.05, reste / FONDU_S))); } catch { }
+  }
+  majDodo(); majNuit();
+}
+function finDodo() {
+  try { L?.pauseVideo?.(); } catch { }
+  setTimeout(restaurerVolume, 800);   // le volume revient à la normale pour la prochaine fois, une fois en pause
+  dodo.fin = 0; dodo.finVideo = false; dodo.alerte = false;
+  $("#alerteDodo").hidden = true; majDodo(); majNuit();
+  toast("🌙 Bonne nuit. Touche Lecture pour reprendre.");
+}
 
 function feuilleGrille() {
   if (cour.src !== "tele") return toast("La grille n'existe qu'en mode Télé, sur un canal.");
@@ -698,7 +775,7 @@ function immersif(on) {
 document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement && fsParNous && document.body.classList.contains("immersif")) { fsParNous = false; immersif(false); } });
 function majIm() {
   const x = cour.x, dir = cour.src === "direct";
-  $("#imCanal").textContent = dir ? "YO1 Direct" : cour.src === "tele" ? CANAL[cour.canal]?.nom || "" : "À la carte";
+  $("#imCanal").textContent = dir ? "YO1 Direct" : cour.src === "dodo" ? "🌙 Dodo" + (dodo.fin ? " · " + hhmm(paris(dodo.fin).s) : "") : cour.src === "tele" ? CANAL[cour.canal]?.nom || "" : "À la carte";
   $("#imTitre").textContent = dir ? cour.file[cour.k]?.nom || "" : x ? titreDe(x) + (x.c ? " · " + x.c : "") : "";
 }
 $("#bPrec").onclick = () => suivant(-1);
@@ -714,9 +791,11 @@ $("#bPlein").onclick = pleinEcran;
 $("#bCat").onclick = feuilleCat;
 $("#barreIm").onclick = e => {
   const b = e.target.closest("[data-cmd]"); if (!b || b.disabled) return;
-  ({ prec: () => suivant(-1), pause, suiv: () => suivant(1), aime: () => voter(1), bof: () => voter(-1), tard: feuilleTard, cat: feuilleCat,
+  ({ prec: () => suivant(-1), pause, suiv: () => suivant(1), aime: () => voter(1), bof: () => voter(-1), tard: feuilleTard, cat: feuilleCat, dodo: feuilleDodo,
     canal: () => cour.src === "carte" ? suivant(1) : zapper(1), reduire: () => document.body.classList.add("reduit"), sortir: () => immersif(false) })[b.dataset.cmd]?.();
 };
+$("#alerteDodo").onclick = e => { const b = e.target.closest("[data-plus]"); if (!b) return; +b.dataset.plus ? prolonger(+b.dataset.plus) : finDodo(); };
+$("#nuit").onclick = () => ecranNoir(false);
 $("#imOuvrir").onclick = () => document.body.classList.remove("reduit");
 $("#bReglages").onclick = feuilleReglages;
 $("#bGrille").onclick = feuilleGrille;
