@@ -60,7 +60,7 @@ Tout fonctionne sur la tablette (détail et journal dans `CONTEXTE.md` §2). Deu
 
 ## 5. Interface
 
-- Portrait d'abord ; paysage = lecteur plein écran.
+- Portrait d'abord. Paysage sur tablette : deux colonnes (lecteur et commandes à gauche, programmes à droite) — demandé par Yoann le 1/11/2026 après essai du plein écran ; plein écran par le bouton. Paysage sur téléphone : lecteur seul.
 - Grandes cibles tactiles (≥ 44 px), gestes simples (glisser pour zapper : à tester, conflit possible avec le lecteur).
 - Thème sombre par défaut (télé), clair disponible ; même famille visuelle que la Vigie sans la copier.
 - Installable en raccourci (manifeste web, icône YO1tv).
