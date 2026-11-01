@@ -12,6 +12,6 @@ Télé personnelle construite sur le catalogue vidéo quotidien de La Vigie : di
 ## Lancer le test
 
 1. Settings → Pages → Deploy from a branch → `main` / `(root)` → Save.
-2. Ouvrir `https://akouatik-yo.github.io/yo1tv/` dans Brave sur la tablette.
+2. Ouvrir `https://akouatik-yo.github.io/YO1tv/` dans Brave sur la tablette.
 3. Toucher une vidéo, puis vérifier : enchaînement, ⏮ ⏯ ⏭, 📡 direct simulé, plein écran, superposition, écran éteint, publicité.
 4. Copier le journal technique (bas de page) dans la conversation avec Claude.

@@ -70,4 +70,4 @@ Règles du collecteur (constantes en tête de `collecteur.py`) :
 
 ## 7. Activer GitHub Pages
 
-Dépôt → **Settings → Pages → Build and deployment : Deploy from a branch → `main` / `(root)` → Save**. L'adresse devient `https://akouatik-yo.github.io/yo1tv/` (1 à 2 minutes). Puis, dans Brave : menu ⋮ → « Ajouter à l'écran d'accueil ».
+Dépôt → **Settings → Pages → Build and deployment : Deploy from a branch → `main` / `(root)` → Save**. L'adresse devient `https://akouatik-yo.github.io/YO1tv/` (1 à 2 minutes). Puis, dans Brave : menu ⋮ → « Ajouter à l'écran d'accueil ».
