@@ -93,7 +93,7 @@ async function chargerCatalogues() {
   }
   // Pépites : archives choisies chaque dimanche par la routine hebdomadaire (data/stock.json).
   try { for (const x of (await lireJson("data/stock.json", { cache: "no-cache" })).items || []) if (/^[\w-]{11}$/.test(x.i) && CATS[x.o] && !CAT.has(x.i)) { x._j = "stock"; x.pep = 1; CAT.set(x.i, x); NB_PEPITES++; } } catch { }
-  // Grilles du jour préparées par la routine de la Vigie (data/grilles/AAAA-MM-JJ.json) ; sinon, calcul dans la page.
+  // Grilles du jour préparées par la tâche du matin (data/grilles/AAAA-MM-JJ.json) ; sinon, calcul dans la page.
   try { GRILLES_SERVEUR = (await lireJson(`data/grilles/${auj}.json`, { cache: "no-cache" })).canaux || null; } catch { GRILLES_SERVEUR = null; }
   appliquerCorrections();
   try { DIRECTS = (await lireJson("data/directs.json")).filter(d => /^UC[\w-]{22}$/.test(d.yt_chaine || "")).sort((a, b) => (b.poids || 1) - (a.poids || 1)); } catch { DIRECTS = []; }

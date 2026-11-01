@@ -2,8 +2,8 @@
 """YO1tv — collecte et programmation, sans IA (bibliothèque standard de Python seulement).
 
 Commandes (toutes acceptent --depot DOSSIER, racine du dépôt YO1tv, par défaut le dossier parent de ce script) :
-  jour CATALOGUE DATE      catalogue du jour de la Vigie (out/videos_jour.json) → data/DATE.json, data/index.json,
-                           puis grilles data/grilles/DATE.json. Appelée chaque matin par la routine de la Vigie.
+  jour CATALOGUE DATE      catalogue du jour de la Vigie (document videos/DATE de sa base) → data/DATE.json, data/index.json,
+                           puis grilles data/grilles/DATE.json. Appelée chaque matin par la tâche « YO1tv — publication du matin ».
   grilles DATE             recalcule seulement les grilles du jour.
   candidats [--n 45 | --toutes] [--par 12] [--sortie F]
                            pépites possibles : vidéos longues les plus populaires (liste YouTube « UULP ») des chaînes

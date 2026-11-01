@@ -2,7 +2,7 @@
 
 Télé personnelle construite sur le catalogue vidéo quotidien de La Vigie : on l'allume, ça joue ; et quand on veut choisir, on peut. Page statique servie par GitHub Pages (https://akouatik-yo.github.io/YO1tv/), lecteur YouTube officiel (API IFrame).
 
-**État (1er novembre 2026, soir) : v1.1** — lots 1 à 4. Catalogue et grilles publiés chaque matin par la routine de la Vigie ; pépites d'archives choisies chaque dimanche par la routine « YO1tv — pépites et retours » ; retours de goûts envoyés vers le dépôt privé sans jeton. Détail : `CAHIER-DES-CHARGES.md` §8 ter.
+**État (1er novembre 2026) : v1.2** — lots 1 à 4 et mode dodo. Catalogue et grilles publiés chaque matin par la tâche « YO1tv — publication du matin » ; pépites d'archives et retours traités chaque dimanche par « YO1tv — pépites et retours ». Décisions : `CAHIER-DES-CHARGES.md` §8.
 
 ## Ce qui marche (v1)
 
@@ -26,15 +26,14 @@ Choix de conception et questions tranchées : [`CAHIER-DES-CHARGES.md`](CAHIER-D
 
 ## Circulation des données
 
-- **Chaque matin** (tâche planifiée dans la conversation « atelier YO1tv », après la routine de la Vigie) : lecture du catalogue `videos/DATE` dans la base de la Vigie, puis `python3 outils/yo1tv.py jour fichier.json DATE` → `data/DATE.json` (champs privés retirés), `data/index.json` (8 jours), `data/grilles/DATE.json` (grilles des 4 canaux), `data/diffusions.json` (ce qui est passé, pour ne pas répéter).
-- **Chaque dimanche soir** (tâche « YO1tv — pépites et retours » dans l'atelier, consignes dans le dépôt privé) : `dodo` (fonds du programme dodo), `candidats` (listes « vidéos populaires » des chaînes hors actu, rotation de 45 chaînes) → choix par l'IA → `integrer` → `data/stock.json` ; puis traitement des retours de goûts.
+- **Chaque matin à 5 h 41** (tâche « YO1tv — publication du matin », après la routine de la Vigie) : lecture du catalogue `videos/DATE` dans la base de la Vigie, puis `python3 outils/yo1tv.py jour fichier.json DATE` → `data/DATE.json` (champs privés retirés), `data/index.json` (8 jours), `data/grilles/DATE.json` (grilles des 4 canaux), `data/diffusions.json` (ce qui est passé, pour ne pas répéter).
+- **Chaque dimanche à 19 h 53** (tâche « YO1tv — pépites et retours », consignes dans `yo1tv-hebdo.md` du dépôt privé) : `dodo` (fonds du programme dodo), `candidats` (listes « vidéos populaires » des chaînes hors actu, rotation de 45 chaînes) → choix par l'IA → `integrer` → `data/stock.json` ; puis traitement des retours de goûts.
 - **Depuis la tablette** : Réglages → « Envoyer mes retours » → fichier `retours/yo1tv-….json` dans le dépôt privé (page GitHub pré-remplie, à valider).
 
 Sans grilles du jour, la page les calcule elle-même ; sans nouveau catalogue, elle reprend le dernier et l'indique par un bandeau.
 
 ## Ce qui reste
 
-- Créer la conversation « atelier YO1tv » (avec les deux dépôts) et y brancher les deux tâches planifiées ; d'ici là, catalogue figé au 1er novembre et grilles calculées dans la page.
 - Média Session (commandes de l'écran verrouillé) : à tester sur la tablette avant de coder.
 - À vérifier sur la tablette : sous-titres bien coupés, canal Direct, bouton « Allumer », glisser pour zapper, minuterie écran éteint.
 

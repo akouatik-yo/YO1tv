@@ -58,18 +58,9 @@ Règles du collecteur (constantes en tête de `collecteur.py`) :
 - Choix éditoriaux de Yoann : autant d'humour que d'information ; **exclus** : sport, défis, pranks, caméras cachées ; chaînes inactives gardées (« elles serviront plus tard ») ; certains créateurs ont volontairement deux chaînes.
 - Chroniques radio/télé suivies par motifs (France Inter, RTL, Quotidien, C à vous, Quelle époque !, Europe 1, Canal+) : liste complète dans `data/chaines.json` (champ `motif`).
 
-## 5. Ce qui existe déjà
+## 5. Où en est YO1tv
 
-- [`index.html`](index.html) + `app.js` + `app.css` : **YO1tv v1** (voir README).
-- [`test.html`](test.html) : ancienne page de test du lot 0 (lecteur officiel, file de 14 vidéos du catalogue d'exemple, ⏮ ⏯ ⏭, enchaînement, erreurs sautées, direct simulé, « vue à 80 % », journal, suivi de la mise en veille). Accepte aussi `#v=ID1,ID2,…`.
-- [`reference/lecteur-vigie-v4.html`](reference/lecteur-vigie-v4.html) : premier lecteur externe écrit pour la Vigie (version 4, jamais publié) : `#v=…&t=…` et `#live=UC…` (direct d'une chaîne), titres via oEmbed.
-- [`data/categories.json`](data/categories.json) : noms et descriptions des catégories, identiques à la Vigie.
-
-## 6. Pour publier le catalogue ici chaque matin (lot 1)
-
-- La routine de la Vigie tourne dans une session Claude Code planifiée qui n'a que le dépôt privé : il faudra **lui ajouter ce dépôt** (accès en écriture) et une étape « copier `out/videos_jour.json` vers `yo1tv/data/AAAA-MM-JJ.json` + mettre à jour `data/index.json`, supprimer au-delà de 8 jours ».
-- Alternative sans toucher la routine : une GitHub Action dans le dépôt privé qui pousse le fichier ici (nécessite un jeton en secret). À comparer.
-
-## 7. Activer GitHub Pages
-
-Dépôt → **Settings → Pages → Build and deployment : Deploy from a branch → `main` / `(root)` → Save**. L'adresse devient `https://akouatik-yo.github.io/YO1tv/` (1 à 2 minutes). Puis, dans Brave : menu ⋮ → « Ajouter à l'écran d'accueil ».
+Voir `README.md` (fonctions, fichiers, circulation des données) et `CAHIER-DES-CHARGES.md` §8 (décisions). Leçons techniques à retenir :
+- Une tâche planifiée (ex-routine) n'a accès qu'aux dépôts choisis dans ses réglages (claude.ai/code/routines dans un navigateur → Modifier → Paramètres avancés → Dépôt) ; l'outil `add_repo` n'y existe pas.
+- Les listes YouTube publiques se lisent sans clé : `UULF…` (vidéos longues récentes), `UULP…` (vidéos longues populaires), `UUSH…` (Shorts) ; la page `https://www.youtube.com/playlist?list=…` donne une centaine de vidéos avec titre, durée, vues et âge (`lockupViewModel`). Les flux RSS n'en donnent que 15, sans durée.
+- La base de la Vigie publie le catalogue du jour dans `videos/AAAA-MM-JJ` (même format que `out/videos_jour.json`, avec les champs privés `b` et `s` que `yo1tv.py` retire).
