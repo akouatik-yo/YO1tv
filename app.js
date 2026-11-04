@@ -834,14 +834,9 @@ function basculerCC() { S.cc = !S.cc; sauver(); appliquerCC(); $("#bCC").setAttr
    déjà en plein écran), la même mise en page sert de « faux plein écran ». La barre se replie en une petite poignée. */
 let fsParNous = false;
 function pleinEcran() { immersif(!document.body.classList.contains("immersif")); }
-// Le plein écran porte sur le bloc vidéo (#ecran : lecteur + barre), pas sur la page : Android ne bascule en incrustation
-// (PiP) en quittant l'appli que si une vidéo remplit l'écran — c'était le cas en v1, perdu en v1.1 (toute la page). Les calques
-// (message, écran noir, alerte dodo) y sont déplacés le temps du plein écran pour rester visibles.
-const CALQUES = ["#toast", "#nuit", "#alerteDodo"];
 function immersif(on) {
   document.body.classList.toggle("immersif", on); document.body.classList.remove("reduit");
-  const d = $("#ecran");
-  for (const c of CALQUES) (on ? d : document.body).append($(c));
+  const d = document.documentElement;
   if (on && !document.fullscreenElement) {
     const p = (d.requestFullscreen || d.webkitRequestFullscreen)?.call(d, { navigationUI: "hide" });
     fsParNous = false; p?.then?.(() => { fsParNous = true; }).catch?.(() => { });
