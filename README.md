@@ -23,7 +23,7 @@ Choix de conception et questions tranchées : [`CAHIER-DES-CHARGES.md`](CAHIER-D
 - `index.html`, `app.js`, `app.css` : l'application. `outils/yo1tv.py` : publication du jour, grilles, pépites (Python, sans dépendance). `manifest.webmanifest`, `logo.svg`, `icone.svg`, `icone-*.png` : installation en raccourci.
 - `test.html` : page de test du lecteur (lot 0), avec journal technique — utile pour diagnostiquer.
 - `data/index.json` + `data/AAAA-MM-JJ.json` : catalogues quotidiens. `data/chaines.json`, `data/directs.json`, `data/categories.json` : sources. `data/catalogue-exemple.json` : catalogue de secours.
-- [`CONTEXTE.md`](CONTEXTE.md) : ce qui a été appris côté Vigie. `reference/` : premier lecteur externe de la Vigie.
+- [`CONTEXTE.md`](CONTEXTE.md) : ce qui a été appris côté Vigie.
 
 ## Circulation des données
 
