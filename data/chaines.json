@@ -22,6 +22,7 @@
 "id": "yt-lemonde",
 "nom": "Le Monde (vidéo)",
 "url": "https://www.youtube.com/@lemondefr",
+"chaine_id": "UCYpRDnhk5H8h16jpS84uqsA",
 "onglet": "actu",
 "poids": 2,
 "actif": true
@@ -30,6 +31,7 @@
 "id": "yt-france24",
 "nom": "France 24",
 "url": "https://www.youtube.com/@FRANCE24",
+"chaine_id": "UCCCPCZNChQdGa9EkATeye4g",
 "onglet": "actu",
 "poids": 1,
 "actif": true
@@ -38,6 +40,7 @@
 "id": "yt-arte",
 "nom": "ARTE",
 "url": "https://www.youtube.com/@arte",
+"chaine_id": "UCwI-JbGNsojunnHbFAc0M4Q",
 "onglet": "decouverte",
 "poids": 2,
 "actif": true
@@ -55,6 +58,7 @@
 "id": "yt-lci",
 "nom": "LCI",
 "url": "https://www.youtube.com/@LCI",
+"chaine_id": "UCewhc0fvja891XkpIPGRMxQ",
 "onglet": "actu",
 "poids": 2,
 "actif": true
@@ -63,8 +67,9 @@
 "id": "yt-blast",
 "nom": "Blast",
 "url": "https://www.youtube.com/@blastinfo",
+"chaine_id": "UC__xRB5L4toU9yYawt_lIKg",
 "onglet": "analyse",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -125,8 +130,9 @@
 "id": "yt-notabene",
 "nom": "Nota Bene",
 "url": "https://www.youtube.com/@NotaBeneMovies",
+"chaine_id": "UCP46_MXP_WG_auH88FnfS1A",
 "onglet": "decouverte",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -199,7 +205,7 @@
 "url": "https://www.youtube.com/@mediapart",
 "chaine_id": "UCdnaDhU-LDQrIEEmSIfq0-Q",
 "onglet": "actu",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -235,7 +241,7 @@
 "url": "https://www.youtube.com/@datagueule",
 "chaine_id": "UCm5wThREh298TkK8hCT9HuA",
 "onglet": "decouverte",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -425,7 +431,7 @@
 "url": "https://www.youtube.com/channel/UCXwDLMDV86ldKoFVc_g8P0g",
 "chaine_id": "UCXwDLMDV86ldKoFVc_g8P0g",
 "onglet": "actu",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -545,7 +551,7 @@
 "url": "https://www.youtube.com/channel/UCSKdvgqdnj72_SLggp7BDTg",
 "chaine_id": "UCSKdvgqdnj72_SLggp7BDTg",
 "onglet": "actu",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -590,7 +596,7 @@
 "url": "https://www.youtube.com/channel/UC7PX-myPpcT4YfZEWqZxGGg",
 "chaine_id": "UC7PX-myPpcT4YfZEWqZxGGg",
 "onglet": "actu",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -649,7 +655,7 @@
 "url": "https://www.youtube.com/channel/UC8EzKGkEiusTm7g0mTfkWkg",
 "chaine_id": "UC8EzKGkEiusTm7g0mTfkWkg",
 "onglet": "analyse",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -667,7 +673,7 @@
 "url": "https://www.youtube.com/channel/UCPplJEsqnAH_8s8qvyI3BEw",
 "chaine_id": "UCPplJEsqnAH_8s8qvyI3BEw",
 "onglet": "analyse",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -748,7 +754,7 @@
 "url": "https://www.youtube.com/channel/UCofQxJWd4qkqc7ZgaLkZfcw",
 "chaine_id": "UCofQxJWd4qkqc7ZgaLkZfcw",
 "onglet": "decouverte",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -829,7 +835,7 @@
 "url": "https://www.youtube.com/channel/UCSULDz1yaHLVQWHpm4g_GHA",
 "chaine_id": "UCSULDz1yaHLVQWHpm4g_GHA",
 "onglet": "decouverte",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -901,7 +907,7 @@
 "url": "https://www.youtube.com/channel/UCX9lsdsTKfTi1eqoyL-RS-Q",
 "chaine_id": "UCX9lsdsTKfTi1eqoyL-RS-Q",
 "onglet": "decouverte",
-"poids": 1,
+"poids": 2,
 "actif": true
 },
 {
@@ -2137,5 +2143,45 @@
 "poids": 1,
 "courts": true,
 "actif": true
+},
+{
+"id": "yt-jeremynadeausecondechain",
+"nom": "Jérémy Nadeau (seconde chaîne)",
+"url": "https://www.youtube.com/channel/UCQLZkqvxRYqwJAlsl-ybsww",
+"chaine_id": "UCQLZkqvxRYqwJAlsl-ybsww",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": false
+},
+{
+"id": "yt-lewoop",
+"nom": "Woop",
+"url": "https://www.youtube.com/channel/UCdsopirJ8XJilmg2Jvgc6AA",
+"chaine_id": "UCdsopirJ8XJilmg2Jvgc6AA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": false
+},
+{
+"id": "yt-nathalienicole",
+"nom": "Nathalie Nicole",
+"url": "https://www.youtube.com/channel/UCm6xk6yw6gDhbANblPzOHDw",
+"chaine_id": "UCm6xk6yw6gDhbANblPzOHDw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": false
+},
+{
+"id": "yt-peppeetciccio",
+"nom": "Peppe et Ciccio",
+"url": "https://www.youtube.com/channel/UCjw6UfOTw7Yza7eGaWdre9A",
+"chaine_id": "UCjw6UfOTw7Yza7eGaWdre9A",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": false
 }
 ]

@@ -8,7 +8,7 @@
 
 - Quotidien numérique personnel (artefact claude.ai) : édition rédigée chaque matin, « mur » de liens, onglet Présidentielle, et une partie **Vidéos**.
 - **Routine planifiée chaque jour à 4 h 38 (Paris)** : `collecteur.py` (sans IA) collecte flux, chaînes YouTube, météo… puis une IA rédige et publie dans la base de données de l'artefact.
-- Dépôt privé `akouatik-yo/Actualit-s-` : `collecteur.py`, `la-vigie.html`, `routine-prompt.md`, `redaction.md`, `sources-initiales.json`, `README.md`, `A-FAIRE.md`.
+- Dépôt privé `akouatik-yo/Actualit-s-` : `collecteur.py`, `la-vigie.html`, `routine-prompt.md`, `redaction.md`, `etat/sources.json` (liste de référence des sources), `README.md`, `A-FAIRE.md`.
 - La page de la Vigie ne peut **ni intégrer d'iframe, ni charger d'images externes** (règles de sécurité de claude.ai, identiques dans l'application et dans le navigateur — déduit, et confirmé pour les iframes) : les vignettes y sont stockées en data URI dans la base (`vignettes/DATE-N`).
 
 ## 2. Tests du lecteur intégré (1er novembre 2026)

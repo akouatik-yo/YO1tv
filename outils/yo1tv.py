@@ -2,8 +2,12 @@
 """YO1tv — collecte et programmation, sans IA (bibliothèque standard de Python seulement).
 
 Commandes (toutes acceptent --depot DOSSIER, racine du dépôt YO1tv, par défaut le dossier parent de ce script) :
-  jour CATALOGUE DATE      catalogue du jour de la Vigie (document videos/DATE de sa base) → data/DATE.json, data/index.json,
-                           puis grilles data/grilles/DATE.json. Appelée chaque matin par la tâche « YO1tv — publication du matin ».
+  jour CATALOGUE DATE [--sources SOURCES]
+                           catalogue du jour de la Vigie (document videos/DATE de sa base) → data/DATE.json, data/index.json,
+                           puis grilles data/grilles/DATE.json. Appelée chaque matin par la routine de la Vigie (diffuser.sh du
+                           dépôt privé), avec --sources : les listes de chaînes et de directs sont d'abord mises à jour (commande sources).
+  sources SOURCES          data/chaines.json et data/directs.json tirés de la liste de référence des sources de la Vigie
+                           (etat/sources.json du dépôt privé), sans l'orientation politique ni les notes de la rédaction.
   grilles DATE             recalcule seulement les grilles du jour.
   candidats [--n 45 | --toutes] [--par 12] [--sortie F]
                            pépites possibles : vidéos longues les plus populaires (liste YouTube « UULP ») des chaînes
@@ -57,10 +61,10 @@ def lire(chemin, defaut=None):
         return defaut
 
 
-def ecrire(chemin, obj, compact=True):
+def ecrire(chemin, obj, compact=True, indent=1):
     os.makedirs(os.path.dirname(chemin), exist_ok=True)
     with open(chemin + ".tmp", "w", encoding="utf-8") as f:
-        json.dump(obj, f, ensure_ascii=False, separators=(",", ":") if compact else None, indent=None if compact else 1)
+        json.dump(obj, f, ensure_ascii=False, separators=(",", ":") if compact else None, indent=None if compact else indent)
     os.replace(chemin + ".tmp", chemin)
 
 
@@ -335,6 +339,31 @@ def cmd_contexte(depot):
         pass
 
 
+# ---------------------------------------------------------------- sources (copie publique de la liste de la Vigie)
+CHAMPS_CHAINE = ("id", "nom", "url", "chaine_id", "onglet", "poids", "directs", "courts", "mixte", "motif", "sinon", "actif")
+CHAMPS_DIRECT = ("id", "nom", "url", "yt_chaine", "poids")
+
+
+def cmd_sources(depot, fichier):
+    """La liste de référence est etat/sources.json (dépôt privé de la Vigie) : on n'en copie ici que les champs utiles à
+    YO1tv. Chaînes YouTube (actives ou non : `actif` est gardé) → data/chaines.json ; directs actifs → data/directs.json."""
+    srcs = lire(fichier)
+    if not isinstance(srcs, list) or not srcs:
+        sys.exit(f"Liste des sources illisible : {fichier}")
+    chaines = [{k: s[k] for k in CHAMPS_CHAINE if k in s} for s in srcs if s.get("type") == "youtube" and s.get("chaine_id")]
+    for c in chaines:
+        c["actif"] = bool(c.get("actif", True))
+    directs = [{k: s[k] for k in CHAMPS_DIRECT if k in s} for s in srcs if s.get("type") == "direct" and s.get("actif", True)]
+    if not chaines:
+        sys.exit("Aucune chaîne YouTube dans la liste des sources : rien n'est remplacé")
+    for nom, l in (("chaines", chaines), ("directs", directs)):   # ordre des fichiers existants conservé (zapping, diffs courts)
+        rang = {x.get("id"): k for k, x in enumerate(lire(f"{depot}/data/{nom}.json", []) or [])}
+        l.sort(key=lambda x: rang.get(x["id"], len(rang)))
+    ecrire(f"{depot}/data/chaines.json", chaines, compact=False, indent=0)
+    ecrire(f"{depot}/data/directs.json", directs, compact=False)
+    print(f"Sources : {len(chaines)} chaînes ({sum(1 for c in chaines if c['actif'])} actives), {len(directs)} directs")
+
+
 # ---------------------------------------------------------------- publication du jour
 def cmd_jour(depot, catalogue, jour):
     cat = lire(catalogue)
@@ -530,12 +559,16 @@ class Grilles:
 
 
 def main():
-    depot = arg("--depot", DEPOT)
+    depot, sources = arg("--depot", DEPOT), arg("--sources")
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     c, a = sys.argv[1], sys.argv[2:]
     if c == "jour" and len(a) == 2:
+        if sources:
+            cmd_sources(depot, sources)
         cmd_jour(depot, a[0], a[1])
+    elif c == "sources" and len(a) == 1:
+        cmd_sources(depot, a[0])
     elif c == "grilles" and len(a) == 1:
         cmd_grilles(depot, a[0])
     elif c == "candidats":

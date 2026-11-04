@@ -30,7 +30,7 @@ Esprit : autant d'humour que d'information, pour s'informer sans déprimer.
 Tout fonctionne sur la tablette (détail et journal dans `CONTEXTE.md` §2). Deux remarques de Yoann : **le son démarre bien activé, mais les sous-titres aussi** → les désactiver par défaut ; le démarrage en cours de vidéo du « direct simulé » de test **n'apporte rien** → à supprimer (voir lot 2 pour le vrai besoin).
 
 ### Lot 1 — Le lecteur (MVP)
-- **Catalogue du jour** lu depuis `data/` (déposé chaque matin par la tâche « YO1tv — publication du matin »).
+- **Catalogue du jour** lu depuis `data/` (déposé chaque matin par la routine de la Vigie).
 - **Lecteur en haut, file en dessous** (portrait) ; vignettes `i.ytimg.com`.
 - **Sous-titres désactivés par défaut** (`cc_load_policy: 0` ne suffit pas toujours : après `onReady`/changement de vidéo, `player.unloadModule("captions")` ou `setOption("captions","track",{})` ; bouton pour les réactiver).
 - **Enchaînement automatique** ; vidéos non intégrables (erreur 101/150) sautées et signalées, avec lien « Ouvrir sur YouTube ».
@@ -96,7 +96,7 @@ Format des vidéos : voir `CONTEXTE.md` §3 (champs `i t c sid d o p du co`).
 | Boucle avec la Vigie | Sans jeton : « Envoyer mes retours » ouvre la page GitHub de création de fichier du dépôt privé (`retours/yo1tv-….json`), pré-remplie. La tâche du dimanche applique des ajustements bornés (poids ±1, catégorie d'une chaîne non mixte) aux sources de la Vigie et tient un journal. |
 | Dodo | Minuterie, ou programme de documentaires calmes ≥ 20 min (fonds `dodo` : 42 d'ARTE, Balade Mentale, documentaires ARTE et ARTE Évasion, C'est pas sorcier ; titres violents ou angoissants exclus ; ordre : 2-3 « 42 », 2 documentaires ≥ 44 min, puis alternance Balade Mentale / documentaire ; file ≥ 6 h), arrêt au bout de 3 h par défaut même en cours de vidéo, alerte 5 min avant avec prolongation, son qui baisse, écran noir ; rien ne compte comme vu ; « Bof » retire du programme. |
 | Interface | Portrait d'abord ; paysage sur tablette en deux colonnes ; plein écran immersif avec barre de commandes YO1tv (plein écran de YouTube masqué) ; sombre par défaut ; raccourci plein écran (manifeste) ; logo vectoriel d'après le dessin de Yoann. |
-| Tâches planifiées | « YO1tv — publication du matin » (5 h 41, dépôt YO1tv) et « YO1tv — pépites et retours » (dimanche 19 h 53, dépôts YO1tv et Actualit-s-), sessions neuves sur Sonnet ; dépôts attachés dans les réglages de chaque tâche (navigateur seulement, pas l'application). La routine de la Vigie n'est pas modifiée : la tâche du matin lit `videos/DATE` dans sa base. |
+| Tâches planifiées | Catalogue, grilles, listes des chaînes et des directs : publiés chaque matin par la routine de la Vigie (dépôts Actualit-s-, YO1tv et Vigie attachés), à la fin de son travail ; la tâche « YO1tv — publication du matin » (5 h 41) est désactivée depuis le 5 novembre 2026. « YO1tv — pépites et retours » (dimanche 19 h 53, dépôts YO1tv et Actualit-s-), session neuve sur Sonnet. Dépôts attachés dans les réglages de chaque tâche (navigateur seulement, pas l'application). |
 
 ## 9. Pistes ouvertes
 
