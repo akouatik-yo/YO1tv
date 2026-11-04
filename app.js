@@ -224,7 +224,7 @@ function creerLecteur(dem) {
   placeLecteur(); pret = false; enDirect = false; demande = null;
   L = new YT.Player("lecteur", {
     videoId: dem.id,
-    playerVars: { playsinline: 1, rel: 0, autoplay: 1, start: dem.debut || 0, cc_load_policy: S.cc ? 1 : 0, iv_load_policy: 3, fs: 0, hl: "fr", origin: location.origin },
+    playerVars: { playsinline: 1, rel: 0, autoplay: 1, start: dem.debut || 0, cc_load_policy: S.cc ? 1 : 0, iv_load_policy: 3, fs: 1, hl: "fr", origin: location.origin },
     events: {
       onReady: () => { pret = true; appliquerCC(); if (demande) charger(demande); else try { L.playVideo(); } catch { } },
       onStateChange: e => etatChange(e.data),
