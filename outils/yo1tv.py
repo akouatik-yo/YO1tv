@@ -42,6 +42,15 @@ PAR_CHAINE = 12                 # candidates examinées par chaîne et par passa
 STOCK_MAX, ECARTES_MAX = 2500, 30000
 REPOS_STOCK = 21                # une pépite ne repasse pas avant 21 jours
 CHAMPS_PRIVES = ("b", "s")      # orientation politique, score interne
+RIRE_MAX_S = 900                # YO1 Rire : jamais de vidéo de plus de 15 min
+# Jeu vidéo : écarté des pépites (choix de Yoann), sauf les bandes-annonces ; même règle que collecteur.py de la Vigie.
+JEU_MOTS = re.compile(r"\b(gameplay|let'?s ?play|walkthrough|playthrough|speedrun|soluce|let'?s ?test|en live sur twitch|stream|streamer|"
+                      r"e-?sports?|minecraft|fortnite|roblox|among us|gta ?(v|5|6|rp|online)|league of legends|valorant|call of duty|"
+                      r"warzone|apex legends|counter-?strike|elden ring|zelda|pok[ée]mon|super mario|mario kart|fifa ?\d\d|ea sports fc|"
+                      r"ps[45]|playstation|xbox|nintendo|switch 2|steam|twitch|fnaf|trackmania|line rider race|five nights at freddy|doki doki|undertale|gamer|manette|"
+                      r"jeux?[ -]vidéos?|video ?games?|gaming)\b", re.I)
+BANDE_ANNONCE = re.compile(r"\b(bande[ -]annonce|trailer|teaser)\b", re.I)
+est_jeu = lambda titre: bool(JEU_MOTS.search(titre or "")) and not BANDE_ANNONCE.search(titre or "")
 
 
 def arg(nom, defaut=None):
@@ -213,7 +222,7 @@ def cmd_candidats(depot):
             stock["rotation"][src["id"]] = jour
             pris = 0
             for v in vids:
-                if v["i"] in connus or v["du_s"] < DUREE_MIN_PEPITE or pris >= par_chaine:
+                if v["i"] in connus or v["du_s"] < DUREE_MIN_PEPITE or pris >= par_chaine or est_jeu(v.get("t")):
                     continue
                 connus.add(v["i"])
                 pris += 1
@@ -427,7 +436,7 @@ class Grilles:
                 self.score[x["i"]] = s + 0.4 * alea(jour, x["i"])
         for x in charger_stock(depot)["items"]:
             der = self.diffusions.get(x["i"])
-            if x["i"] in self.fiche or (der and der < jour and (self.j - date.fromisoformat(der)).days < REPOS_STOCK):
+            if est_jeu(x.get("t")) or x["i"] in self.fiche or (der and der < jour and (self.j - date.fromisoformat(der)).days < REPOS_STOCK):
                 continue
             self.fiche[x["i"]] = x
             echo = x.get("echo") and x.get("echo_fin", "") >= jour
@@ -498,7 +507,8 @@ class Grilles:
         def prendre(nom, plafond, profondeur=0):
             r = reserves.setdefault(nom, self.reserve(nom))
             for x in r:
-                if x["i"] in pris or duree(x) > plafond or (avant and x.get("sid") == avant) or (permises and x["o"] not in permises):
+                if x["i"] in pris or duree(x) > plafond or (avant and x.get("sid") == avant) or (permises and x["o"] not in permises) \
+                        or (canal == "rire" and duree(x) > RIRE_MAX_S):
                     continue
                 return x
             if profondeur < 2:

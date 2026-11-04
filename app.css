@@ -178,3 +178,7 @@ body.immersif.reduit .toast { bottom: calc(18px + env(safe-area-inset-bottom)) }
 .alerte-dodo span { display: flex; gap: 6px; flex-wrap: wrap }
 .alerte-dodo button { min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid #3d4a66; background: #262f45; color: inherit; font-weight: 700 }
 .alerte-dodo button[data-plus="0"] { background: transparent }
+
+/* Pied de page (mention du projet) ; l'adresse est assemblée par app.js pour échapper aux robots. */
+.pied-projet { margin: 28px 0 4px; padding-top: 12px; border-top: 1px solid var(--trait); color: var(--gris); font-size: 13px; text-align: center }
+.pied-projet a { color: inherit }

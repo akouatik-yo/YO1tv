@@ -2183,5 +2183,311 @@
 "poids": 1,
 "courts": true,
 "actif": false
+},
+{
+"id": "yt-bobbypills",
+"nom": "Bobbypills",
+"url": "https://www.youtube.com/channel/UCMFYKDl4VZCHbU3vCsy86yg",
+"chaine_id": "UCMFYKDl4VZCHbU3vCsy86yg",
+"onglet": "humour",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-doodlechaos",
+"nom": "DoodleChaos",
+"url": "https://www.youtube.com/channel/UCnVimh35ecf46P_Bt-2AArg",
+"chaine_id": "UCnVimh35ecf46P_Bt-2AArg",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-minuscule",
+"nom": "Minuscule",
+"url": "https://www.youtube.com/channel/UCOOi7JtIMDaYsaUjDBSTSIQ",
+"chaine_id": "UCOOi7JtIMDaYsaUjDBSTSIQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-kekeflipnote",
+"nom": "kekeflipnote",
+"url": "https://www.youtube.com/channel/UCNdNkUfhFfzBtKRU_5QgUvw",
+"chaine_id": "UCNdNkUfhFfzBtKRU_5QgUvw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-felixcolgrave",
+"nom": "Felix Colgrave",
+"url": "https://www.youtube.com/channel/UCO7fujFV_MuxTM0TuZrnE6Q",
+"chaine_id": "UCO7fujFV_MuxTM0TuZrnE6Q",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-animatic",
+"nom": "Animatic (Autour de Minuit)",
+"url": "https://www.youtube.com/channel/UCjJSFyNeim43LclfKcWccmg",
+"chaine_id": "UCjJSFyNeim43LclfKcWccmg",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-folimage",
+"nom": "Folimage",
+"url": "https://www.youtube.com/channel/UCxEWAwSWGR6hIRL61pRtiUg",
+"chaine_id": "UCxEWAwSWGR6hIRL61pRtiUg",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-lapinscretins",
+"nom": "Les Lapins Crétins",
+"url": "https://www.youtube.com/channel/UCdLdz4Jf5HDBrHv7_1acKiw",
+"chaine_id": "UCdLdz4Jf5HDBrHv7_1acKiw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-kaeloo",
+"nom": "Kaeloo",
+"url": "https://www.youtube.com/channel/UCUFtJ_qQiSu399hLqvw9HTA",
+"chaine_id": "UCUFtJ_qQiSu399hLqvw9HTA",
+"onglet": "humour",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-kaamelott",
+"nom": "Kaamelott",
+"url": "https://www.youtube.com/channel/UCXzt21wguxoJGo7TFBXNRgw",
+"chaine_id": "UCXzt21wguxoJGo7TFBXNRgw",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-topito",
+"nom": "Topito",
+"url": "https://www.youtube.com/channel/UCQs8MrktndWkXdqOj08ogrQ",
+"chaine_id": "UCQs8MrktndWkXdqOj08ogrQ",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-failarmy",
+"nom": "FailArmy",
+"url": "https://www.youtube.com/channel/UCPDis9pjXuqyI7RYLJ-TTSA",
+"chaine_id": "UCPDis9pjXuqyI7RYLJ-TTSA",
+"onglet": "humour",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-sylvqin",
+"nom": "Sylvqin",
+"url": "https://www.youtube.com/channel/UCseGV3amBLISlIOMQodPfVQ",
+"chaine_id": "UCseGV3amBLISlIOMQodPfVQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-feldup",
+"nom": "Feldup",
+"url": "https://www.youtube.com/channel/UCQVaKQcp4OxSg1eC6SF3NTw",
+"chaine_id": "UCQVaKQcp4OxSg1eC6SF3NTw",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-misterjday",
+"nom": "MisterJDay",
+"url": "https://www.youtube.com/channel/UC2uPHgyyLv2rnkm4CfIgWcw",
+"chaine_id": "UC2uPHgyyLv2rnkm4CfIgWcw",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-axolot",
+"nom": "Axolot",
+"url": "https://www.youtube.com/channel/UC2_OG1L8DLTzQ7UrZVOk7OA",
+"chaine_id": "UC2_OG1L8DLTzQ7UrZVOk7OA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-poissonfecond",
+"nom": "Poisson Fécond",
+"url": "https://www.youtube.com/channel/UC4ii4_aeS8iOFzsHuhJTq2w",
+"chaine_id": "UC4ii4_aeS8iOFzsHuhJTq2w",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-autrehistoire",
+"nom": "C'est une autre histoire",
+"url": "https://www.youtube.com/channel/UCKjDY4joMPcoRMmd-G1yz1Q",
+"chaine_id": "UCKjDY4joMPcoRMmd-G1yz1Q",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-scienceclic",
+"nom": "ScienceClic",
+"url": "https://www.youtube.com/channel/UCV6uM3y-8TeO7JlCtcEN-Bg",
+"chaine_id": "UCV6uM3y-8TeO7JlCtcEN-Bg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-veritasiumfr",
+"nom": "Veritasium en français",
+"url": "https://www.youtube.com/channel/UCin0m13qWv3-051xlWlHamA",
+"chaine_id": "UCin0m13qWv3-051xlWlHamA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-captainpopcorn",
+"nom": "Captain Popcorn",
+"url": "https://www.youtube.com/channel/UCZeyUZmGAyRLDfM2ir3q-OQ",
+"chaine_id": "UCZeyUZmGAyRLDfM2ir3q-OQ",
+"onglet": "culture",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-defakator",
+"nom": "Defakator",
+"url": "https://www.youtube.com/channel/UCU0FhLr6fr7U9GOn6OiQHpQ",
+"chaine_id": "UCU0FhLr6fr7U9GOn6OiQHpQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-strangernanar",
+"nom": "Stranger Nanar",
+"url": "https://www.youtube.com/channel/UCLlq4vjyJ-SLDUvcn-LhEKQ",
+"chaine_id": "UCLlq4vjyJ-SLDUvcn-LhEKQ",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-gusillusionniste",
+"nom": "Gus illusionniste",
+"url": "https://www.youtube.com/channel/UCh13VrAg8CJ7PVADxr7Ayvw",
+"chaine_id": "UCh13VrAg8CJ7PVADxr7Ayvw",
+"onglet": "divertissement",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-francetvnature",
+"nom": "France tv science & nature",
+"url": "https://www.youtube.com/channel/UCAdyNOE80FsFPYlFliyXfwQ",
+"chaine_id": "UCAdyNOE80FsFPYlFliyXfwQ",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-dailydose",
+"nom": "Daily Dose Of Internet",
+"url": "https://www.youtube.com/channel/UCdC0An4ZPNr_YiFiYoVbwaw",
+"chaine_id": "UCdC0An4ZPNr_YiFiYoVbwaw",
+"onglet": "divertissement",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-slowmoguys",
+"nom": "The Slow Mo Guys",
+"url": "https://www.youtube.com/channel/UCUK0HBIBWgM2c4vsPhkYY4w",
+"chaine_id": "UCUK0HBIBWgM2c4vsPhkYY4w",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-markrober",
+"nom": "Mark Rober",
+"url": "https://www.youtube.com/channel/UCY1kMZp36IQSyNx_9h4mpCg",
+"chaine_id": "UCY1kMZp36IQSyNx_9h4mpCg",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-grandillusions",
+"nom": "Grand Illusions",
+"url": "https://www.youtube.com/channel/UCnmgSO_4g6QcRzy0yFeglyA",
+"chaine_id": "UCnmgSO_4g6QcRzy0yFeglyA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-primitivetech",
+"nom": "Primitive Technology",
+"url": "https://www.youtube.com/channel/UCAL3JXZSzSm8AlZyD3nQdBA",
+"chaine_id": "UCAL3JXZSzSm8AlZyD3nQdBA",
+"onglet": "decouverte",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-howridiculous",
+"nom": "How Ridiculous",
+"url": "https://www.youtube.com/channel/UC5f5IV0Bf79YLp_p9nfInRA",
+"chaine_id": "UC5f5IV0Bf79YLp_p9nfInRA",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
+},
+{
+"id": "yt-peopleareawesome",
+"nom": "People Are Awesome",
+"url": "https://www.youtube.com/channel/UCIJ0lLcABPdYGp7pRMGccAQ",
+"chaine_id": "UCIJ0lLcABPdYGp7pRMGccAQ",
+"onglet": "divertissement",
+"poids": 1,
+"courts": true,
+"actif": true
+},
+{
+"id": "yt-oddlysatisfying",
+"nom": "Oddly Satisfying",
+"url": "https://www.youtube.com/channel/UCCZIevhN62jJ2gb-u__M95g",
+"chaine_id": "UCCZIevhN62jJ2gb-u__M95g",
+"onglet": "divertissement",
+"poids": 1,
+"actif": true
 }
 ]

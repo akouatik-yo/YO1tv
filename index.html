@@ -32,6 +32,7 @@
     <symbol id="i-bas" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-haut" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
     <symbol id="i-canal" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m8 2 4 4 4-4"/></symbol>
+    <symbol id="i-source" viewBox="0 0 24 24"><circle cx="12" cy="10" r="2"/><path d="M8.5 6.5a5 5 0 0 0 0 7M15.5 6.5a5 5 0 0 1 0 7M5.6 3.6a9 9 0 0 0 0 12.8M18.4 3.6a9 9 0 0 1 0 12.8M12 12v9"/></symbol>
     <symbol id="i-reglages" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
   </defs>
 </svg>
@@ -74,6 +75,7 @@
     <button data-cmd="bof" id="imBof" aria-pressed="false" aria-label="Bof"><svg><use href="#i-bof"/></svg></button>
     <button data-cmd="tard" id="imTard" aria-label="Plus tard"><svg><use href="#i-tard"/></svg></button>
     <button data-cmd="cat" id="imCat" aria-label="Mal classée"><svg><use href="#i-cat"/></svg></button>
+    <button data-cmd="source" id="imSource" aria-label="Agir sur la source" hidden><svg><use href="#i-source"/></svg></button>
     <button data-cmd="dodo" aria-label="Dodo"><svg><use href="#i-dodo"/></svg></button>
     <button data-cmd="reduire" aria-label="Replier la barre"><svg><use href="#i-bas"/></svg></button>
     <button data-cmd="sortir" aria-label="Quitter le plein écran"><svg><use href="#i-fermer"/></svg></button>
@@ -96,6 +98,7 @@
     <button id="bBof" aria-pressed="false" class="vote"><svg><use href="#i-bof"/></svg><span>Bof</span></button>
     <button id="bTard"><svg><use href="#i-tard"/></svg><span>Plus tard</span></button>
     <button id="bCat"><svg><use href="#i-cat"/></svg><span>Catégorie</span></button>
+    <button id="bSource" hidden><svg><use href="#i-source"/></svg><span>Source</span></button>
     <button id="bHumeur"><svg><use href="#i-humeur"/></svg><span id="txtHumeur">Humeur</span></button>
     <button id="bDodo" aria-pressed="false"><svg><use href="#i-dodo"/></svg><span id="txtDodo">Dodo</span></button>
     <button id="bCC" aria-pressed="false"><svg><use href="#i-cc"/></svg><span>Sous-titres</span></button>
@@ -121,6 +124,7 @@
     <ol class="liste" id="carte"></ol>
     <button class="plus" id="bPlus" hidden>Afficher plus</button>
   </section>
+  <footer class="pied-projet">Projet personnel en cours de construction · en cas de besoin : <a id="contact" data-a="akouatik" data-b="gmail.com">contact</a></footer>
 </main>
 
 <div class="nuit" id="nuit" hidden><span id="nuitHeure"></span><small>Écran noir : le son continue. Toucher pour rallumer.</small></div>

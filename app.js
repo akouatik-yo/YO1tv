@@ -11,6 +11,7 @@ const ytUrl = id => "https://www.youtube.com/watch?v=" + id;
 const vignette = id => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
 const enSec = d => String(d || "").split(":").reduce((s, x) => s * 60 + (+x || 0), 0);
 const DUREE_COURT = 40, DUREE_INCONNUE = 600, JOUR_S = 86400;
+const RIRE_MAX_S = 900;   // YO1 Rire : jamais de vidéo de plus de 15 min (même règle que outils/yo1tv.py)
 const duree = x => x.co ? DUREE_COURT : (enSec(x.du) || DUREE_INCONNUE);
 const deux = n => String(n).padStart(2, "0");
 const hhmm = s => { s = Math.floor(s) % JOUR_S; return deux(s / 3600 | 0) + ":" + deux((s % 3600) / 60 | 0); };
@@ -50,7 +51,7 @@ const CLE = "yo1tv.v1";
 const defaut = () => ({
   v: 1, vus: {}, hist: [], prog: {}, votes: {}, gouts: { ch: {}, cat: {} }, masquees: [], noms: {}, plusTard: [], bloquees: {},
   humeur: 50, cc: false, theme: "sombre", canal: "mix", mode: "tele", format: "avec", courtsTele: true, cacherVues: true,
-  direct: 0, grilles: {}, pos: {}, corr: {}, modif: 0, envoi: 0, dodoVus: {}, dodoNon: {}, dodoDuree: 180, dodoNoir: false, dodoFondu: true
+  direct: 0, grilles: {}, pos: {}, corr: {}, prio: {}, suppr: [], proprio: 0, modif: 0, envoi: 0, dodoVus: {}, dodoNon: {}, dodoDuree: 180, dodoNoir: false, dodoFondu: true
 });
 function lireStock() {
   let s; try { s = Object.assign(defaut(), JSON.parse(localStorage.getItem(CLE)) || {}); } catch { s = defaut(); }
@@ -112,6 +113,7 @@ function fHumeur(x) {
 }
 function poids(x, canal) {
   let w = (x.pep ? .9 * (x.q || 2) : (x.p || 1)) * fGout(x) * fHumeur(x) * (x.sel ? 1.5 : 1);
+  if (S.prio[x.sid]) w *= S.prio[x.sid] / (x.p || 1);   // priorité choisie avec le bouton Source
   if (canal === "mix") { w *= MIX_CAT[x.o] || 1; if (duree(x) > 5400) w *= .4; }
   if (x._j !== DERNIER) w *= .7;
   return w;
@@ -145,7 +147,7 @@ function passe(longs, courts, c) {
 // cible : durée totale visée (24 h ; davantage quand on prolonge une grille épuisée).
 function construire(canal, garder = [], gen = 0, cible = JOUR_S) {
   const c = CANAL[canal], gardes = new Set(garder.map(g => g[0]));
-  const okC = x => c.cats.includes(x.o) && (!x.co || (c.courts && S.courtsTele));
+  const okC = x => c.cats.includes(x.o) && (!x.co || (c.courts && S.courtsTele)) && (canal !== "rire" || duree(x) <= RIRE_MAX_S);
   let pool = [...CAT.values()].filter(x => okC(x) && !gardes.has(x.i) && jouable(x)), rediff = 0;
   if (!pool.length && garder.length) {   // tout le canal est déjà dans la grille : rediffusions, hors les 40 derniers passages
     const recents = new Set(garder.slice(-40).map(g => g[0]));
@@ -375,7 +377,7 @@ function metaDe(x, e) {
 }
 function afficher() {
   const dir = cour.src === "direct";
-  for (const id of ["#bAime", "#bBof", "#bTard", "#bCC", "#bCat", "#imAime", "#imBof", "#imTard", "#imCat"]) $(id).disabled = dir;
+  for (const id of ["#bAime", "#bBof", "#bTard", "#bCC", "#bCat", "#bSource", "#imAime", "#imBof", "#imTard", "#imCat", "#imSource"]) $(id).disabled = dir;
   majCanaux(); majPause(); majVotes(); majDodo();
   $("#bCC").setAttribute("aria-pressed", S.cc);
   if (dir) {
@@ -682,7 +684,7 @@ function feuilleGrille() {
     });
 }
 function feuilleReglages() {
-  const masq = S.masquees.map(sid => `<li><span>${esc(S.noms[sid] || sid)}</span><button type="button" class="petit" data-demasquer="${esc(sid)}">Réafficher</button></li>`).join("");
+  const masq = S.masquees.map(sid => `<li><span>${esc(S.noms[sid] || sid)}${S.suppr.includes(sid) ? " (suppression demandée)" : ""}</span><button type="button" class="petit" data-demasquer="${esc(sid)}">Réafficher</button></li>`).join("");
   const bloq = Object.keys(S.bloquees).map(id => { const x = CAT.get(id); return `<li><span>${esc(x ? court(titreDe(x), 70) : id)}</span><a class="petit" href="${ytUrl(id)}" target="_blank" rel="noopener">YouTube</a></li>`; }).join("");
   const gch = Object.entries(S.gouts.ch).filter(([, v]) => v).sort((a, b) => b[1] - a[1]);
   const goutsTxt = gch.length ? gch.slice(0, 6).map(([sid, v]) => `${esc(S.noms[sid] || sid)} (${v > 0 ? "+" : ""}${v})`).join(", ") + (gch.length > 6 ? "…" : "") : "aucun vote pour l'instant";
@@ -711,7 +713,7 @@ function feuilleReglages() {
           const k = b.dataset.opt; S[k] = !S[k]; sauver(); b.setAttribute("aria-pressed", S[k]);
           if (k === "cc") { appliquerCC(); afficher(); } if (k === "courtsTele") refaireTout(); if (k === "cacherVues") rendreListe();
         }
-        if (b.dataset.demasquer) { S.masquees = S.masquees.filter(s => s !== b.dataset.demasquer); sauver(); b.closest("li").remove(); rendreListe(); }
+        if (b.dataset.demasquer) { const sid = b.dataset.demasquer; S.masquees = S.masquees.filter(s => s !== sid); S.suppr = S.suppr.filter(s => s !== sid); S.modif = Date.now(); sauver(); b.closest("li").remove(); rendreListe(); }
         if (b.dataset.act === "export") exporter();
         if (b.dataset.act === "envoyer") envoyerRetours();
         if (b.dataset.act === "copier") navigator.clipboard?.writeText(JSON.stringify(retours(), null, 1)).then(() => toast("Retours copiés."), () => toast("Copie impossible."));
@@ -760,6 +762,32 @@ function feuilleCat() {
     <p>YO1tv s'en souvient tout de suite pour cette vidéo ; après trois corrections dans le même sens pour une chaîne, ses autres vidéos suivent. Les corrections partent vers la Vigie avec « Envoyer mes retours » (Réglages).</p>`,
     el => el.onclick = e => { const b = e.target.closest("[data-cat]"); if (b) { corriger(x, b.dataset.cat); fermer(); } });
 }
+/* ---------- Source (propriétaire seulement : activé une fois par ?proprio=1 dans l'adresse) ---------- */
+const PRIOS = [[.5, "Basse"], [1, "Normale"], [2, "Haute"], [3, "Très haute"]];   // poids de la chaîne (1 pour la plupart)
+function feuilleSource() {
+  const x = cour.x; if (!x?.sid || cour.src === "direct") return;
+  const actuelle = S.prio[x.sid] || x.p || 1, suppr = S.suppr.includes(x.sid);
+  feuille(`<h2>Source : ${esc(x.c || x.sid)}</h2><p>Catégorie de la chaîne : <b>${esc(CATS[x._o0 || x.o] || x.o || "?")}</b> · priorité ${S.prio[x.sid] ? "choisie" : "de la Vigie"} : <b>${esc(PRIOS.find(p => p[0] === actuelle)?.[1] || "poids " + actuelle)}</b>.</p>
+    <h3>Priorité</h3><div class="choix">${PRIOS.map(([v, n]) => `<button type="button" data-prio="${v}" aria-pressed="${actuelle === v}">${n}</button>`).join("")}</div>
+    <h3>Retirer</h3><div class="choix"><button type="button" data-src="masquer">Masquer ici seulement</button><button type="button" data-src="suppr" aria-pressed="${suppr}">${suppr ? "Annuler la suppression" : "Supprimer de la Vigie et de YO1tv"}</button></div>
+    <h3>Voir</h3><div class="choix"><button type="button" data-src="videos">Ses vidéos (À la carte)</button></div>
+    <p>Effet immédiat dans ce navigateur. La liste des sources de la Vigie suit au prochain « Envoyer mes retours » (traités le dimanche soir).</p>`,
+    el => el.onclick = e => {
+      const b = e.target.closest("button"); if (!b) return;
+      S.noms[x.sid] = x.c;
+      if (b.dataset.prio) {
+        const v = +b.dataset.prio;
+        if (v === (x.p || 1)) delete S.prio[x.sid]; else S.prio[x.sid] = v;
+        toast(`Priorité ${PRIOS.find(p => p[0] === v)[1].toLowerCase()} pour ${x.c}.`); refaireTout();
+      } else if (b.dataset.src === "masquer") { fermer(); masquer(x); }
+      else if (b.dataset.src === "suppr") {
+        if (suppr) { S.suppr = S.suppr.filter(s => s !== x.sid); S.masquees = S.masquees.filter(s => s !== x.sid); toast(`${x.c} est conservée.`); rendreListe(); }
+        else if (confirm(`Supprimer ${x.c} des sources ? Elle disparaît tout de suite ici ; la Vigie la désactivera après l'envoi des retours.`)) { S.suppr.push(x.sid); fermer(); masquer(x); }
+      } else if (b.dataset.src === "videos") { fermer(); $("#chaine").click(); return; }
+      S.modif = Date.now(); sauver(); fermer();
+    });
+}
+function majProprio() { $("#bSource").hidden = $("#imSource").hidden = !S.proprio; }
 function corriger(x, vers) {
   const de = x._o0 || x.o;
   if (vers === de) delete S.corr[x.i];
@@ -777,7 +805,7 @@ function retours() {
   return {
     yo1tv: VERSION, date: paris().jour, genere: new Date().toISOString(),
     votes: Object.fromEntries(Object.entries(S.gouts.ch).filter(([, v]) => v)), categories_gout: S.gouts.cat,
-    noms: S.noms, masquees: S.masquees,
+    noms: S.noms, masquees: S.masquees, priorites: S.prio, supprimees: S.suppr,
     corrections: Object.entries(S.corr).map(([i, c]) => ({ i, ...c })),
     vus_30_jours: vus, pepites_vues_30_jours: S.hist.filter(h => h.pep && t - h.vu < 30 * 864e5).length
   };
@@ -832,9 +860,10 @@ $("#bDodo").onclick = feuilleDodo;
 $("#bCC").onclick = basculerCC;
 $("#bPlein").onclick = pleinEcran;
 $("#bCat").onclick = feuilleCat;
+$("#bSource").onclick = feuilleSource;
 $("#barreIm").onclick = e => {
   const b = e.target.closest("[data-cmd]"); if (!b || b.disabled) return;
-  ({ prec: () => suivant(-1), pause, suiv: () => suivant(1), aime: () => voter(1), bof: () => voter(-1), tard: feuilleTard, cat: feuilleCat, dodo: feuilleDodo,
+  ({ prec: () => suivant(-1), pause, suiv: () => suivant(1), aime: () => voter(1), bof: () => voter(-1), tard: feuilleTard, cat: feuilleCat, source: feuilleSource, dodo: feuilleDodo,
     canal: () => cour.src === "carte" ? suivant(1) : zapper(1), reduire: () => document.body.classList.add("reduit"), sortir: () => immersif(false) })[b.dataset.cmd]?.();
 };
 $("#alerteDodo").onclick = e => { const b = e.target.closest("[data-plus]"); if (!b) return; +b.dataset.plus ? prolonger(+b.dataset.plus) : finDodo(); };
@@ -916,7 +945,9 @@ async function hashPlaylist() {
   return true;
 }
 (async () => {
-  theme(); majHorloge(); majHumeur(); majCanaux();
+  { const pr = new URLSearchParams(location.search).get("proprio"); if (pr === "1" || pr === "0") { S.proprio = +pr; sauver(true); } }
+  theme(); majHorloge(); majHumeur(); majCanaux(); majProprio();
+  { const c = $("#contact"), m = c.dataset.a + "@" + c.dataset.b; c.textContent = m; c.href = "mailto:" + m; }
   const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api";
   s.onerror = () => annonce("Le lecteur YouTube n'a pas pu être chargé (connexion ou bloqueur).");
   document.head.append(s);
