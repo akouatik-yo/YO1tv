@@ -76,7 +76,7 @@ addEventListener("pagehide", () => sauver(true));
 const mini = x => ({ i: x.i, t: x.t, tf: x.tf, c: x.c, sid: x.sid, o: x.o, du: x.du, co: x.co, d: x.d, p: x.p, pep: x.pep, q: x.q, th: x.th, sp: x.sp });
 
 /* ---------- Catalogues ---------- */
-let CAT = new Map(), DERNIER = null, JOURS = [], DIRECTS = [], SECOURS = false, GRILLES_SERVEUR = null, GRILLES_JOUR = null, NB_PEPITES = 0;
+let CAT = new Map(), DERNIER = null, JOURS = [], DIRECTS = [], SECOURS = false, GRILLES_SERVEUR = null, GRILLES_JOUR = null, GRILLES_GEN = null, NB_PEPITES = 0;
 async function lireJson(url, opts) { const r = await fetch(url, opts); if (!r.ok) throw new Error(url + " : " + r.status); return r.json(); }
 async function chargerCatalogues() {
   const auj = paris().jour;
@@ -96,7 +96,7 @@ async function chargerCatalogues() {
   // Pépites : archives choisies chaque dimanche par la routine hebdomadaire (data/stock.json).
   try { for (const x of (await lireJson("data/stock.json", { cache: "no-cache" })).items || []) if (/^[\w-]{11}$/.test(x.i) && CATS[x.o] && !CAT.has(x.i)) { x._j = "stock"; x.pep = 1; CAT.set(x.i, x); NB_PEPITES++; } } catch { }
   // Grilles du jour préparées par la routine du matin (data/grilles/AAAA-MM-JJ.json) ; sinon, calcul dans la page.
-  try { GRILLES_SERVEUR = (await lireJson(`data/grilles/${auj}.json`, { cache: "no-cache" })).canaux || null; GRILLES_JOUR = auj; } catch { GRILLES_SERVEUR = null; }
+  try { const g = await lireJson(`data/grilles/${auj}.json`, { cache: "no-cache" }); GRILLES_SERVEUR = g.canaux || null; GRILLES_GEN = g.genere || null; GRILLES_JOUR = auj; } catch { GRILLES_SERVEUR = null; }
   appliquerCorrections();
   try { DIRECTS = (await lireJson("data/directs.json")).filter(d => /^UC[\w-]{22}$/.test(d.yt_chaine || "")).sort((a, b) => (b.poids || 1) - (a.poids || 1)); } catch { DIRECTS = []; }
 }
@@ -190,8 +190,9 @@ function grille(canal) {
   const j = paris().jour; S.grilles[j] ||= {};
   let g = S.grilles[j][canal];
   const srv = GRILLES_JOUR === j ? (GRILLES_SERVEUR?.[canal] || []).filter(e => CAT.has(e[0])) : [];   // jamais la grille de la veille après minuit
-  if (srv.length && !g?.srv) {   // grille de la routine (arrivée éventuellement après une première ouverture dans la journée)
-    g = S.grilles[j][canal] = { cat: DERNIER, gen: 0, items: srv, srv: 1 };
+  // grille de la routine (arrivée éventuellement après une première ouverture dans la journée, ou recalculée depuis)
+  if (srv.length && (!g?.srv || (GRILLES_GEN && g.srvGen !== GRILLES_GEN))) {
+    g = S.grilles[j][canal] = { cat: DERNIER, gen: 0, items: srv, srv: 1, srvGen: GRILLES_GEN };
     if (S.pos[j]) delete S.pos[j][canal];
     sauver();
   }
