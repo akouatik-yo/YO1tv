@@ -155,7 +155,7 @@
 "onglet": "humour",
 "poids": 3,
 "mixte": true,
-"motif": "Mazine|le billet d|la chanson d|GiedRé|humour|sketch|parodie|imitation|Double jeu|Personnage principal",
+"motif": "Mazine|le billet d|la chanson d|GiedRé|humour|sketch|parodie|imitation|Double jeu",
 "sinon": "culture",
 "actif": true
 },
@@ -1054,7 +1054,7 @@
 "onglet": "humour",
 "poids": 1,
 "courts": true,
-"actif": true
+"actif": false
 },
 {
 "id": "yt-meurice",
@@ -1158,7 +1158,7 @@
 "chaine_id": "UCY-_QmcW09PHAImgVnKxU2g",
 "onglet": "divertissement",
 "poids": 1,
-"actif": true
+"actif": false
 },
 {
 "id": "yt-valouzz",

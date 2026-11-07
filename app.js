@@ -11,7 +11,6 @@ const ytUrl = id => "https://www.youtube.com/watch?v=" + id;
 const vignette = id => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
 const enSec = d => String(d || "").split(":").reduce((s, x) => s * 60 + (+x || 0), 0);
 const DUREE_COURT = 40, DUREE_INCONNUE = 600, JOUR_S = 86400;
-const RIRE_MAX_S = 900;   // YO1 Rire : jamais de vidéo de plus de 15 min (même règle que outils/yo1tv.py)
 const duree = x => x.co ? DUREE_COURT : (enSec(x.du) || DUREE_INCONNUE);
 const deux = n => String(n).padStart(2, "0");
 const hhmm = s => { s = Math.floor(s) % JOUR_S; return deux(s / 3600 | 0) + ":" + deux((s % 3600) / 60 | 0); };
@@ -51,13 +50,15 @@ const CLE = "yo1tv.v1";
 const defaut = () => ({
   v: 1, vus: {}, hist: [], prog: {}, votes: {}, gouts: { ch: {}, cat: {} }, masquees: [], noms: {}, plusTard: [], bloquees: {},
   humeur: 50, cc: false, theme: "sombre", canal: "mix", mode: "tele", format: "avec", courtsTele: true, cacherVues: true,
-  direct: 0, grilles: {}, pos: {}, corr: {}, prio: {}, suppr: [], proprio: 0, modif: 0, envoi: 0, dodoVus: {}, dodoNon: {}, dodoDuree: 180, dodoNoir: false, dodoFondu: true
+  direct: 0, grilles: {}, pos: {}, corr: {}, prio: {}, suppr: [], chv: {}, contenus: {}, dejaVu: {}, modif: 0, envoi: 0, dodoVus: {}, dodoNon: {}, dodoDuree: 180, dodoNoir: false, dodoFondu: true
 });
 function lireStock() {
   let s; try { s = Object.assign(defaut(), JSON.parse(localStorage.getItem(CLE)) || {}); } catch { s = defaut(); }
   const t = Date.now(), j = paris().jour;
   for (const [id, ts] of Object.entries(s.vus)) if (t - ts > 90 * 864e5) delete s.vus[id];
   for (const [id, ts] of Object.entries(s.bloquees)) if (t - ts > 7 * 864e5) delete s.bloquees[id];
+  for (const [id, ts] of Object.entries(s.dejaVu || {})) if (t - ts > 7 * 864e5) delete s.dejaVu[id];
+  const cs = Object.keys(s.contenus || {}); cs.slice(0, Math.max(0, cs.length - 400)).forEach(k => delete s.contenus[k]);
   for (const k of Object.keys(s.grilles)) if (k !== j) delete s.grilles[k];
   for (const k of Object.keys(s.pos)) if (k !== j) delete s.pos[k];
   const p = Object.keys(s.prog); p.slice(0, Math.max(0, p.length - 300)).forEach(k => delete s.prog[k]);
@@ -101,7 +102,9 @@ async function chargerCatalogues() {
 }
 
 /* ---------- Goûts, humeur, poids ---------- */
-const fGout = x => clamp(1.25 ** (S.gouts.ch[x.sid] || 0), .25, 4) * clamp(1.15 ** (S.gouts.cat[x.o] || 0), .5, 2);
+// Goût pour une chaîne : votes « chaîne » (±3 points chacun) plus l'historique des anciens votes ; goût par catégorie : votes « contenu ».
+const fGout = x => clamp(1.25 ** ((S.gouts.ch[x.sid] || 0) + 3 * (S.chv[x.sid] || 0)), .25, 4) * clamp(1.15 ** (S.gouts.cat[x.o] || 0), .5, 2)
+  * (S.votes[x.i] === 1 ? 1.3 : 1);
 function fHumeur(x) {
   const h = (S.humeur - 50) / 50, d = duree(x); let f = 1;   // h : −1 = « à plat », +1 = « curieux »
   if (x.o === "humour") f *= 1 - .45 * h;
@@ -121,7 +124,8 @@ function poids(x, canal) {
 const masquee = x => S.masquees.includes(x.sid);
 // Spectacles entiers : marque « sp » du stock, ou long format d'humour annoncé comme tel. Ils restent aussi dans l'humour.
 const estSpectacle = x => !!x.sp || x.o === "humour" && !x.co && duree(x) >= 2400 && /spectacle|one.?(wo)?man.?show/i.test(x.t || "");
-const jouable = (x, souple) => !!x && !S.bloquees[x.i] && !masquee(x) && (souple || !S.vus[x.i]);
+const vuRecemment = x => S.vus[x.i] && Date.now() - S.vus[x.i] < 3 * 864e5;
+const jouable = (x, souple) => !!x && !S.bloquees[x.i] && !S.dejaVu[x.i] && S.votes[x.i] !== -1 && !masquee(x) && (!S.vus[x.i] || souple && !vuRecemment(x));
 
 /* ---------- Grille du jour (télé) ---------- */
 function hash(s) { let h = 2166136261; for (const ch of s) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -147,7 +151,7 @@ function passe(longs, courts, c) {
 // cible : durée totale visée (24 h ; davantage quand on prolonge une grille épuisée).
 function construire(canal, garder = [], gen = 0, cible = JOUR_S) {
   const c = CANAL[canal], gardes = new Set(garder.map(g => g[0]));
-  const okC = x => c.cats.includes(x.o) && (!x.co || (c.courts && S.courtsTele)) && (canal !== "rire" || duree(x) <= RIRE_MAX_S);
+  const okC = x => c.cats.includes(x.o) && (!x.co || (c.courts && S.courtsTele));
   let pool = [...CAT.values()].filter(x => okC(x) && !gardes.has(x.i) && jouable(x)), rediff = 0;
   if (!pool.length && garder.length) {   // tout le canal est déjà dans la grille : rediffusions, hors les 40 derniers passages
     const recents = new Set(garder.slice(-40).map(g => g[0]));
@@ -363,9 +367,11 @@ function majPause() {
   $("#icoImPause").setAttribute("href", lecture ? "#i-pause" : "#i-lecture");
 }
 function majVotes() {
-  const v = cour.x ? S.votes[cour.x.i] || 0 : 0;
+  const v = cour.x ? S.votes[cour.x.i] || 0 : 0, c = cour.x?.sid ? S.chv[cour.x.sid] || 0 : 0;
   for (const s of ["#bAime", "#imAime"]) $(s).setAttribute("aria-pressed", v === 1);
   for (const s of ["#bBof", "#imBof"]) $(s).setAttribute("aria-pressed", v === -1);
+  for (const s of ["#bAimeCh", "#imAimeCh"]) $(s).setAttribute("aria-pressed", c === 1);
+  for (const s of ["#bBofCh", "#imBofCh"]) $(s).setAttribute("aria-pressed", c === -1);
 }
 function metaDe(x, e) {
   const bits = [CATS[x.o] || ""];
@@ -377,7 +383,7 @@ function metaDe(x, e) {
 }
 function afficher() {
   const dir = cour.src === "direct";
-  for (const id of ["#bAime", "#bBof", "#bTard", "#bCC", "#bCat", "#bSource", "#imAime", "#imBof", "#imTard", "#imCat", "#imSource"]) $(id).disabled = dir;
+  for (const id of ["#bAime", "#bBof", "#bAimeCh", "#bBofCh", "#bVu", "#bTard", "#bCC", "#bCat", "#bSource", "#imAime", "#imBof", "#imAimeCh", "#imBofCh", "#imVu", "#imTard", "#imCat", "#imSource"]) $(id).disabled = dir;
   majCanaux(); majPause(); majVotes(); majDodo();
   $("#bCC").setAttribute("aria-pressed", S.cc);
   if (dir) {
@@ -498,22 +504,44 @@ function toast(txt, o = {}) {
 }
 
 /* ---------- Goûts : j'aime / bof / masquer ---------- */
+// « J'aime / Bof contenu » : la vidéo elle-même (et, via les retours, son artiste : la tâche du dimanche en tire les goûts
+// par artiste et cherche ses autres vidéos, hors des chaînes suivies comprises). Touche aussi un peu la catégorie.
 function voter(v, x = cour.x, silencieux) {
   if (!x || cour.src === "direct" && x === cour.x) return;
   const avant = S.votes[x.i] || 0, nv = avant === v ? 0 : v, delta = nv - avant;
-  if (nv) S.votes[x.i] = nv; else delete S.votes[x.i];
-  S.gouts.ch[x.sid] = (S.gouts.ch[x.sid] || 0) + delta;
+  if (nv) { S.votes[x.i] = nv; S.contenus[x.i] = { v: nv, t: String(x.t || "").slice(0, 120), c: x.c || "", sid: x.sid || "", o: x.o || "", le: paris().jour }; }
+  else { delete S.votes[x.i]; delete S.contenus[x.i]; }
   S.gouts.cat[x.o] = (S.gouts.cat[x.o] || 0) + delta * .5;
   if (x.sid) S.noms[x.sid] = x.c;
   S.modif = Date.now(); sauver(); majVotes();
   if (silencieux) return;
-  if (nv === 1) toast(`Noté : un peu plus de ${x.c || "cette chaîne"} et de ${CATS[x.o] || "ce genre"}.`);
+  if (nv === 1) toast(`Noté : ce contenu te plaît. Ses artistes compteront dès les prochains retours.`);
   else if (nv === -1) {
-    if ((S.gouts.ch[x.sid] || 0) <= -3 && x.sid && !masquee(x)) toast(`Plusieurs « bof » pour ${x.c}. La masquer ?`, { action: "Masquer", fn: () => masquer(x) });
-    else toast(`Noté : moins de ${x.c || "cette chaîne"}.`, { action: "Annuler", fn: () => voter(-1, x, true) });
-    if (cour.src === "dodo" && x === cour.x) { S.dodoNon[x.i] = 1; sauver(); toast("Retirée du programme dodo.", { action: "Annuler", fn: () => { delete S.dodoNon[x.i]; voter(-1, x, true); sauver(); } }); }
+    toast(`Noté : pas ce contenu.`, { action: "Annuler", fn: () => voter(-1, x, true) });
+    if (cour.src === "dodo" && x === cour.x) { S.dodoNon[x.i] = 1; sauver(); }
     if (x === cour.x) suivant(1);
-  }
+  } else toast("Vote retiré.");
+}
+// « J'aime / Bof chaîne » : toute la chaîne (poids dans YO1tv tout de suite, dans la liste de la Vigie après les retours).
+// Pour une chaîne hors de la liste (vidéo trouvée par artiste), « J'aime chaîne » propose de l'ajouter aux sources.
+function voterCh(v, x = cour.x) {
+  if (!x?.sid || cour.src === "direct" && x === cour.x) return;
+  const nv = (S.chv[x.sid] || 0) === v ? 0 : v;
+  if (nv) S.chv[x.sid] = nv; else delete S.chv[x.sid];
+  S.noms[x.sid] = x.c; S.modif = Date.now(); sauver(); majVotes(); refaireTout();
+  const ext = String(x.sid).startsWith("ext-");
+  if (nv === 1) toast(ext ? `${x.c} : chaîne hors de la liste, elle sera proposée à l'ajout aux sources.` : `Noté : plus de ${x.c}.`);
+  else if (nv === -1) {
+    toast(`Noté : moins de ${x.c}.`, { action: "Masquer", fn: () => masquer(x) });
+    if (x === cour.x) suivant(1);
+  } else toast(`Vote retiré pour ${x.c}.`);
+}
+// « Déjà vu » : écartée 7 jours, même si une grille de la routine la reprogramme.
+function dejaVu(x = cour.x) {
+  if (!x || cour.src === "direct" && x === cour.x) return;
+  S.dejaVu[x.i] = Date.now(); marquerVu(x); sauver();
+  toast("Déjà vue : écartée pendant 7 jours.", { action: "Annuler", fn: () => { delete S.dejaVu[x.i]; sauver(); } });
+  if (x === cour.x) suivant(1);
 }
 function masquer(x) {
   if (!x.sid || masquee(x)) return;
@@ -686,7 +714,7 @@ function feuilleGrille() {
 function feuilleReglages() {
   const masq = S.masquees.map(sid => `<li><span>${esc(S.noms[sid] || sid)}${S.suppr.includes(sid) ? " (suppression demandée)" : ""}</span><button type="button" class="petit" data-demasquer="${esc(sid)}">Réafficher</button></li>`).join("");
   const bloq = Object.keys(S.bloquees).map(id => { const x = CAT.get(id); return `<li><span>${esc(x ? court(titreDe(x), 70) : id)}</span><a class="petit" href="${ytUrl(id)}" target="_blank" rel="noopener">YouTube</a></li>`; }).join("");
-  const gch = Object.entries(S.gouts.ch).filter(([, v]) => v).sort((a, b) => b[1] - a[1]);
+  const gch = [...new Set([...Object.keys(S.gouts.ch), ...Object.keys(S.chv)])].map(sid => [sid, (S.gouts.ch[sid] || 0) + 3 * (S.chv[sid] || 0)]).filter(([, v]) => v).sort((a, b) => b[1] - a[1]);
   const goutsTxt = gch.length ? gch.slice(0, 6).map(([sid, v]) => `${esc(S.noms[sid] || sid)} (${v > 0 ? "+" : ""}${v})`).join(", ") + (gch.length > 6 ? "…" : "") : "aucun vote pour l'instant";
   feuille(`<h2>Réglages</h2>
     <h3>Affichage</h3><div class="choix">${[["sombre", "Sombre"], ["clair", "Clair"], ["auto", "Comme l'appareil"]].map(([k, n]) => `<button type="button" data-theme="${k}" aria-pressed="${S.theme === k}">${n}</button>`).join("")}</div>
@@ -697,13 +725,13 @@ function feuilleReglages() {
     <h3>Ta semaine</h3>${bilanSemaine()}
     <h3>Retours vers la Vigie</h3><p>Tes votes, chaînes masquées et catégories corrigées peuvent partir vers le dépôt privé de la Vigie : la routine du dimanche soir en tient compte (poids des chaînes, classement). Dernier envoi : ${S.envoi ? esc(joliMoment(S.envoi)) : "jamais"}${S.modif > S.envoi ? " — des changements attendent" : ""}.</p>
     <div class="choix"><button type="button" data-act="envoyer">Envoyer mes retours (GitHub)</button><button type="button" data-act="copier">Copier les retours</button></div>
-    <h3>Tes goûts</h3><p>Chaînes votées : ${goutsTxt}. ${Object.keys(S.vus).length} vidéos vues, ${S.plusTard.length} mises de côté, ${Object.keys(S.corr).length} catégorie(s) corrigée(s).</p>
+    <h3>Tes goûts</h3><p>Chaînes votées : ${goutsTxt}. ${Object.keys(S.contenus).length} contenu(s) noté(s) (j'aime / bof contenu), ${Object.keys(S.vus).length} vidéos vues, ${Object.keys(S.dejaVu).length} « déjà vu » (7 jours), ${S.plusTard.length} mises de côté, ${Object.keys(S.corr).length} catégorie(s) corrigée(s).</p>
     <div class="masquees"><p><b>Chaînes masquées</b>${masq ? "" : " : aucune."}</p><ul>${masq}</ul></div>
     <div class="bloquees"><p><b>Vidéos non intégrables</b> (sautées pendant 7 jours)${bloq ? "" : " : aucune."}</p><ul>${bloq}</ul></div>
     <h3>Sauvegarde</h3><p>Tout est gardé dans ce navigateur. Exporte de temps en temps : un nettoyage des données de Brave effacerait tout.</p>
     <div class="choix"><button type="button" data-act="export">Exporter (JSON)</button><label>Importer…<input type="file" accept="application/json,.json" id="fImport" hidden></label>
       <button type="button" data-act="hist">Oublier l'historique</button><button type="button" data-act="tout">Tout effacer</button></div>
-    <h3>Raccourcis</h3><p><kbd>Échap</kbd> quitter le plein écran · <kbd>Espace</kbd> lecture/pause · <kbd>→</kbd> <kbd>←</kbd> suivante/précédente · <kbd>↑</kbd> <kbd>↓</kbd> ou <kbd>1</kbd>…<kbd>5</kbd> canaux · <kbd>+</kbd> j'aime · <kbd>-</kbd> bof · <kbd>T</kbd> télé / à la carte · <kbd>S</kbd> sous-titres · <kbd>F</kbd> plein écran. Sur la tablette : glisser à gauche/droite sur le bandeau sous l'image pour zapper.</p>
+    <h3>Raccourcis</h3><p><kbd>Échap</kbd> quitter le plein écran · <kbd>Espace</kbd> lecture/pause · <kbd>→</kbd> <kbd>←</kbd> suivante/précédente · <kbd>↑</kbd> <kbd>↓</kbd> ou <kbd>1</kbd>…<kbd>5</kbd> canaux · <kbd>+</kbd> j'aime (contenu) · <kbd>-</kbd> bof (contenu) · <kbd>V</kbd> déjà vu · <kbd>T</kbd> télé / à la carte · <kbd>S</kbd> sous-titres · <kbd>F</kbd> plein écran. Sur la tablette : glisser à gauche/droite sur le bandeau sous l'image pour zapper.</p>
     <h3>À propos</h3><p>YO1tv ${VERSION} · catalogue ${DERNIER ? "du " + esc(joliJour(DERNIER)) : "absent"}${SECOURS ? " (exemple)" : ""}${JOURS.length > 1 ? ` + ${JOURS.length - 1} jour(s) précédent(s) pour le report` : ""} · ${CAT.size} vidéos · <a href="test.html">page de test du lecteur</a></p>`,
     el => {
       el.onclick = e => {
@@ -762,7 +790,7 @@ function feuilleCat() {
     <p>YO1tv s'en souvient tout de suite pour cette vidéo ; après trois corrections dans le même sens pour une chaîne, ses autres vidéos suivent. Les corrections partent vers la Vigie avec « Envoyer mes retours » (Réglages).</p>`,
     el => el.onclick = e => { const b = e.target.closest("[data-cat]"); if (b) { corriger(x, b.dataset.cat); fermer(); } });
 }
-/* ---------- Source (propriétaire seulement : activé une fois par ?proprio=1 dans l'adresse) ---------- */
+/* ---------- Source : priorité, masquer, supprimer, voir (effet dans ce navigateur, puis dans la Vigie par les retours) ---------- */
 const PRIOS = [[.5, "Basse"], [1, "Normale"], [2, "Haute"], [3, "Très haute"]];   // poids de la chaîne (1 pour la plupart)
 function feuilleSource() {
   const x = cour.x; if (!x?.sid || cour.src === "direct") return;
@@ -770,6 +798,7 @@ function feuilleSource() {
   feuille(`<h2>Source : ${esc(x.c || x.sid)}</h2><p>Catégorie de la chaîne : <b>${esc(CATS[x._o0 || x.o] || x.o || "?")}</b> · priorité ${S.prio[x.sid] ? "choisie" : "de la Vigie"} : <b>${esc(PRIOS.find(p => p[0] === actuelle)?.[1] || "poids " + actuelle)}</b>.</p>
     <h3>Priorité</h3><div class="choix">${PRIOS.map(([v, n]) => `<button type="button" data-prio="${v}" aria-pressed="${actuelle === v}">${n}</button>`).join("")}</div>
     <h3>Retirer</h3><div class="choix"><button type="button" data-src="masquer">Masquer ici seulement</button><button type="button" data-src="suppr" aria-pressed="${suppr}">${suppr ? "Annuler la suppression" : "Supprimer de la Vigie et de YO1tv"}</button></div>
+    ${String(x.sid).startsWith("ext-") ? `<h3>Hors de la liste</h3><p>Cette vidéo a été trouvée en cherchant un artiste que tu aimes ; sa chaîne n'est pas suivie.</p><div class="choix"><button type="button" data-src="ajouter" aria-pressed="${S.chv[x.sid] === 1}">Proposer d'ajouter la chaîne</button></div>` : ""}
     <h3>Voir</h3><div class="choix"><button type="button" data-src="videos">Ses vidéos (À la carte)</button></div>
     <p>Effet immédiat dans ce navigateur. La liste des sources de la Vigie suit au prochain « Envoyer mes retours » (traités le dimanche soir).</p>`,
     el => el.onclick = e => {
@@ -784,10 +813,10 @@ function feuilleSource() {
         if (suppr) { S.suppr = S.suppr.filter(s => s !== x.sid); S.masquees = S.masquees.filter(s => s !== x.sid); toast(`${x.c} est conservée.`); rendreListe(); }
         else if (confirm(`Supprimer ${x.c} des sources ? Elle disparaît tout de suite ici ; la Vigie la désactivera après l'envoi des retours.`)) { S.suppr.push(x.sid); fermer(); masquer(x); }
       } else if (b.dataset.src === "videos") { fermer(); $("#chaine").click(); return; }
+      else if (b.dataset.src === "ajouter") { fermer(); if (S.chv[x.sid] !== 1) voterCh(1, x); return; }
       S.modif = Date.now(); sauver(); fermer();
     });
 }
-function majProprio() { $("#bSource").hidden = $("#imSource").hidden = !S.proprio; }
 function corriger(x, vers) {
   const de = x._o0 || x.o;
   if (vers === de) delete S.corr[x.i];
@@ -799,23 +828,31 @@ function corriger(x, vers) {
 /* ---------- Retours vers la Vigie (lot 4 sans jeton) ---------- */
 // Pas de jeton stocké : on ouvre la page GitHub de création de fichier du dépôt privé, pré-remplie ; il suffit de valider.
 const DEPOT_VIGIE = "akouatik-yo/Actualit-s-";
+// Retours compacts : ils voyagent dans l'adresse d'une page GitHub (quelques dizaines de Ko au plus).
 function retours() {
   const t = Date.now(), vus = {};
   for (const h of S.hist) if (t - h.vu < 30 * 864e5) vus[h.o] = (vus[h.o] || 0) + 1;
+  const votes = Object.fromEntries(Object.entries(S.gouts.ch).filter(([, v]) => v));
+  const sids = new Set([...Object.keys(votes), ...Object.keys(S.chv), ...S.masquees, ...Object.keys(S.prio), ...S.suppr]);
+  const contenus = Object.entries(S.contenus).sort((a, b) => (b[1].le || "").localeCompare(a[1].le || "")).slice(0, 120)
+    .map(([i, c]) => ({ i, v: c.v, t: String(c.t || "").slice(0, 80), c: c.c, sid: c.sid, o: c.o }));
+  for (const c of contenus) if (c.sid) sids.add(c.sid);
   return {
     yo1tv: VERSION, date: paris().jour, genere: new Date().toISOString(),
-    votes: Object.fromEntries(Object.entries(S.gouts.ch).filter(([, v]) => v)), categories_gout: S.gouts.cat,
-    noms: S.noms, masquees: S.masquees, priorites: S.prio, supprimees: S.suppr,
-    corrections: Object.entries(S.corr).map(([i, c]) => ({ i, ...c })),
+    votes, categories_gout: S.gouts.cat, chaines_vote: S.chv,
+    noms: Object.fromEntries([...sids].filter(s => S.noms[s]).map(s => [s, S.noms[s]])),
+    masquees: S.masquees, priorites: S.prio, supprimees: S.suppr,
+    contenus, deja_vu: Object.keys(S.dejaVu),
+    corrections: Object.entries(S.corr).slice(-80).map(([i, c]) => ({ i, ...c })),
     vus_30_jours: vus, pepites_vues_30_jours: S.hist.filter(h => h.pep && t - h.vu < 30 * 864e5).length
   };
 }
 function envoyerRetours() {
   const p = paris(), nom = `retours/yo1tv-${p.jour}-${hhmm(p.s).replace(":", "h")}.json`;
-  const url = `https://github.com/${DEPOT_VIGIE}/new/main?filename=${encodeURIComponent(nom)}&value=${encodeURIComponent(JSON.stringify(retours(), null, 1))}`;
+  const url = `https://github.com/${DEPOT_VIGIE}/new/main?filename=${encodeURIComponent(nom)}&value=${encodeURIComponent(JSON.stringify(retours()))}`;
   open(url, "_blank", "noopener");
   S.envoi = Date.now(); sauver();
-  toast("Page GitHub ouverte : vérifie puis « Commit changes ».");
+  toast(url.length > 60000 ? "Page GitHub ouverte (retours volumineux : si elle reste vide, utilise « Copier les retours »)." : "Page GitHub ouverte : vérifie puis « Commit changes ».");
 }
 function bilanSemaine() {
   const t = Date.now(), h = S.hist.filter(x => t - x.vu < 7 * 864e5);
@@ -854,6 +891,9 @@ $("#bSuiv").onclick = () => suivant(1);
 $("#bPause").onclick = pause;
 $("#bAime").onclick = () => voter(1);
 $("#bBof").onclick = () => voter(-1);
+$("#bAimeCh").onclick = () => voterCh(1);
+$("#bBofCh").onclick = () => voterCh(-1);
+$("#bVu").onclick = () => dejaVu();
 $("#bTard").onclick = feuilleTard;
 $("#bHumeur").onclick = feuilleHumeur;
 $("#bDodo").onclick = feuilleDodo;
@@ -863,7 +903,7 @@ $("#bCat").onclick = feuilleCat;
 $("#bSource").onclick = feuilleSource;
 $("#barreIm").onclick = e => {
   const b = e.target.closest("[data-cmd]"); if (!b || b.disabled) return;
-  ({ prec: () => suivant(-1), pause, suiv: () => suivant(1), aime: () => voter(1), bof: () => voter(-1), tard: feuilleTard, cat: feuilleCat, source: feuilleSource, dodo: feuilleDodo,
+  ({ prec: () => suivant(-1), pause, suiv: () => suivant(1), aime: () => voter(1), bof: () => voter(-1), aimeCh: () => voterCh(1), bofCh: () => voterCh(-1), vu: () => dejaVu(), tard: feuilleTard, cat: feuilleCat, source: feuilleSource, dodo: feuilleDodo,
     canal: () => cour.src === "carte" ? suivant(1) : zapper(1), reduire: () => document.body.classList.add("reduit"), sortir: () => immersif(false) })[b.dataset.cmd]?.();
 };
 $("#alerteDodo").onclick = e => { const b = e.target.closest("[data-plus]"); if (!b) return; +b.dataset.plus ? prolonger(+b.dataset.plus) : finDodo(); };
@@ -913,7 +953,7 @@ addEventListener("keydown", e => {
   if (e.key === "Escape" && document.body.classList.contains("immersif")) { immersif(false); return; }
   const k = e.key, actions = {
     " ": pause, ArrowRight: () => suivant(1), ArrowLeft: () => suivant(-1), ArrowUp: () => zapper(-1), ArrowDown: () => zapper(1),
-    "+": () => voter(1), "-": () => voter(-1), t: () => $(S.mode === "tele" ? "#mCarte" : "#mTele").click(), s: basculerCC, f: pleinEcran
+    "+": () => voter(1), "-": () => voter(-1), v: () => dejaVu(), t: () => $(S.mode === "tele" ? "#mCarte" : "#mTele").click(), s: basculerCC, f: pleinEcran
   };
   if (/^[1-5]$/.test(k)) { vue("tele"); demarrerTele(CANAUX[+k - 1].id); e.preventDefault(); return; }
   const f = actions[k] || actions[k.toLowerCase()]; if (f) { f(); e.preventDefault(); }
@@ -945,8 +985,7 @@ async function hashPlaylist() {
   return true;
 }
 (async () => {
-  { const pr = new URLSearchParams(location.search).get("proprio"); if (pr === "1" || pr === "0") { S.proprio = +pr; sauver(true); } }
-  theme(); majHorloge(); majHumeur(); majCanaux(); majProprio();
+  theme(); majHorloge(); majHumeur(); majCanaux();
   { const c = $("#contact"), m = c.dataset.a + "@" + c.dataset.b; c.textContent = m; c.href = "mailto:" + m; }
   const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api";
   s.onerror = () => annonce("Le lecteur YouTube n'a pas pu être chargé (connexion ou bloqueur).");
