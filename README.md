@@ -21,6 +21,7 @@ Choix de conception et questions tranchées : [`CAHIER-DES-CHARGES.md`](CAHIER-D
 ## Fichiers
 
 - `index.html`, `app.js`, `app.css` : l'application. `outils/yo1tv.py` : publication du jour, grilles, pépites (Python, sans dépendance). `manifest.webmanifest`, `logo.svg`, `icone.svg`, `icone-*.png` : installation en raccourci.
+- `stats.js` : mesure d'audience GoatCounter (script officiel, licence ISC, hébergé ici), sans cookie, chargé par `index.html` ; tableau de bord privé de Yoann (site « yo1tv »). Les visites en localhost et des navigateurs automatisés ne sont pas comptées.
 - `test.html` : page de test du lecteur (lot 0), avec journal technique — utile pour diagnostiquer.
 - `data/index.json` + `data/AAAA-MM-JJ.json` : catalogues quotidiens. `data/chaines.json`, `data/directs.json`, `data/categories.json` : sources. `data/catalogue-exemple.json` : catalogue de secours.
 - [`CONTEXTE.md`](CONTEXTE.md) : ce qui a été appris côté Vigie.
