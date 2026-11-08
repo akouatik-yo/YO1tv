@@ -304,6 +304,8 @@ function jouer(x) {
   const pr = S.prog[x.i] || 0, debut = pr > 15 && pr < duree(x) * .9 - 10 ? Math.floor(pr) : 0;   // reprise là où on s'était arrêté
   charger({ id: x.i, debut });
   afficher(); surveillerDemarrage();
+  const suiviCh = `regarde/${cour.src === "tele" ? cour.canal : cour.src}/${x.sid || "?"}`;   // mesure d'audience : chaîne regardée 30 s au moins
+  setTimeout(() => { if (cour.x === x) window.suivi?.(suiviCh, x.c || x.sid); }, 30000);
 }
 function aller(k, dir = 1, souple = false) {
   if (cour.src === "tele" && dir > 0 && cour.jour === paris().jour) etendre(cour.canal, k);
