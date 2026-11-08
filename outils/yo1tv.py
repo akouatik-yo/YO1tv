@@ -16,12 +16,14 @@ Commandes (toutes acceptent --depot DOSSIER, racine du dépôt YO1tv, par défau
   candidats [--n 45 | --toutes] [--par 12] [--sortie F]
                            pépites possibles : vidéos longues les plus populaires (liste YouTube « UULP ») des chaînes
                            hors actualité ; affiche une ligne par candidate et écrit le détail dans F (JSON).
+                           Les chaînes aimées (poids 2 ou 3) passent plus souvent et donnent plus de candidates.
   dodo                     fonds « dodo » : documentaires calmes de 20 min ou plus tirés des listes de data/sources-dodo.json
                            (42 d'ARTE, Balade Mentale, documentaires ARTE), versés au stock avec la marque dodo (sans IA).
   contexte                 titres d'actualité des 7 derniers catalogues (pour repérer les archives qui y font écho).
   integrer DECISIONS CANDIDATS
                            ajoute au stock (data/stock.json) les pépites retenues ; les autres candidates sont écartées
                            pour ne pas être réexaminées.
+  adopter ANCIEN NOUVEAU   rattache au nouvel identifiant de source les pépites d'une chaîne hors liste (ext-UC…).
 Format des grilles : {"date", "genere", "canaux": {"mix": [[id, durée_s, drapeau?], …], …}} ; drapeau 1 = rediffusion.
 """
 import concurrent.futures as cf
@@ -281,6 +283,21 @@ def sources_pepites(depot):
     return chaines + (lire(f"{depot}/data/sources-pepites.json", []) or [])
 
 
+def date_rotation(jour, poids):
+    """Date de dernière exploration, avancée de deux semaines par point de poids au-dessus de 1 : une chaîne aimée
+    (poids 2, réglé par les votes « chaîne ») revient environ deux fois plus souvent, une chaîne à poids 3 chaque semaine."""
+    if not jour:
+        return ""
+    try:
+        return (date.fromisoformat(jour) - timedelta(days=14 * (max(1, min(3, poids)) - 1))).isoformat()
+    except ValueError:
+        return jour
+
+
+def par_poids(par_chaine, src):
+    return par_chaine + 4 * (max(1, min(3, src.get("poids", 1))) - 1)   # plus de candidates pour une chaîne aimée
+
+
 def cmd_candidats(depot):
     n, toutes, sortie = int(arg("--n", 45)), bool(arg("--toutes", False)), arg("--sortie", "/tmp/yo1tv-candidats.json")
     par_chaine = int(arg("--par", PAR_CHAINE))
@@ -288,7 +305,7 @@ def cmd_candidats(depot):
     connus = {x["i"] for x in stock["items"]} | set(stock["ecartes"])
     srcs = sources_pepites(depot)
     if not toutes:   # rotation : les chaînes les moins récemment explorées d'abord, les plus importantes en premier
-        srcs.sort(key=lambda c: (stock["rotation"].get(c["id"], ""), -c.get("poids", 1), c["id"]))
+        srcs.sort(key=lambda c: (date_rotation(stock["rotation"].get(c["id"]), c.get("poids", 1)), -c.get("poids", 1), c["id"]))
         srcs = srcs[:n]
 
     def une(src):
@@ -309,7 +326,7 @@ def cmd_candidats(depot):
             stock["rotation"][src["id"]] = jour
             pris = 0
             for v in vids:
-                if v["i"] in connus or v["du_s"] < DUREE_MIN_PEPITE or pris >= par_chaine or est_jeu(v.get("t")):
+                if v["i"] in connus or v["du_s"] < DUREE_MIN_PEPITE or pris >= par_poids(par_chaine, src) or est_jeu(v.get("t")):
                     continue
                 connus.add(v["i"])
                 pris += 1
@@ -364,6 +381,18 @@ def cmd_integrer(depot, decisions, candidats):
     for x in stock["items"]:
         par[x["o"]] = par.get(x["o"], 0) + 1
     print(f"{gardes} pépites ajoutées ; stock : {len(stock['items'])} ({par}) ; écartées connues : {len(stock['ecartes'])}")
+
+
+def cmd_adopter(depot, ancien, nouveau):
+    """Une chaîne hors liste (ext-UC…) vient d'être ajoutée aux sources sous l'identifiant `nouveau` : ses pépites le prennent."""
+    stock, n = charger_stock(depot), 0
+    for x in stock["items"]:
+        if x.get("sid") == ancien:
+            x["sid"] = nouveau
+            x.pop("ext", None)
+            n += 1
+    ecrire(f"{depot}/data/stock.json", stock)
+    print(f"{n} pépites de {ancien} rattachées à {nouveau}")
 
 
 DODO_MIN = 1200   # 20 min
@@ -713,6 +742,8 @@ def main():
         cmd_dodo(depot)
     elif c == "contexte":
         cmd_contexte(depot)
+    elif c == "adopter" and len(a) == 2:
+        cmd_adopter(depot, *a)
     elif c == "integrer" and len(a) == 2:
         cmd_integrer(depot, a[0], a[1])
     else:
