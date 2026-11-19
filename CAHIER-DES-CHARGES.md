@@ -98,6 +98,16 @@ Format des vidéos : voir `CONTEXTE.md` §3 (champs `i t c sid d o p du co`).
 | Interface | Portrait d'abord ; paysage sur tablette en deux colonnes ; plein écran immersif avec barre de commandes YO1tv (plein écran de YouTube masqué) ; sombre par défaut ; raccourci plein écran (manifeste) ; logo vectoriel d'après le dessin de Yoann. |
 | Tâches planifiées | Catalogue, grilles, listes des chaînes et des directs : publiés chaque matin par la routine de la Vigie (dépôts Actualit-s-, YO1tv et Vigie attachés), à la fin de son travail ; la tâche « YO1tv — publication du matin » (5 h 41) est désactivée depuis le 5 novembre 2026. « YO1tv — pépites et retours » (dimanche 19 h 53, dépôts YO1tv et Actualit-s-), session neuve sur Sonnet. Dépôts attachés dans les réglages de chaque tâche (navigateur seulement, pas l'application). |
 
+### 8 ter. v2 : YO1tv indépendante, playlists de la semaine (19 novembre 2026, demande de Yoann)
+
+- Plus de lien avec la Vigie : ni catalogue du jour, ni grilles de 24 h, ni lien depuis sa page. Une seule routine, le dimanche soir, avec Opus pour le contrôle des catégories (le jugement des candidates par des sous-agents Sonnet) ; l'ancienne tâche du dimanche est remplacée.
+- Canaux = catégories : Rire (humour seul), Culture (interviews d'artistes), Savoir (vulgarisation), Découverte (grands documentaires), Divertissement, Info (analyses et entretiens de 15 min et plus de la semaine), Direct. Mix supprimé.
+- Une playlist de 40 h au moins par canal, chaque semaine ; reprise par appareil après la dernière vidéo vue. Les pépites non vues restent d'une semaine à l'autre ; vu ou « déjà vu » : écarté trois mois (dans la page, et dans la programmation par les retours, qui portent désormais les vues).
+- Pépites favorisées (poids × 1,5, plus la qualité `q`), sources panachées, artistes séparés.
+- Collecte élargie : 100 humoristes cherchés sur YouTube (25 par semaine), 19 chaînes de vulgarisation et 8 de documentaires ajoutées ; liste des chaînes propre à YO1tv (dépôt privé), plus recopiée de la Vigie.
+- Première collecte : aucune des vidéos passées dans les grilles depuis le début (3 195) n'est reprise avant le 17 février 2027.
+- Votes « chaîne » cumulables (−3 à +3) ; bouton « Retirer la chaîne ». Envoi des retours : copie puis page GitHub (le contenu ne passe plus par l'adresse, qui devenait trop longue).
+
 ## 9. Pistes ouvertes
 
 - Commandes de l'écran verrouillé (Media Session) : à tester sur la tablette avant de coder (lecture dans l'iframe de YouTube).

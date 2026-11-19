@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0f1115">
-<meta name="description" content="YO1tv : télé personnelle construite sur le catalogue vidéo quotidien de La Vigie.">
+<meta name="description" content="YO1tv : télé personnelle, des playlists de la semaine par canal.">
 <title>YO1tv</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icone.svg" type="image/svg+xml">
@@ -79,6 +79,7 @@
     <button data-cmd="aimeCh" id="imAimeCh" class="ch" aria-pressed="false" aria-label="J'aime cette chaîne"><svg><use href="#i-aime"/></svg><i>ch.</i></button>
     <button data-cmd="bofCh" id="imBofCh" class="ch" aria-pressed="false" aria-label="Bof pour cette chaîne"><svg><use href="#i-bof"/></svg><i>ch.</i></button>
     <button data-cmd="vu" id="imVu" aria-label="Déjà vu"><svg><use href="#i-vu"/></svg></button>
+    <button data-cmd="retirer" id="imRetirer" class="ch" aria-label="Retirer cette chaîne"><svg><use href="#i-fermer"/></svg><i>ch.</i></button>
     <button data-cmd="tard" id="imTard" aria-label="Plus tard"><svg><use href="#i-tard"/></svg></button>
     <button data-cmd="cat" id="imCat" aria-label="Mal classée"><svg><use href="#i-cat"/></svg></button>
     <button data-cmd="source" id="imSource" aria-label="Agir sur la source"><svg><use href="#i-source"/></svg></button>
@@ -104,7 +105,8 @@
     <button id="bAimeCh" aria-pressed="false" class="vote" title="J'aime cette chaîne"><svg><use href="#i-aime"/></svg><span>J'aime<small>chaîne</small></span></button>
     <button id="bBof" aria-pressed="false" class="vote" title="Bof pour ce contenu (cette vidéo, son artiste)"><svg><use href="#i-bof"/></svg><span>Bof<small>contenu</small></span></button>
     <button id="bBofCh" aria-pressed="false" class="vote" title="Bof pour cette chaîne"><svg><use href="#i-bof"/></svg><span>Bof<small>chaîne</small></span></button>
-    <button id="bVu" title="Déjà vu : écartée pendant 7 jours, même si la grille la reprogramme"><svg><use href="#i-vu"/></svg><span>Déjà vu</span></button>
+    <button id="bVu" title="Déjà vu : écartée pendant trois mois"><svg><use href="#i-vu"/></svg><span>Déjà vu</span></button>
+    <button id="bRetirer" title="Retirer cette chaîne de YO1tv"><svg><use href="#i-fermer"/></svg><span>Retirer<small>la chaîne</small></span></button>
     <button id="bTard"><svg><use href="#i-tard"/></svg><span>Plus tard</span></button>
     <button id="bCat"><svg><use href="#i-cat"/></svg><span>Catégorie</span></button>
     <button id="bSource"><svg><use href="#i-source"/></svg><span>Source</span></button>
@@ -118,7 +120,7 @@
 <main>
   <div class="banniere" id="banniere" hidden></div>
   <section id="vueTele">
-    <h2 class="titre-section"><span>Et ensuite</span><button class="petit" id="bGrille">Toute la grille</button></h2>
+    <h2 class="titre-section"><span>Et ensuite</span><button class="petit" id="bGrille">Toute la playlist</button></h2>
     <ol class="liste" id="ensuite"></ol>
   </section>
 

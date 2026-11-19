@@ -9,7 +9,7 @@
 <style>
 /* Étape 0 de YO1tv : vérifier que le lecteur YouTube intégré fonctionne sur GitHub Pages,
    dans Brave sur tablette Android en portrait (pub, superposition, écran éteint, enchaînement).
-   Données : data/catalogue-exemple.json (catalogue de La Vigie du 1er novembre 2026).
+   Données : data/semaine.json (programmes de la semaine).
    Adresse alternative : #v=ID1,ID2,…&t=Titre (compatible avec l'ancien lecteur de la Vigie). */
 :root { --fond: #F3EFE6; --papier: #FBF8F2; --encre: #1F2420; --gris: #5D635C; --trait: #D9D2C3; --accent: #1E3A78 }
 @media (prefers-color-scheme: dark) { :root { --fond: #14161a; --papier: #1d2026; --encre: #E6E4DC; --gris: #A3A69C; --trait: #343842; --accent: #9DB8F0; color-scheme: dark } }
@@ -59,10 +59,9 @@ let file = [], i = 0, lecteur = null, vuNote = new Set();
 async function chargerFile() {
   const p = new URLSearchParams(location.hash.slice(1)), ids = (p.get("v") || "").split(",").filter(x => /^[\w-]{11}$/.test(x));
   if (ids.length) return ids.slice(0, 200).map(id => ({ i: id, t: "Vidéo " + id, c: "" }));
-  const cat = await (await fetch("data/catalogue-exemple.json")).json(), out = [], vus = new Set();
-  for (const o of ["humour", "actu", "decouverte", "culture", "divertissement", "analyse"])
+  const sem = await (await fetch("data/semaine.json")).json(), cat = { items: Object.entries(sem.items || {}).map(([i, x]) => ({ ...x, i })) }, out = [], vus = new Set();
+  for (const o of ["humour", "culture", "savoir", "decouverte", "divertissement", "info"])
     for (const x of cat.items.filter(x => x.o === o && !x.co).sort((a, b) => (b.p || 1) - (a.p || 1)).slice(0, 2)) if (!vus.has(x.i)) { vus.add(x.i); out.push(x); }
-  const courts = cat.items.filter(x => x.co).slice(0, 2); out.splice(1, 0, courts[0]); out.splice(6, 0, courts[1]);
   return out.filter(Boolean);
 }
 function rendreFile() {
